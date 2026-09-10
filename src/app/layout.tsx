@@ -32,12 +32,30 @@ const sansFont = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://weddingcard.vercel.app")
+  ),
   title: weddingData.meta.title,
   description: weddingData.meta.description,
   openGraph: {
     title: weddingData.meta.title,
     description: weddingData.meta.description,
-    images: [weddingData.groom.photoUrl],
+    siteName: "Walimatulurus Umar & Nafisya",
+    images: [
+      {
+        url: "/images/page_background.jpg",
+        alt: "Walimatulurus Umar & Nafisya",
+      },
+    ],
+    locale: "ms_MY",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: weddingData.meta.title,
+    description: weddingData.meta.description,
+    images: ["/images/page_background.jpg"],
   },
 };
 
