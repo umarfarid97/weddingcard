@@ -203,8 +203,8 @@ export const weddingData: WeddingConfig = {
     },
   ],
   audio: {
-    title: "Amin Paling Serius (Instrumental)",
-    artist: "Sal Priadi & Nadin Amizah",
-    url: "https://assets.mixkit.co/music/preview/mixkit-wedding-waltz-piano-music-221.mp3",
+    title: "Great Expectation",
+    artist: "Sienna Spiro",
+    url: "/audio/great_expectation.mp3",
   },
 };

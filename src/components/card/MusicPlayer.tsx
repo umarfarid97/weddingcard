@@ -72,8 +72,8 @@ export default function MusicPlayer({ autoPlayTrigger }: MusicPlayerProps) {
               ? "bg-[#52664b] border-[#dfa528] text-white ring-2 ring-[#dfa528]/30"
               : "bg-[#faf7f0] border-[#52664b]/40 text-[#52664b] hover:bg-[#f5efe4]"
           }`}
-          aria-label={isPlaying ? "Pause music" : "Play wedding music"}
-          title={isPlaying ? "Jeda Muzik" : "Mainkan Muzik"}
+          aria-label={isPlaying ? `Jeda lagu: ${weddingData.audio.title}` : `Mainkan lagu: ${weddingData.audio.title}`}
+          title={isPlaying ? `Jeda Muzik (${weddingData.audio.title})` : `Mainkan Muzik (${weddingData.audio.title})`}
         >
           {isPlaying ? (
             <div className="relative flex items-center justify-center">
@@ -89,18 +89,18 @@ export default function MusicPlayer({ autoPlayTrigger }: MusicPlayerProps) {
 
         {/* Expanded Info Pill (shows when playing) */}
         {isPlaying && (
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#faf7f0]/90 text-[#283424] border border-[#ece4d3] text-xs shadow-md backdrop-blur-sm animate-fade-in">
+          <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-[#faf7f0]/95 text-[#283424] border border-[#ece4d3] text-xs shadow-md backdrop-blur-sm animate-fade-in">
             <div className="flex items-end gap-0.5 h-3">
               <span className="w-0.5 bg-[#dfa528] rounded-full audio-bar-1" />
               <span className="w-0.5 bg-[#dfa528] rounded-full audio-bar-2" />
               <span className="w-0.5 bg-[#dfa528] rounded-full audio-bar-3" />
             </div>
-            <span className="max-w-[130px] truncate text-[11px] font-medium font-serif">
+            <span className="max-w-[110px] sm:max-w-[150px] truncate text-[11px] font-medium font-serif">
               {weddingData.audio.title}
             </span>
             <button
               onClick={toggleMute}
-              className="text-[#52664b] hover:text-[#222d1f] transition-colors cursor-pointer"
+              className="text-[#52664b] hover:text-[#222d1f] transition-colors cursor-pointer ml-0.5"
               aria-label={isMuted ? "Unmute" : "Mute"}
             >
               {isMuted ? <VolumeX className="w-3.5 h-3.5 text-red-500" /> : <Volume2 className="w-3.5 h-3.5" />}

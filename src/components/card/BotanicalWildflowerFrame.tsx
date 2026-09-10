@@ -21,29 +21,30 @@ export default function BotanicalWildflowerFrame({
   return (
     <div className={`relative w-full h-full overflow-hidden flex flex-col items-center justify-between select-none ${className}`}>
       {/* ========================================================================= */}
-      {/* 1. LAYER: VINTAGE GARDEN ESTATE WATERCOLOR BACKGROUND                     */}
+      {/* 1. LAYER: TORN-PAPER BOTANICAL WATERCOLOR BACKGROUND                       */}
       {/* ========================================================================= */}
       <div
-        data-swiper-parallax-y="-12%"
-        data-swiper-parallax-scale="1.08"
+        data-swiper-parallax-y="-10%"
+        data-swiper-parallax-scale="1.06"
         className="slide-bg absolute inset-0 z-0 bg-cover bg-center pointer-events-none transition-transform duration-1000"
         style={{
-          backgroundImage: "url('/images/vintage_garden_bg.jpg')",
+          backgroundImage: "url('/images/page_background.jpg')",
+          backgroundPosition: "center center",
         }}
       />
 
-      {/* Gentle center reading wash to ensure text readability on the watercolor painting */}
+      {/* Very subtle soft warm highlight to preserve authentic cotton paper texture while ensuring crisp typography */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(ellipse at 50% 46%, rgba(255, 254, 250, 0.88) 0%, rgba(255, 254, 250, 0.76) 45%, rgba(255, 254, 250, 0.35) 72%, transparent 100%)
+            radial-gradient(ellipse at 50% 50%, rgba(254, 252, 247, 0.25) 0%, rgba(254, 252, 247, 0.1) 60%, transparent 100%)
           `,
         }}
       />
 
       {/* Subtle edge vignette */}
-      <div className="absolute inset-0 z-0 bg-radial from-transparent via-transparent to-[#282218]/15 pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-radial from-transparent via-transparent to-[#282218]/10 pointer-events-none" />
 
       {/* ========================================================================= */}
       {/* 2. LAYER: FLOATING PETALS & BOTANICAL PARTICLES (Parallax 3D Depth)       */}
