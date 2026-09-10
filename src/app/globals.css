@@ -88,14 +88,29 @@
 .audio-bar-3 { animation: audioWave 1.4s infinite ease-in-out 0.4s; }
 
 /* Swiper Slider Transitions (#28 Mirko Zoric Style) */
+html,
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  overscroll-behavior-x: none;
+}
+
 .wedding-slider {
-  width: 100vw;
+  width: 100%;
+  max-width: 100vw;
   height: 100vh;
+  overflow-x: hidden;
+  touch-action: pan-y;
 }
 
 .wedding-slider .swiper-slide {
   position: relative;
   overflow: hidden;
+  overflow-x: hidden;
+  max-width: 100vw;
+  touch-action: pan-y;
   display: flex;
   align-items: center;
   justify-content: center;

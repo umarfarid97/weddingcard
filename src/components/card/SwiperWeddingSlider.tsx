@@ -156,13 +156,16 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
   ];
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-[#060813] text-white select-none">
+    <div className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#060813] text-white select-none touch-none">
       <Swiper
         direction="vertical"
         speed={1000}
         parallax={true}
         mousewheel={{ enabled: true, sensitivity: 1 }}
         keyboard={{ enabled: true }}
+        touchAngle={45}
+        resistanceRatio={0}
+        preventInteractionOnTransition={true}
         modules={[Parallax, Mousewheel, Pagination, Navigation, Keyboard]}
         onSwiper={(swiper) => {
           setSwiperInstance(swiper);
@@ -646,7 +649,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       placeholder="Nama Penuh Anda *"
                       value={rsvpName}
                       onChange={(e) => setRsvpName(e.target.value)}
-                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-sm placeholder:text-white/40 focus:outline-none transition-colors"
+                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-[16px] sm:text-sm placeholder:text-white/40 focus:outline-none transition-colors"
                       required
                     />
                   </div>
@@ -658,7 +661,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       placeholder="Nombor Telefon / WhatsApp *"
                       value={rsvpPhone}
                       onChange={(e) => setRsvpPhone(e.target.value)}
-                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-sm placeholder:text-white/40 focus:outline-none transition-colors"
+                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-[16px] sm:text-sm placeholder:text-white/40 focus:outline-none transition-colors"
                       required
                     />
                   </div>
@@ -696,7 +699,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       placeholder="Ucapan & doa tulus (pilihan)..."
                       value={rsvpMessage}
                       onChange={(e) => setRsvpMessage(e.target.value)}
-                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-sm placeholder:text-white/40 focus:outline-none transition-colors"
+                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-[16px] sm:text-sm placeholder:text-white/40 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -766,7 +769,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
             {/* Floating Live Wishes Preview */}
             <div
               data-swiper-parallax-y="-140"
-              className="w-full max-w-md my-2 max-h-36 overflow-y-auto space-y-2.5 text-left pr-2 scrollbar-thin"
+              className="w-full max-w-md my-2 max-h-36 overflow-y-auto overflow-x-hidden break-words space-y-2.5 text-left pr-2 scrollbar-thin"
             >
               {wishes.length === 0 ? (
                 <p className="text-xs text-white/50 text-center py-4 font-serif italic">
@@ -779,7 +782,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       <span className="font-serif font-bold text-[#dfc285]">{w.name}</span>
                       <span className="text-[10px] text-white/40">{w.date}</span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/90 italic mt-0.5">&ldquo;{w.message}&rdquo;</p>
+                    <p className="text-xs sm:text-sm text-white/90 italic mt-0.5 break-words">&ldquo;{w.message}&rdquo;</p>
                   </div>
                 ))
               )}
@@ -818,7 +821,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
             {/* WhatsApp Family Contact Buttons */}
             <div
               data-swiper-parallax-y="-50"
-              className="flex items-center justify-center gap-3 my-2"
+              className="flex flex-wrap items-center justify-center gap-2.5 my-2"
             >
               {weddingData.contacts.slice(0, 2).map((c, idx) => (
                 <a
