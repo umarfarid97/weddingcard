@@ -15,6 +15,8 @@ import {
   CheckCircle2, 
   ChevronRight, 
   ChevronLeft, 
+  ChevronUp, 
+  ChevronDown, 
   MessageSquare,
   Gift,
   Phone,
@@ -154,10 +156,12 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#0d0a08] text-white select-none">
       <Swiper
-        speed={1100}
+        direction="vertical"
+        speed={1000}
         parallax={true}
-        mousewheel={{ forceToAxis: true, sensitivity: 1 }}
+        mousewheel={{ enabled: true, sensitivity: 1 }}
         keyboard={{ enabled: true }}
+        modules={[Parallax, Mousewheel, Pagination, Navigation, Keyboard]}
         onSwiper={(swiper) => {
           setSwiperInstance(swiper);
           if (typeof window !== "undefined") {
@@ -230,17 +234,17 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 {weddingData.event.venueName}
               </p>
 
-              {/* Swipe Cue */}
+              {/* Scroll / Swipe Cue */}
               <div
-                data-swiper-parallax="-80"
-                className="mt-6 flex flex-col items-center gap-2 cursor-pointer"
+                data-swiper-parallax-y="-80"
+                className="mt-6 flex flex-col items-center gap-1.5 cursor-pointer"
                 onClick={() => swiperInstance?.slideNext()}
               >
                 <span className="text-[10px] uppercase tracking-widest text-[#dfc285] font-serif font-medium animate-pulse">
-                  Luncurkan atau skrol untuk melangkah masuk
+                  Skrol ke bawah untuk melangkah masuk
                 </span>
                 <div className="w-8 h-8 rounded-full border border-[#dfc285]/40 flex items-center justify-center bg-black/40 hover:bg-[#dfc285]/20 transition-all">
-                  <ChevronRight className="w-4 h-4 text-[#dfc285] animate-pulse" />
+                  <ChevronDown className="w-4 h-4 text-[#dfc285] animate-bounce" />
                 </div>
               </div>
             </div>
@@ -299,12 +303,12 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               </p>
 
               <div
-                data-swiper-parallax="-60"
-                className="mt-6 pt-3 border-t border-[#dfc285]/25 flex items-center justify-center gap-1 text-[10px] text-[#dfc285]/90 font-serif tracking-wider cursor-pointer"
+                data-swiper-parallax-y="-60"
+                className="mt-6 pt-3 border-t border-[#dfc285]/25 flex items-center justify-center gap-1.5 text-[10px] text-[#dfc285]/90 font-serif tracking-wider cursor-pointer"
                 onClick={() => swiperInstance?.slideNext()}
               >
                 <span>Lihat Atur Cara &amp; Kira Detik</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
               </div>
             </div>
           </div>
@@ -414,12 +418,12 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               </div>
 
               <div
-                data-swiper-parallax="-50"
-                className="mt-4 pt-3 border-t border-[#dfc285]/40 flex items-center justify-center gap-1 text-[10px] text-[#8c6d32] font-serif cursor-pointer"
+                data-swiper-parallax-y="-50"
+                className="mt-4 pt-3 border-t border-[#dfc285]/40 flex items-center justify-center gap-1.5 text-[10px] text-[#8c6d32] font-serif cursor-pointer"
                 onClick={() => swiperInstance?.slideNext()}
               >
                 <span>Lihat Profil Pengantin &amp; Atur Cara</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
               </div>
             </div>
           </div>
@@ -504,12 +508,12 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               </div>
 
               <div
-                data-swiper-parallax="-60"
-                className="mt-4 pt-2 border-t border-[#dfc285]/30 flex items-center justify-center gap-1 text-[10px] text-[#dfc285] font-serif cursor-pointer"
+                data-swiper-parallax-y="-60"
+                className="mt-4 pt-2 border-t border-[#dfc285]/30 flex items-center justify-center gap-1.5 text-[10px] text-[#dfc285] font-serif cursor-pointer"
                 onClick={() => swiperInstance?.slideNext()}
               >
                 <span>Seterusnya: Sahkan Kehadiran (RSVP)</span>
-                <ChevronRight className="w-3.5 h-3.5" />
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
               </div>
             </div>
           </div>
@@ -769,11 +773,11 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               </div>
 
               <div
-                className="mt-4 pt-2 border-t border-[#dfc285]/20 flex items-center justify-center gap-1 text-[10px] text-[#dfc285] font-serif cursor-pointer"
+                className="mt-4 pt-2 border-t border-[#dfc285]/20 flex items-center justify-center gap-1.5 text-[10px] text-[#dfc285] font-serif cursor-pointer"
                 onClick={() => swiperInstance?.slideTo(0)}
               >
+                <ChevronUp className="w-3.5 h-3.5" />
                 <span>Kembali ke Pintu Gerbang</span>
-                <ChevronLeft className="w-3.5 h-3.5" />
               </div>
             </div>
           </div>
@@ -829,32 +833,32 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
         })}
       </div>
 
-      {/* Navigation Chevrons on Left & Right */}
+      {/* Vertical Navigation Chevrons: Top & Bottom */}
       {activeIndex > 0 && (
         <button
           onClick={() => swiperInstance?.slidePrev()}
-          className="fixed left-3 sm:left-6 top-1/2 -translate-y-1/2 z-40 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/60 backdrop-blur-md border border-[#dfc285]/40 flex items-center justify-center text-[#dfc285] hover:bg-black/85 hover:border-[#dfc285] transition-all cursor-pointer shadow-lg"
-          aria-label="Slaid sebelumnya"
+          className="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 backdrop-blur-md border border-[#dfc285]/40 flex items-center justify-center text-[#dfc285] hover:bg-black/85 hover:border-[#dfc285] transition-all cursor-pointer shadow-lg"
+          aria-label="Slaid atas sebelumnya"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronUp className="w-5 h-5" />
         </button>
       )}
 
       {activeIndex < slideTitles.length - 1 && (
         <button
           onClick={() => swiperInstance?.slideNext()}
-          className="fixed right-14 sm:right-20 top-1/2 -translate-y-1/2 z-40 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/60 backdrop-blur-md border border-[#dfc285]/40 flex items-center justify-center text-[#dfc285] hover:bg-black/85 hover:border-[#dfc285] transition-all cursor-pointer shadow-lg"
-          aria-label="Slaid seterusnya"
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/60 backdrop-blur-md border border-[#dfc285]/40 flex items-center justify-center text-[#dfc285] hover:bg-black/85 hover:border-[#dfc285] transition-all cursor-pointer shadow-lg"
+          aria-label="Slaid bawah seterusnya"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ChevronDown className="w-5 h-5" />
         </button>
       )}
 
-      {/* Bottom Progress Bar */}
-      <div className="fixed bottom-0 left-0 right-0 h-1 bg-white/10 z-40">
+      {/* Right Edge Vertical Progress Bar */}
+      <div className="fixed right-0 top-0 bottom-0 w-1 bg-white/10 z-40 pointer-events-none">
         <div
-          className="h-full bg-gradient-to-r from-[#b0883b] via-[#dfc285] to-[#b0883b] transition-all duration-500 shadow-[0_0_8px_rgba(223,194,133,0.8)]"
-          style={{ width: `${((activeIndex + 1) / slideTitles.length) * 100}%` }}
+          className="w-full bg-gradient-to-b from-[#b0883b] via-[#dfc285] to-[#b0883b] transition-all duration-500 shadow-[0_0_8px_rgba(223,194,133,0.8)]"
+          style={{ height: `${((activeIndex + 1) / slideTitles.length) * 100}%` }}
         />
       </div>
     </div>
