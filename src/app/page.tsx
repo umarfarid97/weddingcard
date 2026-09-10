@@ -17,7 +17,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#241a13] select-none touch-none">
+    <main className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#faf6ee] select-none touch-none">
       {/* 1. SWIPER PARALLAX SLIDER TRANSITIONS */}
       <SwiperWeddingSlider onSlideChange={handleSlideChange} />
 
