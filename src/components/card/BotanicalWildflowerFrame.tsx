@@ -47,33 +47,10 @@ export default function BotanicalWildflowerFrame({
       <div className="absolute inset-0 z-0 bg-radial from-transparent via-transparent to-[#282218]/10 pointer-events-none" />
 
       {/* ========================================================================= */}
-      {/* 2. LAYER: FLOATING PETALS & BOTANICAL PARTICLES (Parallax 3D Depth)       */}
+      {/* 2. MAIN CONTENT AREA (WORDS DIRECTLY ON THE BOTANICAL BACKGROUND)         */}
+      {/* Safe padding top & bottom ensures text sits in clear ivory canvas         */}
       {/* ========================================================================= */}
-      <div 
-        data-swiper-parallax-y="-120"
-        data-swiper-parallax-scale="1.12"
-        className="absolute inset-0 pointer-events-none z-10 overflow-hidden"
-      >
-        {/* Soft Pink Lily Petals */}
-        <div 
-          className="absolute top-[22%] left-[10%] w-4 h-7 bg-[#f2cbd2] rounded-[50%/70%_70%_30%_30%] rotate-[28deg] shadow-xs opacity-75 border border-[#ba7d87]/30"
-        />
-        <div 
-          className="absolute bottom-[28%] right-[12%] w-3.5 h-6 bg-[#f4d2d8] rounded-[50%/60%_60%_40%_40%] -rotate-[38deg] shadow-xs opacity-70 border border-[#ba7d87]/30"
-        />
-        {/* Wild Rose Petals */}
-        <div 
-          className="absolute top-[48%] right-[8%] w-4 h-5 bg-[#e8b5be] rounded-[50%] rotate-[18deg] shadow-xs opacity-80"
-        />
-        <div 
-          className="absolute top-[35%] left-[16%] w-3.5 h-4.5 bg-[#f7dbe0] rounded-[50%] -rotate-[22deg] opacity-75"
-        />
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 3. MAIN CONTENT AREA (WORDS DIRECTLY ON THE GARDEN BACKGROUND)            */}
-      {/* ========================================================================= */}
-      <div className="relative z-20 flex-1 w-full max-w-xl flex flex-col justify-between items-center px-6 sm:px-12 pt-14 pb-24 sm:pt-16 sm:pb-28 overflow-y-auto overscroll-contain no-scrollbar">
+      <div className="relative z-20 flex-1 w-full max-w-md flex flex-col justify-center items-center px-5 sm:px-8 pt-16 pb-16 sm:pt-20 sm:pb-20 overflow-y-auto overscroll-contain no-scrollbar">
         {children}
       </div>
     </div>
