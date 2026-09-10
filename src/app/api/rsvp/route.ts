@@ -48,6 +48,28 @@ export async function POST(request: Request) {
       saveWish(String(name).trim(), String(message).trim());
     }
 
+    // Forward to Google Sheets Webhook (Google Apps Script) if configured
+    const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    if (googleSheetWebhook) {
+      try {
+        await fetch(googleSheetWebhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            timestamp: new Date().toLocaleString("en-MY", { timeZone: "Asia/Kuala_Lumpur" }),
+            name: String(name).trim(),
+            phone: String(phone).trim(),
+            status: Boolean(attending) ? "Hadir" : "Tidak Hadir",
+            attending: Boolean(attending),
+            pax: attending ? Math.max(1, Math.min(10, Number(pax) || 1)) : 0,
+            message: message ? String(message).trim() : "-",
+          }),
+        });
+      } catch (sheetErr) {
+        console.error("Failed to forward RSVP to Google Sheets:", sheetErr);
+      }
+    }
+
     return NextResponse.json({ success: true, data: newRsvp });
   } catch (error) {
     return NextResponse.json(
