@@ -213,24 +213,17 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 <div className="w-16 h-[1px] bg-[#c5a059]/40 mx-auto" />
               </div>
 
-              {/* Main Couple Names Directly on Background */}
+              {/* Main Couple Monogram Replacing Names */}
               <div 
                 data-swiper-parallax-y="-210"
-                className="my-1 sm:my-1.5"
+                className="my-1 sm:my-2 flex flex-col items-center justify-center"
               >
-                <h1 className="font-serif text-4xl sm:text-5xl text-[#1f2d1b] font-normal tracking-wide">
-                  Umar
-                </h1>
-                <div className="flex items-center justify-center gap-3 my-0.5">
-                  <span className="w-10 h-[1px] bg-[#dfa528]/50" />
-                  <span className="font-handwriting text-3xl sm:text-4xl text-[#dfa528]">
-                    &
-                  </span>
-                  <span className="w-10 h-[1px] bg-[#dfa528]/50" />
-                </div>
-                <h1 className="font-serif text-4xl sm:text-5xl text-[#1f2d1b] font-normal tracking-wide">
-                  Nafisya
-                </h1>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src="/images/monogram_full.png" 
+                  alt="Umar & Nafisya Monogram" 
+                  className="w-52 sm:w-60 max-w-[250px] h-auto object-contain pointer-events-none select-none"
+                />
               </div>
 
               {/* Venue & Time Information */}
