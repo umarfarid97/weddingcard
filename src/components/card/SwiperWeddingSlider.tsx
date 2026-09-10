@@ -534,204 +534,192 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 05: BORANG RSVP (KUBAH ARCH CARD PATTERN DESIGN)                    */}
+        {/* SLIDE 05: BORANG RSVP (CARDLESS - DIRECT ON BACKGROUND)                   */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
-          <BotanicalWildflowerFrame className="!px-3 sm:!px-8 !pt-10 !pb-20 sm:!pt-12 sm:!pb-24">
-            {/* The Kubah Arch Card */}
-            <div 
-              data-swiper-parallax-y="-80"
-              data-swiper-parallax-scale="1.02"
-              className="relative w-full max-w-[380px] sm:max-w-[410px] h-full max-h-[86vh] rounded-[24px] sm:rounded-[32px] shadow-[0_20px_50px_rgba(40,30,18,0.22)] border border-[#bfa278]/40 overflow-hidden flex flex-col justify-between items-center text-center select-none bg-cover bg-center transition-all my-auto"
-              style={{
-                backgroundImage: "url('/images/kubah_rsvp_card.png')",
-                backgroundPosition: "center center",
-              }}
-            >
-              {/* Inner card content placed onto the card's parchment area */}
-              <div className="relative z-10 w-full h-full flex flex-col justify-start items-center pt-12 sm:pt-14 pb-14 sm:pb-16 px-6 sm:px-8 overflow-y-auto no-scrollbar gap-2 sm:gap-2.5">
-                {/* RSVP Top Header */}
-                <div 
-                  data-swiper-parallax-y="-120"
-                  className="text-center space-y-0.5"
-                >
-                  <span className="font-handwriting text-4xl sm:text-5xl text-[#3b4c34] block tracking-wide">
-                    &lsquo;RSVP&rsquo;
-                  </span>
-                  <p className="font-serif text-[11px] sm:text-xs tracking-wider text-[#6e5538] font-semibold">
-                    Please respond by December 1st, 2026
-                  </p>
-                  <p className="font-handwriting text-2xl sm:text-3xl text-[#2f3d2a] pt-0.5">
-                    Kindly Join Our Celebration
-                  </p>
-                </div>
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between items-center py-4 w-full">
+              {/* RSVP Top Header */}
+              <div 
+                data-swiper-parallax-y="-120"
+                className="text-center space-y-1"
+              >
+                <span className="font-handwriting text-5xl sm:text-6xl text-[#3b4c34] block tracking-wide">
+                  &lsquo;RSVP&rsquo;
+                </span>
+                <p className="font-serif text-xs sm:text-sm tracking-wider text-[#6e5538] font-semibold">
+                  Please respond by December 1st, 2026
+                </p>
+                <p className="font-handwriting text-3xl text-[#2f3d2a] pt-1">
+                  Kindly Join Our Celebration
+                </p>
+              </div>
 
-                {rsvpSubmitted ? (
-                  /* Success State */
-                  <div 
-                    data-swiper-parallax-y="-150"
-                    className="p-6 rounded-2xl border border-[#826a4b]/30 bg-[#faf6ed]/95 text-center space-y-3 my-auto max-w-sm w-full shadow-sm"
-                  >
-                    <div className="w-12 h-12 rounded-full bg-[#3b4c34]/15 text-[#3b4c34] flex items-center justify-center mx-auto">
-                      <CheckCircle2 className="w-7 h-7" />
-                    </div>
-                    <h3 className="font-serif text-xl font-bold text-[#221c13]">
-                      Terima Kasih!
-                    </h3>
-                    <p className="font-serif text-xs sm:text-sm text-[#523d24] leading-relaxed">
-                      Pengesahan RSVP anda telah berjaya disimpan. Kami tidak sabar untuk meraikan hari bahagia bersama anda!
-                    </p>
-                    <button
-                      onClick={() => setRsvpSubmitted(false)}
-                      className="text-xs font-sans text-[#3b4c34] underline tracking-wider pt-2 cursor-pointer font-medium"
-                    >
-                      Kemaskini Respons Lain
-                    </button>
+              {rsvpSubmitted ? (
+                /* Success State */
+                <div 
+                  data-swiper-parallax-y="-150"
+                  className="p-8 rounded-2xl border border-[#3b4c34]/20 bg-white/70 text-center space-y-3 my-6 max-w-md w-full shadow-xs"
+                >
+                  <div className="w-14 h-14 rounded-full bg-[#3b4c34]/15 text-[#3b4c34] flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-8 h-8" />
                   </div>
-                ) : (
-                  /* Form Fields placed ONTO the Kubah Card */
-                  <form 
-                    onSubmit={handleRsvpSubmit}
-                    data-swiper-parallax-y="-160"
-                    className="space-y-2.5 sm:space-y-3 my-1 w-full max-w-[280px] sm:max-w-[300px] text-left"
-                  >
-                    {/* Name(s) Underlined Input */}
-                    <div className="space-y-0.5">
-                      <label className="font-serif text-xs sm:text-sm text-[#1b140b] font-bold block">
-                        Name(s):
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={rsvpName}
-                        onChange={(e) => setRsvpName(e.target.value)}
-                        placeholder="Nama penuh anda"
-                        className="w-full bg-transparent border-b-2 border-[#826a4b]/60 focus:border-[#3b4c34] outline-none py-1 font-serif text-base text-[#150f08] font-semibold placeholder:text-[#826a4b]/70 transition-colors"
-                      />
-                    </div>
-
-                    {/* Phone Number Underlined Input */}
-                    <div className="space-y-0.5">
-                      <label className="font-serif text-xs sm:text-sm text-[#1b140b] font-bold block">
-                        No. Telefon:
-                      </label>
-                      <input
-                        type="tel"
-                        required
-                        value={rsvpPhone}
-                        onChange={(e) => setRsvpPhone(e.target.value)}
-                        placeholder="cth: 012-3456789"
-                        className="w-full bg-transparent border-b-2 border-[#826a4b]/60 focus:border-[#3b4c34] outline-none py-1 font-serif text-base text-[#150f08] font-semibold placeholder:text-[#826a4b]/70 transition-colors"
-                      />
-                    </div>
-
-                    {/* Attendance Checkboxes (Joyfully Accepts / Regretfully Declines) */}
-                    <div className="flex items-center justify-between pt-0.5 gap-2">
-                      <label 
-                        onClick={() => setRsvpAttending(true)}
-                        className="flex items-center gap-1.5 cursor-pointer select-none group"
-                      >
-                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
-                          rsvpAttending 
-                            ? "border-[#3b4c34] bg-[#3b4c34] text-white" 
-                            : "border-[#826a4b]/80 bg-[#faf6ee] group-hover:border-[#3b4c34]"
-                        }`}>
-                          {rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
-                        </div>
-                        <span className="font-serif text-xs sm:text-sm text-[#1b140b] font-bold">
-                          Joyfully Accepts
-                        </span>
-                      </label>
-
-                      <label 
-                        onClick={() => setRsvpAttending(false)}
-                        className="flex items-center gap-1.5 cursor-pointer select-none group"
-                      >
-                        <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
-                          !rsvpAttending 
-                            ? "border-[#ba7d7d] bg-[#ba7d7d] text-white" 
-                            : "border-[#826a4b]/80 bg-[#faf6ee] group-hover:border-[#ba7d7d]"
-                        }`}>
-                          {!rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
-                        </div>
-                        <span className="font-serif text-xs sm:text-sm text-[#6e5538] font-bold">
-                          Regretfully Declines
-                        </span>
-                      </label>
-                    </div>
-
-                    {/* Number Attending (Pax Selection) */}
-                    {rsvpAttending && (
-                      <div className="flex items-center justify-between pt-0.5">
-                        <span className="font-serif text-xs sm:text-sm text-[#1b140b] font-bold">
-                          Number Attending:
-                        </span>
-                        <div className="flex items-center gap-1.5">
-                          {[1, 2, 3, 4].map((num) => (
-                            <button
-                              key={num}
-                              type="button"
-                              onClick={() => setRsvpPax(num)}
-                              className={`w-7 h-7 rounded-full font-serif text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                                rsvpPax === num
-                                  ? "bg-[#3b4c34] text-white shadow-sm ring-2 ring-[#cba358]"
-                                  : "bg-[#fbf7ee] text-[#523d24] border border-[#826a4b]/60 hover:bg-white shadow-xs"
-                              }`}
-                            >
-                              {num}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Dietary Restrictions / Wishes Underlined Input */}
-                    <div className="space-y-0.5">
-                      <label className="font-serif text-xs sm:text-sm text-[#1b140b] font-bold block">
-                        Dietary Restrictions / Ucapan:
-                      </label>
-                      <input
-                        type="text"
-                        value={rsvpMessage}
-                        onChange={(e) => setRsvpMessage(e.target.value)}
-                        placeholder="Pesanan atau ucapan ringkas"
-                        className="w-full bg-transparent border-b-2 border-[#826a4b]/60 focus:border-[#3b4c34] outline-none py-1 font-serif text-base text-[#150f08] font-semibold placeholder:text-[#826a4b]/70 transition-colors"
-                      />
-                    </div>
-
-                    {rsvpError && (
-                      <p className="font-sans text-xs text-red-600 font-medium">
-                        {rsvpError}
-                      </p>
-                    )}
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={rsvpLoading}
-                      className="w-full py-2.5 px-4 rounded-xl bg-[#3b4c34] hover:bg-[#2d3a27] disabled:opacity-50 text-white font-serif text-sm sm:text-base font-semibold tracking-wider transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-1.5"
-                    >
-                      {rsvpLoading ? (
-                        <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4 text-[#e8c872]" />
-                          <span>Hantar Pengesahan RSVP</span>
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
-
-                {/* Footer Script Whisper */}
-                <div 
-                  data-swiper-parallax-y="-100"
-                  className="text-center pt-1"
-                >
-                  <p className="font-handwriting text-xl sm:text-2xl text-[#293624] font-semibold">
-                    We can&apos;t wait to celebrate with you!
+                  <h3 className="font-serif text-2xl font-bold text-[#1b140b]">
+                    Terima Kasih!
+                  </h3>
+                  <p className="font-serif text-sm sm:text-base text-[#3b4c34] leading-relaxed">
+                    Pengesahan RSVP anda telah berjaya disimpan. Kami tidak sabar untuk meraikan hari bahagia bersama anda!
                   </p>
+                  <button
+                    onClick={() => setRsvpSubmitted(false)}
+                    className="text-xs font-sans text-[#3b4c34] underline tracking-wider pt-2 cursor-pointer font-medium"
+                  >
+                    Kemaskini Respons Lain
+                  </button>
                 </div>
+              ) : (
+                /* Form Fields styled like Reference Card (Directly on Background) */
+                <form 
+                  onSubmit={handleRsvpSubmit}
+                  data-swiper-parallax-y="-180"
+                  className="space-y-4 my-3 w-full max-w-[380px] text-left"
+                >
+                  {/* Name(s) Underlined Input */}
+                  <div className="space-y-1">
+                    <label className="font-serif text-sm text-[#1b140b] font-bold block">
+                      Name(s):
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={rsvpName}
+                      onChange={(e) => setRsvpName(e.target.value)}
+                      placeholder="Nama penuh anda"
+                      className="w-full bg-transparent border-b-2 border-[#3b4c34]/60 focus:border-[#3b4c34] outline-none py-1.5 font-serif text-base text-[#150f08] font-semibold placeholder:text-[#3b4c34]/50 transition-colors"
+                    />
+                  </div>
+
+                  {/* Phone Number Underlined Input */}
+                  <div className="space-y-1">
+                    <label className="font-serif text-sm text-[#1b140b] font-bold block">
+                      No. Telefon:
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={rsvpPhone}
+                      onChange={(e) => setRsvpPhone(e.target.value)}
+                      placeholder="cth: 012-3456789"
+                      className="w-full bg-transparent border-b-2 border-[#3b4c34]/60 focus:border-[#3b4c34] outline-none py-1.5 font-serif text-base text-[#150f08] font-semibold placeholder:text-[#3b4c34]/50 transition-colors"
+                    />
+                  </div>
+
+                  {/* Attendance Checkboxes (Joyfully Accepts / Regretfully Declines) */}
+                  <div className="flex items-center justify-between pt-2 gap-3">
+                    <label 
+                      onClick={() => setRsvpAttending(true)}
+                      className="flex items-center gap-2.5 cursor-pointer select-none group"
+                    >
+                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
+                        rsvpAttending 
+                          ? "border-[#3b4c34] bg-[#3b4c34] text-white" 
+                          : "border-[#3b4c34]/60 bg-[#faf6ee] group-hover:border-[#3b4c34]"
+                      }`}>
+                        {rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                      <span className="font-serif text-sm text-[#1b140b] font-bold">
+                        Joyfully Accepts
+                      </span>
+                    </label>
+
+                    <label 
+                      onClick={() => setRsvpAttending(false)}
+                      className="flex items-center gap-2.5 cursor-pointer select-none group"
+                    >
+                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
+                        !rsvpAttending 
+                          ? "border-[#ba7d7d] bg-[#ba7d7d] text-white" 
+                          : "border-[#3b4c34]/60 bg-[#faf6ee] group-hover:border-[#ba7d7d]"
+                      }`}>
+                        {!rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                      <span className="font-serif text-sm text-[#6e5538] font-bold">
+                        Regretfully Declines
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Number Attending (Pax Selection) */}
+                  {rsvpAttending && (
+                    <div className="flex items-center justify-between pt-2">
+                      <span className="font-serif text-sm text-[#1b140b] font-bold">
+                        Number Attending:
+                      </span>
+                      <div className="flex items-center gap-2">
+                        {[1, 2, 3, 4].map((num) => (
+                          <button
+                            key={num}
+                            type="button"
+                            onClick={() => setRsvpPax(num)}
+                            className={`w-8 h-8 rounded-full font-serif text-sm font-bold transition-all cursor-pointer ${
+                              rsvpPax === num
+                                ? "bg-[#3b4c34] text-white shadow-sm ring-2 ring-[#cba358]"
+                                : "bg-[#faf6ee] text-[#3b4c34] border border-[#3b4c34]/40 hover:bg-white shadow-xs"
+                            }`}
+                          >
+                            {num}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Dietary Restrictions / Wishes Underlined Input */}
+                  <div className="space-y-1">
+                    <label className="font-serif text-sm text-[#1b140b] font-bold block">
+                      Dietary Restrictions / Ucapan:
+                    </label>
+                    <input
+                      type="text"
+                      value={rsvpMessage}
+                      onChange={(e) => setRsvpMessage(e.target.value)}
+                      placeholder="Pesanan atau ucapan ringkas"
+                      className="w-full bg-transparent border-b-2 border-[#3b4c34]/60 focus:border-[#3b4c34] outline-none py-1.5 font-serif text-base text-[#150f08] font-semibold placeholder:text-[#3b4c34]/50 transition-colors"
+                    />
+                  </div>
+
+                  {rsvpError && (
+                    <p className="font-sans text-xs text-red-600 font-medium">
+                      {rsvpError}
+                    </p>
+                  )}
+
+                  {/* Submit Button in Sage Green */}
+                  <button
+                    type="submit"
+                    disabled={rsvpLoading}
+                    className="w-full py-3 px-4 rounded-xl bg-[#3b4c34] hover:bg-[#2d3a27] disabled:opacity-50 text-white font-serif text-base font-semibold tracking-wider transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-3"
+                  >
+                    {rsvpLoading ? (
+                      <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 text-[#e8c872]" />
+                        <span>Hantar Pengesahan RSVP</span>
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
+
+              {/* Footer Script Whisper */}
+              <div 
+                data-swiper-parallax-y="-100"
+                className="text-center pt-3"
+              >
+                <p className="font-handwriting text-2xl sm:text-3xl text-[#3b4c34]/95">
+                  We can&apos;t wait to celebrate with you!
+                </p>
               </div>
             </div>
           </BotanicalWildflowerFrame>
