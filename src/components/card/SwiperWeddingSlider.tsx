@@ -586,7 +586,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 >
                   {/* Name(s) Underlined Input */}
                   <div className="space-y-1">
-                    <label className="font-serif text-sm text-[#283424] font-semibold block">
+                    <label className="font-serif text-sm text-[#1b2518] font-bold block">
                       Name(s):
                     </label>
                     <input
@@ -595,13 +595,13 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       value={rsvpName}
                       onChange={(e) => setRsvpName(e.target.value)}
                       placeholder="Nama penuh anda"
-                      className="w-full bg-transparent border-b border-[#52664b]/50 focus:border-[#52664b] outline-none py-1.5 font-serif text-base text-[#222d1f] placeholder:text-[#697f5f]/40 transition-colors"
+                      className="w-full bg-transparent border-b-2 border-[#52664b]/60 focus:border-[#52664b] outline-none py-1.5 font-serif text-base text-[#1b2518] font-medium placeholder:text-[#52664b]/50 transition-colors"
                     />
                   </div>
 
                   {/* Phone Number Underlined Input */}
                   <div className="space-y-1">
-                    <label className="font-serif text-sm text-[#283424] font-semibold block">
+                    <label className="font-serif text-sm text-[#1b2518] font-bold block">
                       No. Telefon:
                     </label>
                     <input
@@ -610,7 +610,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       value={rsvpPhone}
                       onChange={(e) => setRsvpPhone(e.target.value)}
                       placeholder="cth: 012-3456789"
-                      className="w-full bg-transparent border-b border-[#52664b]/50 focus:border-[#52664b] outline-none py-1.5 font-serif text-base text-[#222d1f] placeholder:text-[#697f5f]/40 transition-colors"
+                      className="w-full bg-transparent border-b-2 border-[#52664b]/60 focus:border-[#52664b] outline-none py-1.5 font-serif text-base text-[#1b2518] font-medium placeholder:text-[#52664b]/50 transition-colors"
                     />
                   </div>
 
@@ -620,14 +620,14 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       onClick={() => setRsvpAttending(true)}
                       className="flex items-center gap-2.5 cursor-pointer select-none group"
                     >
-                      <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
                         rsvpAttending 
                           ? "border-[#52664b] bg-[#52664b] text-white" 
-                          : "border-[#697f5f]/60 bg-white/70 group-hover:border-[#52664b]"
+                          : "border-[#52664b]/60 bg-[#faf6ee] group-hover:border-[#52664b]"
                       }`}>
                         {rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
                       </div>
-                      <span className="font-serif text-sm text-[#283424] font-medium">
+                      <span className="font-serif text-sm text-[#1b2518] font-bold">
                         Joyfully Accepts
                       </span>
                     </label>
@@ -636,14 +636,14 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       onClick={() => setRsvpAttending(false)}
                       className="flex items-center gap-2.5 cursor-pointer select-none group"
                     >
-                      <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                      <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${
                         !rsvpAttending 
                           ? "border-[#ba7d7d] bg-[#ba7d7d] text-white" 
-                          : "border-[#697f5f]/60 bg-white/70 group-hover:border-[#ba7d7d]"
+                          : "border-[#52664b]/60 bg-[#faf6ee] group-hover:border-[#ba7d7d]"
                       }`}>
                         {!rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
                       </div>
-                      <span className="font-serif text-sm text-[#697f5f] font-medium">
+                      <span className="font-serif text-sm text-[#52664b] font-bold">
                         Regretfully Declines
                       </span>
                     </label>
@@ -652,7 +652,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                   {/* Number Attending (Pax Selection) */}
                   {rsvpAttending && (
                     <div className="flex items-center justify-between pt-2">
-                      <span className="font-serif text-sm text-[#283424] font-semibold">
+                      <span className="font-serif text-sm text-[#1b2518] font-bold">
                         Number Attending:
                       </span>
                       <div className="flex items-center gap-2">
@@ -661,10 +661,10 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                             key={num}
                             type="button"
                             onClick={() => setRsvpPax(num)}
-                            className={`w-8 h-8 rounded-full font-serif text-sm font-semibold transition-all cursor-pointer ${
+                            className={`w-8 h-8 rounded-full font-serif text-sm font-bold transition-all cursor-pointer ${
                               rsvpPax === num
-                                ? "bg-[#52664b] text-white shadow-sm ring-1 ring-[#dfa528]"
-                                : "bg-white/60 text-[#52664b] border border-[#52664b]/30 hover:bg-white"
+                                ? "bg-[#52664b] text-white shadow-sm ring-2 ring-[#dfa528]"
+                                : "bg-[#faf6ee] text-[#52664b] border border-[#52664b]/40 hover:bg-white shadow-xs"
                             }`}
                           >
                             {num}
@@ -676,7 +676,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
 
                   {/* Dietary Restrictions / Wishes Underlined Input */}
                   <div className="space-y-1">
-                    <label className="font-serif text-sm text-[#283424] font-semibold block">
+                    <label className="font-serif text-sm text-[#1b2518] font-bold block">
                       Dietary Restrictions / Ucapan:
                     </label>
                     <input
@@ -684,7 +684,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                       value={rsvpMessage}
                       onChange={(e) => setRsvpMessage(e.target.value)}
                       placeholder="Pesanan atau ucapan ringkas"
-                      className="w-full bg-transparent border-b border-[#52664b]/50 focus:border-[#52664b] outline-none py-1.5 font-serif text-base text-[#222d1f] placeholder:text-[#697f5f]/40 transition-colors"
+                      className="w-full bg-transparent border-b-2 border-[#52664b]/60 focus:border-[#52664b] outline-none py-1.5 font-serif text-base text-[#1b2518] font-medium placeholder:text-[#52664b]/50 transition-colors"
                     />
                   </div>
 
