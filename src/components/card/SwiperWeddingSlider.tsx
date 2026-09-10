@@ -7,7 +7,6 @@ import type { Swiper as SwiperType } from "swiper";
 import { 
   Heart, 
   MapPin, 
-  Users, 
   Send, 
   CheckCircle2, 
   ChevronUp, 
@@ -15,11 +14,15 @@ import {
   Gift, 
   Phone, 
   ExternalLink,
-  Copy,
-  Check
+  Copy, 
+  Check,
+  Calendar,
+  Sparkles,
+  Navigation as NavIcon
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { weddingData } from "@/data/weddingData";
+import BotanicalWildflowerFrame from "./BotanicalWildflowerFrame";
 
 // Swiper CSS styles
 import "swiper/css";
@@ -127,10 +130,10 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
       fetchWishes();
 
       confetti({
-        particleCount: 80,
-        spread: 70,
+        particleCount: 85,
+        spread: 75,
         origin: { y: 0.6 },
-        colors: ["#dfc285", "#f3e3ba", "#ffffff", "#c5a059"],
+        colors: ["#dfa528", "#52664b", "#ffffff", "#e8b738", "#d99b9b"],
       });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : "Ralat tidak dijangka";
@@ -156,7 +159,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
   ];
 
   return (
-    <div className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#060813] text-white select-none touch-none">
+    <div className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#241a13] text-[#283424] select-none touch-none">
       <Swiper
         direction="vertical"
         speed={1000}
@@ -180,509 +183,537 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
         className="wedding-slider w-full h-full"
       >
         {/* ========================================================================= */}
-        {/* SLIDE 01: PINTU GERBANG UTAMA (THE GRAND ENTRANCE - CARDLESS)             */}
+        {/* SLIDE 01: PINTU GERBANG UTAMA (THE GRAND ENTRANCE)                        */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
-          {/* Parallax Background with Cinematic Vignette Overlay */}
+          {/* Layer 1: Rustic Wood Tabletop Background */}
           <div
-            data-swiper-parallax-y="-25%"
-            data-swiper-parallax-scale="1.15"
+            data-swiper-parallax-y="-14%"
+            data-swiper-parallax-scale="1.08"
             className="slide-bg absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{ backgroundImage: "url('/images/garden_arch.jpg')" }}
+            style={{ backgroundImage: "url('/images/rustic_wood_flatlay.jpg')" }}
           />
-          {/* Dark Celestial Midnight Radial & Vignette Overlay */}
-          <div className="absolute inset-0 bg-radial from-[#060813]/50 via-[#060813]/85 to-[#060813]/98 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060813] via-transparent to-[#060813]/90 pointer-events-none" />
+          {/* Soft Dappled Ambient Shadow Overlay */}
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/20 pointer-events-none" />
 
-          {/* Huge Roman/Arabic Watermark Number */}
-          <div
-            data-swiper-parallax-y="-450"
-            className="absolute select-none pointer-events-none font-serif text-[180px] sm:text-[300px] font-black text-white/[0.04] tracking-tighter leading-none"
-          >
-            01
-          </div>
+          {/* Layer 2: Botanical Wildflower Handmade Paper Card */}
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between items-center text-center py-2 sm:py-4">
+              {/* Header Script */}
+              <div 
+                data-swiper-parallax-y="-120"
+                data-swiper-parallax-opacity="0.2"
+                className="space-y-1.5"
+              >
+                <span className="font-handwriting text-3xl sm:text-4xl text-[#52664b] block tracking-wide">
+                  &lsquo;Walimatulurus&rsquo;
+                </span>
+                <p className="font-serif text-[11px] sm:text-xs tracking-[0.25em] text-[#697f5f] uppercase font-semibold">
+                  Sabtu • 2 Januari 2027
+                </p>
+              </div>
 
-          {/* Direct Typography Layout - No Card Box */}
-          <div className="relative z-10 max-w-xl w-full px-6 sm:px-8 text-center flex flex-col items-center">
-            {/* Header Tag */}
-            <div
-              data-swiper-parallax-y="-320"
-              className="flex items-center justify-center gap-3 mb-3"
-            >
-              <span className="w-10 h-px bg-gradient-to-r from-transparent via-[#dfc285]/70 to-transparent" />
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.4em] text-[#dfc285] font-serif font-medium drop-shadow-md">
-                Walimatulurus
-              </span>
-              <span className="w-10 h-px bg-gradient-to-r from-transparent via-[#dfc285]/70 to-transparent" />
-            </div>
+              {/* Invitation Callout */}
+              <div 
+                data-swiper-parallax-y="-170"
+                data-swiper-parallax-opacity="0.2"
+                className="my-3 sm:my-5"
+              >
+                <p className="font-handwriting text-2xl sm:text-3xl text-[#3d4d38] leading-tight">
+                  Kindly Join Our Celebration
+                </p>
+                <div className="w-14 h-[1px] bg-[#52664b]/30 mx-auto mt-2" />
+              </div>
 
-            {/* Couple Grand Titles */}
-            <h1
-              data-swiper-parallax-y="-260"
-              className="font-serif text-4xl sm:text-6xl md:text-7xl text-white font-bold tracking-tight my-2 drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]"
-            >
-              {weddingData.groom.name} <span className="text-[#dfc285] font-light font-sans text-3xl sm:text-5xl">&amp;</span> {weddingData.bride.name}
-            </h1>
+              {/* Main Couple Names */}
+              <div 
+                data-swiper-parallax-y="-210"
+                className="space-y-1 my-2"
+              >
+                <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#222d1f] font-normal tracking-tight">
+                  Umar
+                </h1>
+                <div className="flex items-center justify-center gap-3">
+                  <span className="w-8 h-[1px] bg-[#dfa528]/40" />
+                  <span className="font-handwriting text-3xl sm:text-4xl text-[#dfa528]">
+                    &
+                  </span>
+                  <span className="w-8 h-[1px] bg-[#dfa528]/40" />
+                </div>
+                <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-[#222d1f] font-normal tracking-tight">
+                  Nafisya
+                </h1>
+              </div>
 
-            {/* Glowing Accent Line */}
-            <div
-              data-swiper-parallax-y="-200"
-              className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#dfc285] to-transparent my-4 drop-shadow-[0_0_8px_rgba(223,194,133,0.8)]"
-            />
+              {/* Venue & Time Information */}
+              <div 
+                data-swiper-parallax-y="-160"
+                data-swiper-parallax-opacity="0.3"
+                className="space-y-1 mt-3"
+              >
+                <p className="font-serif text-base sm:text-lg text-[#2f3d2a] font-medium tracking-wide">
+                  Petak Padin, Kepala Batas
+                </p>
+                <p className="font-sans text-[11px] sm:text-xs text-[#697f5f] tracking-wider uppercase font-medium">
+                  Pulau Pinang • 11:00 AM – 4:00 PM
+                </p>
+              </div>
 
-            {/* Event Date & Venue */}
-            <p
-              data-swiper-parallax-y="-150"
-              className="text-sm sm:text-base text-[#fbf8f0] font-serif tracking-widest uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
-            >
-              {weddingData.event.dateFormatted}
-            </p>
-            <p
-              data-swiper-parallax-y="-100"
-              className="text-xs sm:text-sm text-[#e8cda1] mt-1.5 font-serif tracking-wide drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-            >
-              {weddingData.event.venueName} • {weddingData.event.city}
-            </p>
+              {/* Dainty Footer Script Whisper */}
+              <div 
+                data-swiper-parallax-y="-110"
+                className="pt-4"
+              >
+                <p className="font-handwriting text-xl sm:text-2xl text-[#52664b]/90">
+                  We can&apos;t wait to celebrate with you!
+                </p>
+              </div>
 
-            {/* Minimalist Floating Scroll Hint */}
-            <div
-              data-swiper-parallax-y="-60"
-              className="mt-12 flex flex-col items-center gap-2 cursor-pointer group"
-              onClick={() => swiperInstance?.slideNext()}
-            >
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#dfc285] font-serif font-medium transition-all group-hover:text-white drop-shadow-md">
-                Skrol ke bawah untuk melangkah masuk
-              </span>
-              <div className="w-9 h-9 rounded-full border border-[#dfc285]/40 flex items-center justify-center bg-white/[0.04] backdrop-blur-xs group-hover:border-[#dfc285] group-hover:bg-[#dfc285]/20 transition-all shadow-lg">
-                <ChevronDown className="w-4 h-4 text-[#dfc285] animate-bounce" />
+              {/* Interactive Scroll Cue */}
+              <div 
+                data-swiper-parallax-y="-80"
+                className="mt-3 flex items-center gap-1.5 text-[#697f5f] text-[10px] tracking-widest uppercase"
+              >
+                <span>Skrol ke bawah</span>
+                <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#52664b]" />
               </div>
             </div>
-          </div>
+          </BotanicalWildflowerFrame>
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 02: KALAM SUCI & RESTU (SURAH AR-RUM: 21 - CARDLESS)                */}
+        {/* SLIDE 02: KALAM SUCI (SURAH AR-RUM: 21)                                  */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
+          {/* Wood Flatlay Background */}
           <div
-            data-swiper-parallax-y="-25%"
-            data-swiper-parallax-scale="1.15"
+            data-swiper-parallax-y="-14%"
+            data-swiper-parallax-scale="1.08"
             className="slide-bg absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{ backgroundImage: "url('/images/under_the_arch.jpg')" }}
+            style={{ backgroundImage: "url('/images/rustic_wood_flatlay.jpg')" }}
           />
-          <div className="absolute inset-0 bg-radial from-[#060813]/60 via-[#060813]/90 to-[#060813]/98 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060813] via-transparent to-[#060813]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
 
-          <div
-            data-swiper-parallax-y="-450"
-            className="absolute select-none pointer-events-none font-serif text-[180px] sm:text-[300px] font-black text-white/[0.04] tracking-tighter leading-none"
-          >
-            02
-          </div>
+          {/* Botanical Wildflower Card */}
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between items-center text-center py-2 sm:py-4">
+              {/* Header */}
+              <div 
+                data-swiper-parallax-y="-120"
+                className="space-y-1"
+              >
+                <span className="font-handwriting text-3xl sm:text-4xl text-[#52664b] block">
+                  &lsquo;Kalam Suci&rsquo;
+                </span>
+                <p className="font-serif text-[10px] sm:text-xs tracking-[0.2em] text-[#697f5f] uppercase font-semibold">
+                  Dengan Nama Allah Yang Maha Pengasih Lagi Maha Penyayang
+                </p>
+              </div>
 
-          {/* Direct Floating Words - No Card Box */}
-          <div className="relative z-10 max-w-xl w-full px-6 sm:px-8 text-center flex flex-col items-center">
-            <div
-              data-swiper-parallax-y="-320"
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full border border-[#dfc285]/50 bg-white/[0.03] text-[#dfc285] mb-5 shadow-sm"
-            >
-              <Heart className="w-4 h-4 fill-[#dfc285]" />
+              {/* Bismillah Arabic Calligraphy */}
+              <div 
+                data-swiper-parallax-y="-160"
+                className="my-3"
+              >
+                <p className="font-serif text-xl sm:text-2xl text-[#222d1f] tracking-wide leading-relaxed">
+                  {weddingData.bismillahText}
+                </p>
+                <div className="w-12 h-[1px] bg-[#dfa528]/40 mx-auto mt-2" />
+              </div>
+
+              {/* Quranic Arabic Verse */}
+              <div 
+                data-swiper-parallax-y="-200"
+                className="px-2 my-2"
+              >
+                <p className="font-serif text-lg sm:text-xl text-[#2b3926] leading-loose dir-rtl">
+                  {weddingData.doa.arabic}
+                </p>
+              </div>
+
+              {/* Malay Translation */}
+              <div 
+                data-swiper-parallax-y="-150"
+                className="px-2 sm:px-4 my-2"
+              >
+                <p className="font-serif italic text-xs sm:text-sm text-[#44553f] leading-relaxed">
+                  {weddingData.doa.translation}
+                </p>
+              </div>
+
+              {/* Source Tag with Laurel Motif */}
+              <div 
+                data-swiper-parallax-y="-100"
+                className="pt-2"
+              >
+                <span className="inline-block px-4 py-1 rounded-full border border-[#52664b]/30 bg-[#f4ede0]/60 font-serif text-xs text-[#52664b] font-medium tracking-wide">
+                  {weddingData.doa.source}
+                </span>
+              </div>
             </div>
-
-            {/* Bismillah Calligraphy Text */}
-            <p
-              data-swiper-parallax-y="-260"
-              className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#dfc285] mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
-            >
-              {weddingData.bismillahText}
-            </p>
-
-            {/* Floating Ayat Translation */}
-            <blockquote
-              data-swiper-parallax-y="-180"
-              className="font-serif text-sm sm:text-base md:text-lg text-white/95 leading-relaxed italic max-w-lg mx-auto drop-shadow-[0_3px_15px_rgba(0,0,0,0.9)]"
-            >
-              &ldquo;Dan di antara tanda-tanda kebesaran-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang.&rdquo;
-            </blockquote>
-
-            {/* Verse Attribution */}
-            <p
-              data-swiper-parallax-y="-120"
-              className="text-xs uppercase tracking-[0.35em] text-[#dfc285] mt-6 font-serif drop-shadow-md"
-            >
-              — Surah Ar-Rum : Ayat 21 —
-            </p>
-
-            {/* Scroll Next Prompt */}
-            <div
-              data-swiper-parallax-y="-60"
-              className="mt-12 flex items-center justify-center gap-2 text-xs text-[#dfc285]/80 font-serif tracking-widest uppercase cursor-pointer hover:text-white transition-all group"
-              onClick={() => swiperInstance?.slideNext()}
-            >
-              <span>Kira Detik &amp; Butiran Majlis</span>
-              <ChevronDown className="w-4 h-4 animate-bounce group-hover:translate-y-1 transition-transform" />
-            </div>
-          </div>
+          </BotanicalWildflowerFrame>
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 03: BUTIRAN MAJLIS & KIRA DETIK (COUNTDOWN & VENUE - CARDLESS)      */}
+        {/* SLIDE 03: KIRA DETIK & LOKASI (COUNTDOWN & VENUE)                          */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
           <div
-            data-swiper-parallax-y="-25%"
-            data-swiper-parallax-scale="1.15"
+            data-swiper-parallax-y="-14%"
+            data-swiper-parallax-scale="1.08"
             className="slide-bg absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{ backgroundImage: "url('/images/garden_meadow.jpg')" }}
+            style={{ backgroundImage: "url('/images/rustic_wood_flatlay.jpg')" }}
           />
-          <div className="absolute inset-0 bg-radial from-[#060813]/60 via-[#060813]/90 to-[#060813]/98 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060813] via-transparent to-[#060813]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
 
-          <div
-            data-swiper-parallax-y="-450"
-            className="absolute select-none pointer-events-none font-serif text-[180px] sm:text-[300px] font-black text-white/[0.04] tracking-tighter leading-none"
-          >
-            03
-          </div>
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between items-center text-center py-2 sm:py-3">
+              {/* Title */}
+              <div 
+                data-swiper-parallax-y="-120"
+                className="space-y-1"
+              >
+                <span className="font-handwriting text-3xl sm:text-4xl text-[#52664b] block">
+                  &lsquo;Kira Detik Hari Bahagia&rsquo;
+                </span>
+                <p className="font-serif text-[10px] sm:text-xs tracking-[0.2em] text-[#697f5f] uppercase font-semibold">
+                  Menghitung Detik Menuju Walimatulurus
+                </p>
+              </div>
 
-          {/* Direct Floating Words & Countdown - No Card Box */}
-          <div className="relative z-10 max-w-xl w-full px-6 sm:px-8 text-center flex flex-col items-center">
-            <span
-              data-swiper-parallax-y="-320"
-              className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#dfc285] font-serif font-medium drop-shadow-md"
-            >
-              Menghitung Hari Bahagia
-            </span>
+              {/* 4-Box Pressed Paper Countdown Units */}
+              <div 
+                data-swiper-parallax-y="-180"
+                className="grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-[340px] my-3"
+              >
+                {[
+                  { label: "Hari", val: timeLeft.days },
+                  { label: "Jam", val: timeLeft.hours },
+                  { label: "Minit", val: timeLeft.minutes },
+                  { label: "Saat", val: timeLeft.seconds },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center justify-center p-2 sm:p-2.5 rounded-xl bg-[#f5efe4] border border-[#dfd5c2] shadow-[inset_0_1px_3px_rgba(0,0,0,0.05),0_2px_4px_rgba(0,0,0,0.04)]"
+                  >
+                    <span className="font-serif text-2xl sm:text-3xl font-bold text-[#222d1f]">
+                      {String(item.val).padStart(2, "0")}
+                    </span>
+                    <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-wider text-[#697f5f] font-semibold mt-0.5">
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
-            <h2
-              data-swiper-parallax-y="-260"
-              className="font-serif text-3xl sm:text-5xl text-white font-bold my-2 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
-            >
-              {weddingData.groom.name} &amp; {weddingData.bride.name}
-            </h2>
-
-            <p
-              data-swiper-parallax-y="-200"
-              className="text-xs sm:text-sm text-[#fbf8f0] font-serif tracking-widest drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
-            >
-              {weddingData.event.dateFormatted} • {weddingData.event.timeFormatted}
-            </p>
-
-            {/* Glowing Accent Line */}
-            <div
-              data-swiper-parallax-y="-160"
-              className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#dfc285] to-transparent my-4"
-            />
-
-            {/* Direct Floating Minimalist Countdown Numbers */}
-            <div
-              data-swiper-parallax-y="-120"
-              className="grid grid-cols-4 gap-3 sm:gap-6 my-2 w-full max-w-md"
-            >
-              {[
-                { label: "Hari", value: timeLeft.days },
-                { label: "Jam", value: timeLeft.hours },
-                { label: "Minit", value: timeLeft.minutes },
-                { label: "Saat", value: timeLeft.seconds },
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center text-center">
-                  <span className="font-serif text-3xl sm:text-5xl font-bold text-[#dfc285] drop-shadow-[0_2px_12px_rgba(223,194,133,0.5)]">
-                    {String(item.value).padStart(2, "0")}
-                  </span>
-                  <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] text-[#e8cda1]/80 mt-1 font-serif font-medium">
-                    {item.label}
-                  </span>
+              {/* Venue Details */}
+              <div 
+                data-swiper-parallax-y="-160"
+                className="w-full max-w-[350px] p-3 rounded-xl bg-[#f5efe4]/80 border border-[#dfd5c2] text-left space-y-1.5 my-2"
+              >
+                <div className="flex items-start gap-2.5">
+                  <MapPin className="w-4 h-4 text-[#52664b] mt-0.5 shrink-0" />
+                  <div>
+                    <h3 className="font-serif text-sm sm:text-base font-bold text-[#222d1f]">
+                      {weddingData.event.venueName}
+                    </h3>
+                    <p className="font-sans text-[11px] sm:text-xs text-[#52664b]">
+                      {weddingData.event.hallName}
+                    </p>
+                    <p className="font-sans text-[10px] sm:text-[11px] text-[#697f5f] leading-tight mt-0.5">
+                      {weddingData.event.address}
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
+              </div>
 
-            {/* Venue & Navigation Buttons Directly on Background */}
-            <div
-              data-swiper-parallax-y="-80"
-              className="mt-6 flex flex-col items-center gap-2.5"
-            >
-              <p className="text-xs sm:text-sm text-white/90 flex items-center justify-center gap-1.5 font-serif drop-shadow-md">
-                <MapPin className="w-4 h-4 text-[#dfc285]" />
-                <span>{weddingData.event.venueName}, {weddingData.event.city}</span>
-              </p>
-
-              <div className="flex items-center gap-3 mt-2">
+              {/* Navigation Action Buttons (Google Maps & Waze) */}
+              <div 
+                data-swiper-parallax-y="-130"
+                className="flex items-center gap-2.5 w-full max-w-[340px]"
+              >
                 <a
                   href={weddingData.event.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-md border border-[#dfc285]/40 text-[#dfc285] text-xs font-serif tracking-wider hover:bg-[#dfc285] hover:text-[#060813] transition-all flex items-center gap-1.5 shadow-lg cursor-pointer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#52664b] hover:bg-[#44553f] text-white font-serif text-xs font-semibold tracking-wider transition-all shadow-sm active:scale-95"
                 >
+                  <MapPin className="w-3.5 h-3.5 text-[#e8c872]" />
                   <span>Google Maps</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
                 </a>
                 <a
                   href={weddingData.event.wazeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full bg-white/[0.06] backdrop-blur-md border border-[#dfc285]/40 text-[#dfc285] text-xs font-serif tracking-wider hover:bg-[#dfc285] hover:text-[#060813] transition-all flex items-center gap-1.5 shadow-lg cursor-pointer"
+                  className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-[#dfa528] hover:bg-[#c9911e] text-[#222d1f] font-serif text-xs font-semibold tracking-wider transition-all shadow-sm active:scale-95"
                 >
+                  <NavIcon className="w-3.5 h-3.5" />
                   <span>Waze</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Add to Calendar Link */}
+              <div 
+                data-swiper-parallax-y="-90"
+                className="pt-2"
+              >
+                <a
+                  href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(weddingData.event.calendarSummary)}&dates=20270102T030000Z/20270102T080000Z&details=${encodeURIComponent(weddingData.event.calendarDescription)}&location=${encodeURIComponent(weddingData.event.address)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[11px] font-sans text-[#52664b] hover:text-[#222d1f] underline underline-offset-4 tracking-wide"
+                >
+                  <Calendar className="w-3 h-3" />
+                  <span>Tambah ke Google Calendar</span>
                 </a>
               </div>
             </div>
-
-            <div
-              data-swiper-parallax-y="-50"
-              className="mt-8 flex items-center justify-center gap-2 text-xs text-[#dfc285]/80 font-serif tracking-widest uppercase cursor-pointer hover:text-white transition-all group"
-              onClick={() => swiperInstance?.slideNext()}
-            >
-              <span>Profil Pengantin &amp; Atur Cara</span>
-              <ChevronDown className="w-4 h-4 animate-bounce group-hover:translate-y-1 transition-transform" />
-            </div>
-          </div>
+          </BotanicalWildflowerFrame>
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 04: RAJA SEHARI & KELUARGA (THE COUPLE & TIMELINE - CARDLESS)       */}
+        {/* SLIDE 04: RAJA SEHARI & ATUR CARA (COUPLE & ITINERARY)                    */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
           <div
-            data-swiper-parallax-y="-25%"
-            data-swiper-parallax-scale="1.15"
+            data-swiper-parallax-y="-14%"
+            data-swiper-parallax-scale="1.08"
             className="slide-bg absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{ backgroundImage: "url('/images/under_the_arch.jpg')" }}
+            style={{ backgroundImage: "url('/images/rustic_wood_flatlay.jpg')" }}
           />
-          <div className="absolute inset-0 bg-radial from-[#060813]/60 via-[#060813]/90 to-[#060813]/98 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060813] via-transparent to-[#060813]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
 
-          <div
-            data-swiper-parallax-y="-450"
-            className="absolute select-none pointer-events-none font-serif text-[180px] sm:text-[300px] font-black text-white/[0.04] tracking-tighter leading-none"
-          >
-            04
-          </div>
-
-          {/* Direct Floating Words - No Card Box */}
-          <div className="relative z-10 max-w-md w-full px-8 sm:px-10 text-center flex flex-col items-center">
-            <span
-              data-swiper-parallax-y="-320"
-              className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#dfc285] font-serif font-medium drop-shadow-md"
-            >
-              Meraikan Dua Jiwa
-            </span>
-
-            <h2
-              data-swiper-parallax-y="-260"
-              className="font-serif text-3xl sm:text-5xl text-white font-bold my-1 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
-            >
-              Raja Sehari
-            </h2>
-
-            {/* Couple Names & Family Columns - Floating Directly on Background */}
-            <div
-              data-swiper-parallax-y="-180"
-              className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center my-4 w-full"
-            >
-              {/* Groom Column */}
-              <div className="flex flex-col items-center">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-[#dfc285] font-serif">
-                  Pengantin Lelaki
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between items-center text-center py-2">
+              {/* Header */}
+              <div 
+                data-swiper-parallax-y="-120"
+                className="space-y-0.5"
+              >
+                <span className="font-handwriting text-3xl sm:text-4xl text-[#52664b] block">
+                  &lsquo;Raja Sehari&rsquo;
                 </span>
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-white mt-1 drop-shadow-md">
-                  {weddingData.groom.fullName}
-                </h3>
-                <p className="text-xs text-[#e8cda1] mt-1 font-serif">
-                  Putra kepada {weddingData.groom.fatherName} &amp; {weddingData.groom.motherName}
+                <p className="font-serif text-[10px] sm:text-xs tracking-[0.2em] text-[#697f5f] uppercase font-semibold">
+                  Mempelai & Atur Cara Majlis
                 </p>
               </div>
 
-              {/* Bride Column */}
-              <div className="flex flex-col items-center">
-                <span className="text-[10px] uppercase tracking-[0.25em] text-[#dfc285] font-serif">
-                  Pengantin Perempuan
-                </span>
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-white mt-1 drop-shadow-md">
-                  {weddingData.bride.fullName}
-                </h3>
-                <p className="text-xs text-[#e8cda1] mt-1 font-serif">
-                  Puteri kepada {weddingData.bride.fatherName} &amp; {weddingData.bride.motherName}
+              {/* Couple & Parents Dual Column */}
+              <div 
+                data-swiper-parallax-y="-180"
+                className="grid grid-cols-2 gap-3 w-full my-2 text-center"
+              >
+                {/* Groom */}
+                <div className="p-2.5 rounded-xl bg-[#f5efe4]/70 border border-[#dfd5c2]">
+                  <h4 className="font-serif text-sm sm:text-base font-bold text-[#222d1f]">
+                    {weddingData.groom.fullName}
+                  </h4>
+                  <div className="w-8 h-[1px] bg-[#52664b]/30 mx-auto my-1" />
+                  <p className="font-sans text-[9px] sm:text-[10px] text-[#697f5f] leading-snug">
+                    Bapa: {weddingData.groom.fatherName}
+                    <br />
+                    Ibu: {weddingData.groom.motherName}
+                  </p>
+                </div>
+
+                {/* Bride */}
+                <div className="p-2.5 rounded-xl bg-[#f5efe4]/70 border border-[#dfd5c2]">
+                  <h4 className="font-serif text-sm sm:text-base font-bold text-[#222d1f]">
+                    {weddingData.bride.fullName}
+                  </h4>
+                  <div className="w-8 h-[1px] bg-[#52664b]/30 mx-auto my-1" />
+                  <p className="font-sans text-[9px] sm:text-[10px] text-[#697f5f] leading-snug">
+                    Bapa: {weddingData.bride.fatherName}
+                    <br />
+                    Ibu: {weddingData.bride.motherName}
+                  </p>
+                </div>
+              </div>
+
+              {/* Itinerary Vertical Timeline */}
+              <div 
+                data-swiper-parallax-y="-160"
+                className="w-full max-w-[340px] my-1"
+              >
+                <p className="font-handwriting text-xl text-[#52664b] text-center mb-1.5">
+                  Atur Cara Majlis
+                </p>
+                <div className="space-y-1.5 text-left text-[11px] sm:text-xs font-sans">
+                  {weddingData.itinerary.slice(0, 5).map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-2.5">
+                      <span className="font-serif font-bold text-[#52664b] w-16 shrink-0 text-right">
+                        {item.time}
+                      </span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#dfa528] mt-1.5 shrink-0" />
+                      <div className="flex-1">
+                        <p className="font-serif font-semibold text-[#222d1f] leading-tight">
+                          {item.title}
+                        </p>
+                        {item.description && (
+                          <p className="text-[10px] text-[#697f5f] leading-tight">
+                            {item.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Bottom Whisper */}
+              <div 
+                data-swiper-parallax-y="-90"
+                className="pt-1"
+              >
+                <p className="font-serif italic text-[11px] text-[#697f5f]">
+                  Semoga kehadiran para tetamu menyerikan lagi majlis kami
                 </p>
               </div>
             </div>
-
-            {/* Glowing Accent Line */}
-            <div
-              data-swiper-parallax-y="-140"
-              className="w-20 h-0.5 bg-gradient-to-r from-transparent via-[#dfc285] to-transparent my-2"
-            />
-
-            {/* Timeline - Floating Directly on Background */}
-            <div
-              data-swiper-parallax-y="-100"
-              className="w-full max-w-md my-2 text-left"
-            >
-              <span className="text-[10px] uppercase tracking-[0.25em] text-[#dfc285] font-serif font-medium block text-center mb-3">
-                Atur Cara Majlis
-              </span>
-              <div className="space-y-1.5 border-l border-[#dfc285]/30 ml-4 pl-4 sm:ml-8 sm:pl-6">
-                {weddingData.itinerary.map((item, idx) => (
-                  <div key={idx} className="relative flex justify-between items-center py-1">
-                    {/* Glowing Dot on timeline */}
-                    <span className="absolute -left-[21px] sm:-left-[29px] top-2.5 w-2 h-2 rounded-full bg-[#dfc285] shadow-[0_0_6px_rgba(223,194,133,0.8)]" />
-                    <span className="font-mono text-[#dfc285] text-xs font-semibold">{item.time}</span>
-                    <span className="font-serif text-xs sm:text-sm text-white/90 drop-shadow-sm">{item.title}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div
-              data-swiper-parallax-y="-60"
-              className="mt-6 flex items-center justify-center gap-2 text-xs text-[#dfc285]/80 font-serif tracking-widest uppercase cursor-pointer hover:text-white transition-all group"
-              onClick={() => swiperInstance?.slideNext()}
-            >
-              <span>Sahkan Kehadiran (RSVP)</span>
-              <ChevronDown className="w-4 h-4 animate-bounce group-hover:translate-y-1 transition-transform" />
-            </div>
-          </div>
+          </BotanicalWildflowerFrame>
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 05: PENGESAHAN KEHADIRAN (INTERACTIVE RSVP - CARDLESS)               */}
+        {/* SLIDE 05: BORANG RSVP (FAITHFUL RECREATION OF REFERENCE IMAGE CARD)       */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
           <div
-            data-swiper-parallax-y="-25%"
-            data-swiper-parallax-scale="1.15"
+            data-swiper-parallax-y="-14%"
+            data-swiper-parallax-scale="1.08"
             className="slide-bg absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{ backgroundImage: "url('/images/under_the_arch.jpg')" }}
+            style={{ backgroundImage: "url('/images/rustic_wood_flatlay.jpg')" }}
           />
-          <div className="absolute inset-0 bg-radial from-[#060813]/60 via-[#060813]/90 to-[#060813]/98 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060813] via-transparent to-[#060813]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
 
-          <div
-            data-swiper-parallax-y="-450"
-            className="absolute select-none pointer-events-none font-serif text-[180px] sm:text-[300px] font-black text-white/[0.04] tracking-tighter leading-none"
-          >
-            05
-          </div>
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between py-1 sm:py-2">
+              {/* RSVP Top Header */}
+              <div 
+                data-swiper-parallax-y="-120"
+                className="text-center space-y-0.5"
+              >
+                <span className="font-handwriting text-4xl sm:text-5xl text-[#52664b] block tracking-wide">
+                  &lsquo;RSVP&rsquo;
+                </span>
+                <p className="font-serif text-[11px] sm:text-xs tracking-wider text-[#697f5f]">
+                  Please respond by December 1st, 2026
+                </p>
+                <p className="font-handwriting text-2xl text-[#3d4d38] pt-1">
+                  Kindly Join Our Celebration
+                </p>
+              </div>
 
-          {/* Direct Floating Words & Form - No Card Box */}
-          <div className="relative z-10 max-w-md w-full px-8 sm:px-10 text-center flex flex-col items-center">
-            <span
-              data-swiper-parallax-y="-320"
-              className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#dfc285] font-serif font-medium drop-shadow-md"
-            >
-              Sahkan Kehadiran Anda
-            </span>
-
-            <h2
-              data-swiper-parallax-y="-260"
-              className="font-serif text-3xl sm:text-5xl text-white font-bold my-1 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
-            >
-              Borang RSVP
-            </h2>
-
-            <p
-              data-swiper-parallax-y="-200"
-              className="text-xs text-[#e8cda1] font-serif mb-4"
-            >
-              Mohon maklumkan kehadiran anda sebelum 20 Disember 2026
-            </p>
-
-            {/* RSVP Form Content Directly on Background */}
-            <div
-              data-swiper-parallax-y="-120"
-              className="w-full max-w-md text-left"
-            >
               {rsvpSubmitted ? (
-                <div className="text-center py-8 flex flex-col items-center">
-                  <div className="w-14 h-14 rounded-full bg-[#dfc285]/20 text-[#dfc285] flex items-center justify-center mb-3 border border-[#dfc285]/40 shadow-[0_0_16px_rgba(223,194,133,0.4)]">
-                    <CheckCircle2 className="w-8 h-8" />
+                /* Success State */
+                <div 
+                  data-swiper-parallax-y="-150"
+                  className="p-6 rounded-xl bg-[#f5efe4] border border-[#dfd5c2] text-center space-y-3 my-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#52664b]/15 text-[#52664b] flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-7 h-7" />
                   </div>
-                  <h3 className="font-serif text-2xl text-white font-bold">Terima Kasih!</h3>
-                  <p className="text-xs sm:text-sm text-[#e8cda1] mt-2 leading-relaxed max-w-xs mx-auto">
-                    Jawapan RSVP anda telah selamat direkodkan. Kehadiran anda amat bermakna buat kami sekeluarga.
+                  <h3 className="font-serif text-xl font-bold text-[#222d1f]">
+                    Terima Kasih!
+                  </h3>
+                  <p className="font-serif text-sm text-[#52664b] leading-relaxed">
+                    Pengesahan RSVP anda telah berjaya disimpan. Kami tidak sabar untuk meraikan hari bahagia bersama anda!
                   </p>
                   <button
-                    onClick={() => swiperInstance?.slideNext()}
-                    className="mt-6 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#dfc285] via-[#f3e3ba] to-[#dfc285] text-[#060813] font-serif text-xs font-bold uppercase tracking-wider hover:brightness-110 cursor-pointer shadow-lg transition-all"
+                    onClick={() => setRsvpSubmitted(false)}
+                    className="text-xs font-sans text-[#52664b] underline tracking-wider pt-2 cursor-pointer"
                   >
-                    Lihat Ucapan Tetamu &rarr;
+                    Kemaskini Respons Lain
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleRsvpSubmit} className="space-y-3.5">
-                  {rsvpError && (
-                    <div className="p-2.5 rounded-xl bg-rose-950/60 border border-rose-500/50 text-rose-200 text-xs text-center">
-                      {rsvpError}
-                    </div>
-                  )}
-
-                  {/* Attending Toggle - Floating Minimalist Buttons */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setRsvpAttending(true)}
-                      className={`py-2.5 px-4 rounded-full font-serif text-xs uppercase tracking-wider transition-all cursor-pointer border ${
-                        rsvpAttending
-                          ? "bg-gradient-to-r from-[#dfc285] via-[#f3e3ba] to-[#dfc285] text-[#060813] border-[#dfc285] font-bold shadow-[0_0_12px_rgba(223,194,133,0.5)]"
-                          : "bg-white/[0.04] text-white/70 border-white/20 hover:border-[#dfc285]/50"
-                      }`}
-                    >
-                      Hadir
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setRsvpAttending(false)}
-                      className={`py-2.5 px-4 rounded-full font-serif text-xs uppercase tracking-wider transition-all cursor-pointer border ${
-                        !rsvpAttending
-                          ? "bg-rose-900/80 text-white border-rose-500 font-bold shadow-md"
-                          : "bg-white/[0.04] text-white/70 border-white/20 hover:border-rose-500/50"
-                      }`}
-                    >
-                      Tidak Hadir
-                    </button>
-                  </div>
-
-                  {/* Name Input - Floating Border Bottom */}
-                  <div>
+                /* Form Fields styled like Reference Card */
+                <form 
+                  onSubmit={handleRsvpSubmit}
+                  data-swiper-parallax-y="-180"
+                  className="space-y-3.5 my-2 w-full max-w-[360px] mx-auto text-left"
+                >
+                  {/* Name(s) Underlined Input */}
+                  <div className="space-y-0.5">
+                    <label className="font-serif text-xs text-[#283424] font-semibold block">
+                      Name(s):
+                    </label>
                     <input
                       type="text"
-                      placeholder="Nama Penuh Anda *"
+                      required
                       value={rsvpName}
                       onChange={(e) => setRsvpName(e.target.value)}
-                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-[16px] sm:text-sm placeholder:text-white/40 focus:outline-none transition-colors"
-                      required
+                      placeholder="Nama penuh anda"
+                      className="w-full bg-transparent border-b border-[#52664b]/40 focus:border-[#52664b] outline-none py-1 font-serif text-sm text-[#222d1f] placeholder:text-[#697f5f]/50 transition-colors"
                     />
                   </div>
 
-                  {/* Phone Input - Floating Border Bottom */}
-                  <div>
+                  {/* Phone Number Underlined Input */}
+                  <div className="space-y-0.5">
+                    <label className="font-serif text-xs text-[#283424] font-semibold block">
+                      No. Telefon:
+                    </label>
                     <input
                       type="tel"
-                      placeholder="Nombor Telefon / WhatsApp *"
+                      required
                       value={rsvpPhone}
                       onChange={(e) => setRsvpPhone(e.target.value)}
-                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-[16px] sm:text-sm placeholder:text-white/40 focus:outline-none transition-colors"
-                      required
+                      placeholder="cth: 012-3456789"
+                      className="w-full bg-transparent border-b border-[#52664b]/40 focus:border-[#52664b] outline-none py-1 font-serif text-sm text-[#222d1f] placeholder:text-[#697f5f]/50 transition-colors"
                     />
                   </div>
 
-                  {/* Pax Selector (if attending) */}
-                  {rsvpAttending && (
-                    <div className="flex items-center justify-between py-2 border-b border-[#dfc285]/40">
-                      <span className="text-xs text-[#e8cda1] flex items-center gap-1.5 font-serif">
-                        <Users className="w-3.5 h-3.5 text-[#dfc285]" />
-                        <span>Bilangan Tetamu (Pax):</span>
+                  {/* Attendance Checkboxes (Joyfully Accepts / Regretfully Declines) */}
+                  <div className="flex items-center justify-between pt-1 gap-2">
+                    <label 
+                      onClick={() => setRsvpAttending(true)}
+                      className="flex items-center gap-2 cursor-pointer select-none group"
+                    >
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                        rsvpAttending 
+                          ? "border-[#52664b] bg-[#52664b] text-white" 
+                          : "border-[#697f5f]/50 bg-white/60 group-hover:border-[#52664b]"
+                      }`}>
+                        {rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                      <span className="font-serif text-xs text-[#283424] font-medium">
+                        Joyfully Accepts
                       </span>
-                      <div className="flex items-center gap-2">
+                    </label>
+
+                    <label 
+                      onClick={() => setRsvpAttending(false)}
+                      className="flex items-center gap-2 cursor-pointer select-none group"
+                    >
+                      <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
+                        !rsvpAttending 
+                          ? "border-[#ba7d7d] bg-[#ba7d7d] text-white" 
+                          : "border-[#697f5f]/50 bg-white/60 group-hover:border-[#ba7d7d]"
+                      }`}>
+                        {!rsvpAttending && <Check className="w-3 h-3 stroke-[3]" />}
+                      </div>
+                      <span className="font-serif text-xs text-[#697f5f] font-medium">
+                        Regretfully Declines
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Number Attending (Pax Selection) */}
+                  {rsvpAttending && (
+                    <div className="flex items-center justify-between pt-1">
+                      <span className="font-serif text-xs text-[#283424] font-semibold">
+                        Number Attending:
+                      </span>
+                      <div className="flex items-center gap-1.5">
                         {[1, 2, 3, 4].map((num) => (
                           <button
                             key={num}
                             type="button"
                             onClick={() => setRsvpPax(num)}
-                            className={`w-7 h-7 rounded-full text-xs font-serif font-bold transition-all cursor-pointer ${
+                            className={`w-7 h-7 rounded-full font-serif text-xs font-semibold transition-all cursor-pointer ${
                               rsvpPax === num
-                                ? "bg-[#dfc285] text-[#060813] shadow-[0_0_8px_rgba(223,194,133,0.6)]"
-                                : "bg-white/[0.06] text-white/70 border border-white/20 hover:border-[#dfc285]"
+                                ? "bg-[#52664b] text-white shadow-sm"
+                                : "bg-[#f5efe4] text-[#52664b] border border-[#dfd5c2] hover:bg-[#e9e1d2]"
                             }`}
                           >
                             {num}
@@ -692,239 +723,244 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                     </div>
                   )}
 
-                  {/* Wish Message - Floating Border Bottom */}
-                  <div>
+                  {/* Dietary Restrictions / Wishes Underlined Input */}
+                  <div className="space-y-0.5">
+                    <label className="font-serif text-xs text-[#283424] font-semibold block">
+                      Dietary Restrictions / Ucapan:
+                    </label>
                     <input
                       type="text"
-                      placeholder="Ucapan & doa tulus (pilihan)..."
                       value={rsvpMessage}
                       onChange={(e) => setRsvpMessage(e.target.value)}
-                      className="w-full py-2.5 px-1 bg-transparent border-b border-[#dfc285]/40 focus:border-[#dfc285] text-white text-[16px] sm:text-sm placeholder:text-white/40 focus:outline-none transition-colors"
+                      placeholder="Pesanan atau ucapan ringkas"
+                      className="w-full bg-transparent border-b border-[#52664b]/40 focus:border-[#52664b] outline-none py-1 font-serif text-sm text-[#222d1f] placeholder:text-[#697f5f]/50 transition-colors"
                     />
                   </div>
 
-                  {/* Submit Button */}
+                  {rsvpError && (
+                    <p className="font-sans text-xs text-red-600 font-medium">
+                      {rsvpError}
+                    </p>
+                  )}
+
+                  {/* Submit Button in Sage Green */}
                   <button
                     type="submit"
                     disabled={rsvpLoading}
-                    className="w-full py-3 rounded-full bg-gradient-to-r from-[#dfc285] via-[#f3e3ba] to-[#dfc285] text-[#060813] font-serif font-bold text-xs tracking-widest uppercase shadow-[0_0_20px_rgba(223,194,133,0.4)] hover:brightness-110 active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-2 mt-4 disabled:opacity-50"
+                    className="w-full py-2.5 px-4 rounded-xl bg-[#52664b] hover:bg-[#44553f] disabled:opacity-50 text-white font-serif text-sm font-semibold tracking-wider transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-2"
                   >
                     {rsvpLoading ? (
-                      <span>Menghantar...</span>
+                      <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                     ) : (
                       <>
-                        <span>Hantar Pengesahan</span>
-                        <Send className="w-3.5 h-3.5" />
+                        <Send className="w-3.5 h-3.5 text-[#e8c872]" />
+                        <span>Hantar Pengesahan RSVP</span>
                       </>
                     )}
                   </button>
                 </form>
               )}
+
+              {/* Footer Script Whisper */}
+              <div 
+                data-swiper-parallax-y="-100"
+                className="text-center pt-2"
+              >
+                <p className="font-handwriting text-xl text-[#52664b]/90">
+                  We can&apos;t wait to celebrate with you!
+                </p>
+              </div>
             </div>
-          </div>
+          </BotanicalWildflowerFrame>
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 06: BUKU UCAPAN & SALAM KAUT (GUESTBOOK & GIFT - CARDLESS)          */}
+        {/* SLIDE 06: BUKU UCAPAN & SALAM KAUT (GUESTBOOK & GIFT)                      */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
           <div
-            data-swiper-parallax-y="-25%"
-            data-swiper-parallax-scale="1.15"
+            data-swiper-parallax-y="-14%"
+            data-swiper-parallax-scale="1.08"
             className="slide-bg absolute inset-0 bg-cover bg-center transition-all duration-1000"
-            style={{ backgroundImage: "url('/images/garden_meadow.jpg')" }}
+            style={{ backgroundImage: "url('/images/rustic_wood_flatlay.jpg')" }}
           />
-          <div className="absolute inset-0 bg-radial from-[#060813]/60 via-[#060813]/90 to-[#060813]/98 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#060813] via-transparent to-[#060813]/90 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
 
-          <div
-            data-swiper-parallax-y="-450"
-            className="absolute select-none pointer-events-none font-serif text-[180px] sm:text-[300px] font-black text-white/[0.04] tracking-tighter leading-none"
-          >
-            06
-          </div>
-
-          {/* Direct Floating Words - No Card Box */}
-          <div className="relative z-10 max-w-xl w-full px-6 sm:px-8 text-center flex flex-col items-center">
-            <span
-              data-swiper-parallax-y="-320"
-              className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#dfc285] font-serif font-medium drop-shadow-md"
-            >
-              Doa &amp; Ingatan Tulus
-            </span>
-
-            <h2
-              data-swiper-parallax-y="-260"
-              className="font-serif text-3xl sm:text-5xl text-white font-bold my-1 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)]"
-            >
-              Buku Ucapan &amp; Hadiah
-            </h2>
-
-            {/* Glowing Accent Line */}
-            <div
-              data-swiper-parallax-y="-200"
-              className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#dfc285] to-transparent my-3"
-            />
-
-            {/* Floating Live Wishes Preview */}
-            <div
-              data-swiper-parallax-y="-140"
-              className="w-full max-w-md my-2 max-h-36 overflow-y-auto overflow-x-hidden break-words space-y-2.5 text-left pr-2 scrollbar-thin"
-            >
-              {wishes.length === 0 ? (
-                <p className="text-xs text-white/50 text-center py-4 font-serif italic">
-                  Jadilah yang pertama mengirimkan ucapan doa buat pengantin!
+          <BotanicalWildflowerFrame>
+            <div className="flex-1 flex flex-col justify-between items-center text-center py-2">
+              {/* Header */}
+              <div 
+                data-swiper-parallax-y="-120"
+                className="space-y-0.5"
+              >
+                <span className="font-handwriting text-3xl sm:text-4xl text-[#52664b] block">
+                  &lsquo;Buku Ucapan & Hadiah&rsquo;
+                </span>
+                <p className="font-serif text-[10px] sm:text-xs tracking-[0.2em] text-[#697f5f] uppercase font-semibold">
+                  Ingatan Tulus & Salam Kaut Digital
                 </p>
-              ) : (
-                wishes.slice(0, 3).map((w, idx) => (
-                  <div key={idx} className="border-l-2 border-[#dfc285]/50 pl-3 py-1">
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="font-serif font-bold text-[#dfc285]">{w.name}</span>
-                      <span className="text-[10px] text-white/40">{w.date}</span>
+              </div>
+
+              {/* Guestbook Wishes Snapshot */}
+              <div 
+                data-swiper-parallax-y="-180"
+                className="w-full max-w-[340px] my-1"
+              >
+                <p className="font-serif text-xs font-bold text-[#222d1f] mb-1.5 text-left flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
+                  <span>Ucapan Tetamu Terkini</span>
+                </p>
+                <div className="space-y-1.5 max-h-24 overflow-y-auto no-scrollbar text-left">
+                  {wishes.length > 0 ? (
+                    wishes.slice(0, 3).map((w, idx) => (
+                      <div 
+                        key={idx} 
+                        className="p-2 rounded-lg bg-[#f5efe4] border border-[#dfd5c2] text-[11px]"
+                      >
+                        <p className="font-serif font-bold text-[#222d1f] leading-tight">
+                          {w.name}
+                        </p>
+                        <p className="font-serif italic text-[#52664b] text-[10px] line-clamp-2 mt-0.5">
+                          &ldquo;{w.message}&rdquo;
+                        </p>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-2.5 rounded-lg bg-[#f5efe4]/80 border border-[#dfd5c2] text-center text-[11px] text-[#697f5f] font-serif italic">
+                      &ldquo;Selamat menempuh alam perkahwinan, semoga berkekalan hingga ke Jannah.&rdquo;
                     </div>
-                    <p className="text-xs sm:text-sm text-white/90 italic mt-0.5 break-words">&ldquo;{w.message}&rdquo;</p>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {/* Salam Kaut DuitNow - Floating Minimalist Info */}
-            <div
-              data-swiper-parallax-y="-90"
-              className="w-full max-w-md my-4 pt-3 border-t border-[#dfc285]/30 flex flex-col items-center gap-1.5 text-center"
-            >
-              <div className="flex items-center justify-center gap-2">
-                <Gift className="w-4 h-4 text-[#dfc285]" />
-                <span className="text-xs font-serif font-bold text-[#dfc285] uppercase tracking-wider">
-                  Salam Kaut Digital ({weddingData.gift.bankName})
-                </span>
+                  )}
+                </div>
               </div>
 
-              <div className="flex items-center justify-center gap-2 mt-1">
-                <span className="font-mono text-base sm:text-lg font-bold text-white tracking-widest">
-                  {weddingData.gift.accountNumber}
-                </span>
-                <button
-                  onClick={handleCopyBank}
-                  className="px-2.5 py-1 rounded-full bg-white/[0.08] hover:bg-[#dfc285] hover:text-[#060813] transition-all text-xs flex items-center gap-1 text-[#dfc285] cursor-pointer"
-                  title="Salin Nombor Akaun"
-                >
-                  {copiedBank ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span className="text-[10px] font-serif uppercase tracking-wider">{copiedBank ? "Disalin!" : "Salin"}</span>
-                </button>
+              {/* Digital Salam Kaut (Maybank Card with Wax Seal style) */}
+              <div 
+                data-swiper-parallax-y="-160"
+                className="w-full max-w-[340px] p-3 rounded-xl bg-[#f5efe4] border border-[#dfd5c2] text-left relative shadow-sm my-1"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-serif text-xs font-bold text-[#52664b] flex items-center gap-1.5">
+                    <Gift className="w-3.5 h-3.5 text-[#dfa528]" />
+                    <span>Salam Kaut Digital (DuitNow)</span>
+                  </span>
+                  <span className="font-serif text-[10px] text-[#697f5f] uppercase font-bold tracking-wider">
+                    {weddingData.gift.bankName}
+                  </span>
+                </div>
+                <p className="font-serif text-xs text-[#222d1f]">
+                  {weddingData.gift.accountHolder}
+                </p>
+                <div className="flex items-center justify-between mt-1 pt-1 border-t border-[#dfd5c2]">
+                  <span className="font-mono text-xs font-bold text-[#222d1f] tracking-wider">
+                    {weddingData.gift.accountNumber}
+                  </span>
+                  <button
+                    onClick={handleCopyBank}
+                    className="flex items-center gap-1 py-1 px-2.5 rounded-md bg-[#52664b] hover:bg-[#44553f] text-white text-[10px] font-sans font-medium transition-all active:scale-95 cursor-pointer"
+                  >
+                    {copiedBank ? (
+                      <>
+                        <Check className="w-3 h-3 text-[#e8c872]" />
+                        <span>Disalin!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3 h-3" />
+                        <span>Salin No. Akaun</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
-              <p className="text-[11px] text-[#e8cda1] font-serif">
-                {weddingData.gift.accountHolder}
-              </p>
-            </div>
 
-            {/* WhatsApp Family Contact Buttons */}
-            <div
-              data-swiper-parallax-y="-50"
-              className="flex flex-wrap items-center justify-center gap-2.5 my-2"
-            >
-              {weddingData.contacts.slice(0, 2).map((c, idx) => (
-                <a
-                  key={idx}
-                  href={`https://wa.me/${c.phone}?text=Tahniah%20atas%20perkahwinan%20${encodeURIComponent(weddingData.groom.name)}%20dan%20${encodeURIComponent(weddingData.bride.name)}!`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full bg-white/[0.05] border border-[#dfc285]/40 text-[#dfc285] text-xs font-serif hover:bg-[#dfc285] hover:text-[#060813] transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
-                >
-                  <Phone className="w-3 h-3 text-[#dfc285]" />
-                  <span>WhatsApp {c.name.split(" ").slice(0, 2).join(" ")}</span>
-                </a>
-              ))}
-            </div>
+              {/* Family WhatsApp Contacts */}
+              <div 
+                data-swiper-parallax-y="-130"
+                className="w-full max-w-[340px] space-y-1.5 my-1"
+              >
+                <p className="font-serif text-xs font-bold text-[#222d1f] text-left">
+                  Hubungi Keluarga Pengantin:
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {weddingData.contacts.map((contact, idx) => (
+                    <a
+                      key={idx}
+                      href={`https://wa.me/${contact.phone}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 p-2 rounded-lg bg-[#f5efe4] border border-[#dfd5c2] hover:border-[#52664b] text-[10px] text-left transition-colors"
+                    >
+                      <Phone className="w-3 h-3 text-[#52664b] shrink-0" />
+                      <div className="overflow-hidden">
+                        <p className="font-serif font-bold text-[#222d1f] truncate leading-tight">
+                          {contact.name}
+                        </p>
+                        <p className="text-[9px] text-[#697f5f] truncate">
+                          {contact.relation}
+                        </p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
 
-            {/* Back to Entrance Button */}
-            <div
-              className="mt-6 pt-2 flex items-center justify-center gap-1.5 text-xs text-[#dfc285]/80 font-serif tracking-widest uppercase cursor-pointer hover:text-white transition-all group"
-              onClick={() => swiperInstance?.slideTo(0)}
-            >
-              <ChevronUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
-              <span>Kembali ke Pintu Gerbang</span>
+              {/* Concluding Blessing */}
+              <div 
+                data-swiper-parallax-y="-90"
+                className="pt-1 text-center"
+              >
+                <p className="font-handwriting text-lg text-[#52664b]">
+                  Terima kasih atas doa dan ingatan tulus anda.
+                </p>
+              </div>
             </div>
-          </div>
+          </BotanicalWildflowerFrame>
         </SwiperSlide>
       </Swiper>
 
       {/* ========================================================================= */}
-      {/* FLOATING CONTROLS: EDITORIAL SLIDE PAGINATION & ARROWS                   */}
+      {/* FLOATING BOTANICAL NAVIGATION CONTROLS                                    */}
       {/* ========================================================================= */}
-
-      {/* Vertical Pagination Bar on the Right */}
-      <div className="fixed right-3 sm:right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-3 pointer-events-auto">
-        {slideTitles.map((slide, idx) => {
-          const isActive = activeIndex === idx;
-          return (
-            <button
-              key={idx}
-              onClick={() => swiperInstance?.slideTo(idx)}
-              className="group flex items-center gap-2 cursor-pointer transition-all focus:outline-none"
-              aria-label={`Pergi ke slaid ${slide.num}: ${slide.name}`}
-            >
-              {/* Tooltip on desktop hover */}
-              <span
-                className={`hidden sm:inline-block text-[10px] uppercase font-serif tracking-widest px-2.5 py-0.5 rounded-full backdrop-blur-md transition-all ${
-                  isActive
-                    ? "text-[#dfc285] bg-[#060813]/90 border border-[#dfc285]/50 opacity-100 translate-x-0 shadow-md"
-                    : "text-white/60 bg-[#060813]/50 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0"
-                }`}
-              >
-                {slide.name}
-              </span>
-
-              {/* Number & Progress Dot */}
-              <div className="flex items-center gap-1.5">
-                <span
-                  className={`font-serif text-[11px] font-bold transition-all ${
-                    isActive ? "text-[#dfc285] scale-110 drop-shadow-[0_0_8px_rgba(223,194,133,0.8)]" : "text-white/40 group-hover:text-white/80"
-                  }`}
-                >
-                  {slide.num}
-                </span>
-
-                <div
-                  className={`rounded-full transition-all duration-300 ${
-                    isActive
-                      ? "w-2.5 h-6 bg-gradient-to-b from-[#dfc285] to-[#c5a059] shadow-[0_0_10px_rgba(223,194,133,0.9)]"
-                      : "w-2 h-2 bg-white/30 group-hover:bg-white/60 group-hover:scale-125"
-                  }`}
-                />
-              </div>
-            </button>
-          );
-        })}
+      {/* Right Edge Slide Dots */}
+      <div className="fixed right-2 sm:right-4 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-2 py-2 px-1 rounded-full bg-[#faf7f0]/80 backdrop-blur-xs border border-[#ece4d3] shadow-sm pointer-events-auto">
+        {slideTitles.map((slide, idx) => (
+          <button
+            key={idx}
+            onClick={() => swiperInstance?.slideTo(idx)}
+            className={`transition-all duration-300 rounded-full cursor-pointer flex items-center justify-center ${
+              activeIndex === idx
+                ? "w-2.5 h-6 bg-[#52664b] shadow-sm ring-1 ring-[#dfa528]"
+                : "w-2 h-2 bg-[#52664b]/30 hover:bg-[#52664b]/80"
+            }`}
+            aria-label={`Pergi ke slaid ${slide.name}`}
+            title={slide.name}
+          />
+        ))}
       </div>
 
-      {/* Vertical Navigation Chevrons: Top & Bottom */}
-      {activeIndex > 0 && (
+      {/* Slide Index Badge (Top Right) */}
+      <div className="fixed top-4 right-4 z-40 px-2.5 py-1 rounded-full bg-[#faf7f0]/85 border border-[#ece4d3] shadow-sm font-serif text-[11px] text-[#52664b] font-bold tracking-wider">
+        {slideTitles[activeIndex]?.num} / 06
+      </div>
+
+      {/* Floating Vertical Navigation Arrows */}
+      <div className="fixed bottom-4 right-4 z-40 flex items-center gap-1.5">
         <button
           onClick={() => swiperInstance?.slidePrev()}
-          className="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#060813]/70 backdrop-blur-md border border-[#dfc285]/40 flex items-center justify-center text-[#dfc285] hover:bg-[#060813] hover:border-[#dfc285] transition-all cursor-pointer shadow-lg"
-          aria-label="Slaid atas sebelumnya"
+          disabled={activeIndex === 0}
+          className="p-2 rounded-full bg-[#faf7f0]/85 hover:bg-[#faf7f0] border border-[#ece4d3] text-[#52664b] disabled:opacity-20 shadow-sm transition-all cursor-pointer"
+          aria-label="Slaid Sebelumnya"
         >
-          <ChevronUp className="w-5 h-5" />
+          <ChevronUp className="w-4 h-4" />
         </button>
-      )}
-
-      {activeIndex < slideTitles.length - 1 && (
         <button
           onClick={() => swiperInstance?.slideNext()}
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#060813]/70 backdrop-blur-md border border-[#dfc285]/40 flex items-center justify-center text-[#dfc285] hover:bg-[#060813] hover:border-[#dfc285] transition-all cursor-pointer shadow-lg"
-          aria-label="Slaid bawah seterusnya"
+          disabled={activeIndex === slideTitles.length - 1}
+          className="p-2 rounded-full bg-[#faf7f0]/85 hover:bg-[#faf7f0] border border-[#ece4d3] text-[#52664b] disabled:opacity-20 shadow-sm transition-all cursor-pointer"
+          aria-label="Slaid Seterusnya"
         >
-          <ChevronDown className="w-5 h-5" />
+          <ChevronDown className="w-4 h-4" />
         </button>
-      )}
-
-      {/* Right Edge Vertical Progress Bar */}
-      <div className="fixed right-0 top-0 bottom-0 w-1 bg-white/10 z-40 pointer-events-none">
-        <div
-          className="w-full bg-gradient-to-b from-[#c5a059] via-[#dfc285] to-[#c5a059] transition-all duration-500 shadow-[0_0_10px_rgba(223,194,133,0.9)]"
-          style={{ height: `${((activeIndex + 1) / slideTitles.length) * 100}%` }}
-        />
       </div>
     </div>
   );

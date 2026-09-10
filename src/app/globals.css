@@ -13,6 +13,7 @@
 @theme {
   --font-serif: var(--font-serif), Cormorant Garamond, Georgia, serif;
   --font-script: var(--font-script), Great Vibes, cursive;
+  --font-handwriting: var(--font-handwriting), Alex Brush, cursive;
   --font-sans: var(--font-sans), Plus Jakarta Sans, sans-serif;
   --color-gold-50: #fbf8f0;
   --color-gold-100: #f6efdb;
@@ -24,6 +25,10 @@
   --color-gold-700: #8c6d32;
   --color-gold-800: #714e25;
   --color-gold-900: #5e4120;
+  --color-botanical-sage: #52664b;
+  --color-botanical-deep: #283424;
+  --color-botanical-buttercup: #dfa528;
+  --color-paper-cream: #faf7f0;
 }
 
 .font-serif {
@@ -32,6 +37,10 @@
 
 .font-script {
   font-family: var(--font-script);
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting);
 }
 
 .font-sans {
@@ -126,5 +135,14 @@ body {
 .wedding-slider .swiper-slide-active .slide-bg {
   transform: scale(1.02);
   filter: brightness(0.95) contrast(1.05) saturate(1.18);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 

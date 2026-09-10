@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Great_Vibes, Plus_Jakarta_Sans } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Alex_Brush, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { weddingData } from "@/data/weddingData";
 
@@ -12,6 +12,13 @@ const serifFont = Cormorant_Garamond({
 
 const scriptFont = Great_Vibes({
   variable: "--font-script",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
+});
+
+const handwritingFont = Alex_Brush({
+  variable: "--font-handwriting",
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
@@ -49,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="ms"
-      className={`${serifFont.variable} ${scriptFont.variable} ${sansFont.variable} h-full antialiased scroll-smooth`}
+      className={`${serifFont.variable} ${scriptFont.variable} ${handwritingFont.variable} ${sansFont.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full bg-[#fbf9f5] text-[#2c2217] selection:bg-[#c5a059]/20 selection:text-[#5e491c] font-sans antialiased overflow-x-hidden">
         {children}

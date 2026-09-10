@@ -17,8 +17,8 @@ export default function Home() {
   };
 
   return (
-    <main className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#0d0a08] select-none touch-none">
-      {/* 1. SWIPER PARALLAX SLIDER TRANSITIONS (#28 Style) */}
+    <main className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#241a13] select-none touch-none">
+      {/* 1. SWIPER PARALLAX SLIDER TRANSITIONS */}
       <SwiperWeddingSlider onSlideChange={handleSlideChange} />
 
       {/* 2. Floating Ambient Audio Music Player */}
@@ -27,7 +27,7 @@ export default function Home() {
       {/* 3. Discreet Admin Portal Button (Top Left) */}
       <button
         onClick={() => setShowAdmin(true)}
-        className="fixed top-4 left-4 z-40 p-2 rounded-full bg-black/40 hover:bg-black/70 border border-white/10 text-white/30 hover:text-[#dfc285] transition-all cursor-pointer"
+        className="fixed top-4 left-4 z-40 p-2 rounded-full bg-[#faf7f0]/80 hover:bg-[#faf7f0] border border-[#ece4d3] text-[#52664b]/60 hover:text-[#52664b] shadow-sm transition-all cursor-pointer"
         aria-label="Pengurusan RSVP"
         title="Admin RSVP"
       >
