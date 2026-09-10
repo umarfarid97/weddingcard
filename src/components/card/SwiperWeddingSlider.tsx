@@ -440,92 +440,61 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
         </SwiperSlide>
 
         {/* ========================================================================= */}
-        {/* SLIDE 04: RAJA SEHARI & ATUR CARA (CARDLESS - DIRECT ON PAPER BACKGROUND) */}
+        {/* SLIDE 04: ATUR CARA MAJLIS / TENTATIF (CARDLESS - DIRECT ON BACKGROUND)   */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
           <BotanicalWildflowerFrame>
-            <div className="flex-1 flex flex-col justify-center items-center text-center w-full my-auto space-y-2.5 sm:space-y-3">
+            <div className="flex-1 flex flex-col justify-center items-center text-center w-full my-auto space-y-3 sm:space-y-3.5">
               {/* Header */}
               <div 
                 data-swiper-parallax-y="-120"
                 className="space-y-0.5"
               >
                 <span className="font-handwriting text-3xl sm:text-4xl text-[#35452e] block">
-                  &lsquo;Raja Sehari&rsquo;
+                  &lsquo;Atur Cara Majlis&rsquo;
                 </span>
-                <p className="font-serif text-[11px] tracking-[0.2em] text-[#556b4f] uppercase font-semibold">
-                  Mempelai & Atur Cara Majlis
+                <p className="font-serif text-[11px] sm:text-xs tracking-[0.2em] text-[#556b4f] uppercase font-semibold">
+                  Tentatif & Jadual Walimatulurus
                 </p>
-              </div>
-
-              {/* Couple & Parents Dual Column Directly on Background */}
-              <div 
-                data-swiper-parallax-y="-180"
-                className="grid grid-cols-2 gap-3 w-full max-w-[310px] text-center"
-              >
-                {/* Groom */}
-                <div className="space-y-0.5">
-                  <h4 className="font-serif text-sm sm:text-base font-bold text-[#1f2d1b]">
-                    {weddingData.groom.fullName}
-                  </h4>
-                  <div className="w-10 h-[1px] bg-[#35452e]/25 mx-auto my-1" />
-                  <p className="font-sans text-[10px] sm:text-[11px] text-[#556b4f] leading-tight">
-                    Bapa: {weddingData.groom.fatherName}
-                    <br />
-                    Ibu: {weddingData.groom.motherName}
-                  </p>
-                </div>
-
-                {/* Bride */}
-                <div className="space-y-0.5">
-                  <h4 className="font-serif text-sm sm:text-base font-bold text-[#1f2d1b]">
-                    {weddingData.bride.fullName}
-                  </h4>
-                  <div className="w-10 h-[1px] bg-[#35452e]/25 mx-auto my-1" />
-                  <p className="font-sans text-[10px] sm:text-[11px] text-[#556b4f] leading-tight">
-                    Bapa: {weddingData.bride.fatherName}
-                    <br />
-                    Ibu: {weddingData.bride.motherName}
-                  </p>
-                </div>
+                <div className="w-14 h-[1px] bg-[#c5a059]/40 mx-auto mt-1" />
               </div>
 
               {/* Itinerary Timeline Directly on Background */}
               <div 
                 data-swiper-parallax-y="-160"
-                className="w-full max-w-[300px]"
+                className="w-full max-w-[320px] sm:max-w-[340px] space-y-2.5 sm:space-y-3 my-2"
               >
-                <p className="font-handwriting text-2xl text-[#35452e] text-center mb-1.5">
-                  Atur Cara Majlis
-                </p>
-                <div className="space-y-1.5 text-left text-xs font-sans max-w-[260px] mx-auto">
-                  {weddingData.itinerary.slice(0, 5).map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5">
-                      <span className="font-serif font-bold text-[#35452e] w-14 shrink-0 text-right text-[11px] sm:text-xs">
-                        {item.time}
-                      </span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#dfa528] mt-1 shrink-0" />
-                      <div className="flex-1">
-                        <p className="font-serif font-semibold text-[11px] sm:text-xs text-[#1f2d1b] leading-tight">
-                          {item.title}
-                        </p>
-                        {item.description && (
-                          <p className="text-[10px] text-[#556b4f] leading-tight mt-0.5">
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
+                {weddingData.itinerary.map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-3">
+                    {/* Time Badge */}
+                    <span className="font-serif font-bold text-xs sm:text-sm text-[#35452e] w-18 sm:w-20 shrink-0 text-right pt-0.5">
+                      {item.time}
+                    </span>
+                    {/* Gold Dot Accent */}
+                    <div className="flex flex-col items-center mt-1.5 shrink-0">
+                      <span className="w-2 h-2 rounded-full bg-[#dfa528] ring-2 ring-[#dfa528]/30" />
                     </div>
-                  ))}
-                </div>
+                    {/* Event Details */}
+                    <div className="flex-1 text-left pb-0.5">
+                      <p className="font-serif font-bold text-xs sm:text-sm text-[#1f2d1b] leading-tight">
+                        {item.title}
+                      </p>
+                      {item.description && (
+                        <p className="font-sans text-[10px] sm:text-[11px] text-[#556b4f] leading-snug mt-0.5">
+                          {item.description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Bottom Whisper */}
               <div 
                 data-swiper-parallax-y="-90"
-                className="pt-0.5"
+                className="pt-1"
               >
-                <p className="font-serif italic text-xs text-[#556b4f]">
+                <p className="font-serif italic text-xs sm:text-sm text-[#556b4f]">
                   Semoga kehadiran para tetamu menyerikan lagi majlis kami
                 </p>
               </div>
