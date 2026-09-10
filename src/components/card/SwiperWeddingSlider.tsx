@@ -584,7 +584,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               data-swiper-parallax-y="-200"
               className="text-xs text-[#e8cda1] font-serif mb-4"
             >
-              Mohon maklumkan kehadiran anda sebelum 14 November 2026
+              Mohon maklumkan kehadiran anda sebelum 20 Disember 2026
             </p>
 
             {/* RSVP Form Content Directly on Background */}
@@ -826,7 +826,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               {weddingData.contacts.slice(0, 2).map((c, idx) => (
                 <a
                   key={idx}
-                  href={`https://wa.me/${c.phone}?text=Tahniah%20atas%20perkahwinan%20Harith%20dan%20Aisyah!`}
+                  href={`https://wa.me/${c.phone}?text=Tahniah%20atas%20perkahwinan%20${encodeURIComponent(weddingData.groom.name)}%20dan%20${encodeURIComponent(weddingData.bride.name)}!`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-4 py-2 rounded-full bg-white/[0.05] border border-[#dfc285]/40 text-[#dfc285] text-xs font-serif hover:bg-[#dfc285] hover:text-[#060813] transition-all flex items-center gap-1.5 shadow-md cursor-pointer"

@@ -59,19 +59,19 @@ const DEFAULT_WISHES: WishRecord[] = [
   {
     id: "wish_1",
     name: "Farhan & Keluarga",
-    message: "Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fi khair. Selamat melayari bahtera perkahwinan Harith & Aisyah!",
+    message: "Barakallahu lakuma wa baraka 'alaikuma wa jama'a bainakuma fi khair. Selamat melayari bahtera perkahwinan Umar & Nafisya!",
     createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
   },
   {
     id: "wish_2",
     name: "Dr. Zulkifli",
-    message: "Tahniah Harith & Aisyah! Semoga mahligai yang dibina sentiasa dilimpahi sakinah, mawaddah wa rahmah hingga ke syurga.",
+    message: "Tahniah Umar & Nafisya! Semoga mahligai yang dibina sentiasa dilimpahi sakinah, mawaddah wa rahmah hingga ke syurga.",
     createdAt: new Date(Date.now() - 86400000).toISOString(),
   },
   {
     id: "wish_3",
     name: "Nabila & Rakan Sekerja",
-    message: "Tahniah Aisyah! Sama cantik sama padan bagai pinang dibelah dua. Can't wait to celebrate your special day!",
+    message: "Tahniah Nafisya & Umar! Sama cantik sama padan bagai pinang dibelah dua. Can't wait to celebrate your special day!",
     createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
   },
 ];
