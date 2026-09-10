@@ -135,7 +135,7 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                   placeholder="PIN: 1234"
-                  className="w-full text-center px-4 py-2 rounded-xl border border-[#d9caa9] text-sm tracking-widest focus:outline-none focus:ring-2 focus:ring-[#c5a059]"
+                  className="w-full text-center px-4 py-2 rounded-xl border border-[#d9caa9] text-base text-[16px] tracking-widest focus:outline-none focus:ring-2 focus:ring-[#c5a059]"
                 />
                 {pinError && <p className="text-[11px] text-red-600">PIN salah. Cuba lagi.</p>}
                 <button
