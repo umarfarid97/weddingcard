@@ -49,12 +49,16 @@ export async function POST(request: Request) {
     }
 
     // Forward to Google Sheets Webhook (Google Apps Script) if configured
-    const googleSheetWebhook = process.env.GOOGLE_SHEET_WEBHOOK_URL;
+    const googleSheetWebhook =
+      process.env.GOOGLE_SHEET_WEBHOOK_URL ||
+      "https://script.google.com/macros/s/AKfycbwCOR0MNNs-A1i_QLHpYhSD-98Zm4Dy2sj0G5qpo9z42xXqoG86qhgoBlMYCjqYRP_j/exec";
+
     if (googleSheetWebhook) {
       try {
         await fetch(googleSheetWebhook, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          redirect: "follow",
           body: JSON.stringify({
             timestamp: new Date().toLocaleString("en-MY", { timeZone: "Asia/Kuala_Lumpur" }),
             name: String(name).trim(),
