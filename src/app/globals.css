@@ -1,26 +1,115 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fbf9f5;
+  --foreground: #2d261e;
+  --gold-primary: #c5a059;
+  --gold-light: #dfc285;
+  --gold-dark: #8c6d32;
+  --emerald-deep: #1b382b;
+  --cream-soft: #fcfbf7;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --font-serif: var(--font-serif), Cormorant Garamond, Georgia, serif;
+  --font-script: var(--font-script), Great Vibes, cursive;
+  --font-sans: var(--font-sans), Plus Jakarta Sans, sans-serif;
+  --color-gold-50: #fbf8f0;
+  --color-gold-100: #f6efdb;
+  --color-gold-200: #ecddb5;
+  --color-gold-300: #dfc285;
+  --color-gold-400: #d4a956;
+  --color-gold-500: #c5a059;
+  --color-gold-600: #aa7a30;
+  --color-gold-700: #8c6d32;
+  --color-gold-800: #714e25;
+  --color-gold-900: #5e4120;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.font-serif {
+  font-family: var(--font-serif);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.font-script {
+  font-family: var(--font-script);
 }
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Luxury gold text shimmer effect */
+.gold-shimmer {
+  background: linear-gradient(
+    120deg,
+    #996515 0%,
+    #d4af37 25%,
+    #f3e5ab 50%,
+    #d4af37 75%,
+    #996515 100%
+  );
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f4ede0;
+}
+::-webkit-scrollbar-thumb {
+  background: #c5a059;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #aa7a30;
+}
+
+/* Glassmorphism panel */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(197, 160, 89, 0.2);
+}
+
+/* Pulsing audio wave animation */
+@keyframes audioWave {
+  0%, 100% { height: 6px; }
+  50% { height: 18px; }
+}
+
+.audio-bar-1 { animation: audioWave 1.2s infinite ease-in-out; }
+.audio-bar-2 { animation: audioWave 1.0s infinite ease-in-out 0.2s; }
+.audio-bar-3 { animation: audioWave 1.4s infinite ease-in-out 0.4s; }
+
+/* Swiper Slider Transitions (#28 Mirko Zoric Style) */
+.wedding-slider {
+  width: 100vw;
+  height: 100vh;
+}
+
+.wedding-slider .swiper-slide {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wedding-slider .swiper-slide .slide-bg {
+  transform: scale(1.16);
+  filter: brightness(0.6) contrast(1.15) saturate(0.85);
+  transition: filter 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, filter;
+}
+
+.wedding-slider .swiper-slide-active .slide-bg {
+  transform: scale(1.02);
+  filter: brightness(0.95) contrast(1.05) saturate(1.18);
+}
+
