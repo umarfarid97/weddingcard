@@ -196,7 +196,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
     <div className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#faf6ee] text-[#283424] select-none touch-none">
       <Swiper
         direction="vertical"
-        speed={400}
+        speed={650}
         parallax={true}
         mousewheel={{ enabled: true, sensitivity: 1 }}
         keyboard={{ enabled: true }}
