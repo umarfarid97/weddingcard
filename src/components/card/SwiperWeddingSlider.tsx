@@ -238,17 +238,17 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 </p>
               </div>
 
-              {/* 2. Central Arabic Initial Monogram (ع | ن) */}
+              {/* 2. Arabic Initial Monogram with Central Gold Divider (Bigger & Closer) */}
               <div 
                 data-swiper-parallax-y="-170"
-                className="my-1 sm:my-2 flex items-center justify-center gap-7 sm:gap-9 w-full max-w-[280px]"
+                className="flex items-center justify-center gap-3.5 sm:gap-5 mx-auto pt-2 sm:pt-3 select-none"
               >
                 {/* Bride Side: ن / نفيسة / NAFISYA */}
-                <div className="flex-1 flex flex-col items-center">
-                  <span className="font-serif text-6xl sm:text-7xl text-[#3a1d1d] leading-none font-normal select-none">
+                <div className="flex flex-col items-center min-w-[80px] sm:min-w-[95px]">
+                  <span className="font-serif text-[84px] sm:text-[100px] text-[#3a1d1d] leading-[0.88] font-normal select-none">
                     ن
                   </span>
-                  <span className="font-serif text-base sm:text-lg text-[#4a2e24] mt-0.5 font-medium">
+                  <span className="font-serif text-base sm:text-lg text-[#4a2e24] mt-1.5 font-medium">
                     نفيسة
                   </span>
                   <span className="font-serif text-[10px] sm:text-xs tracking-[0.25em] text-[#5c3e32] uppercase font-semibold">
@@ -257,22 +257,22 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 </div>
 
                 {/* Vertical Divider with Infinity / Ornate Loop */}
-                <div className="flex flex-col items-center justify-center h-28 sm:h-32 select-none">
+                <div className="flex flex-col items-center justify-center h-32 sm:h-36 select-none px-0.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#c5a059]" />
-                  <div className="w-[1px] h-9 sm:h-11 bg-[#c5a059]/60" />
+                  <div className="w-[1px] h-10 sm:h-12 bg-[#c5a059]/60" />
                   <div className="my-1 w-4 h-4 rounded-full border border-[#c5a059] flex items-center justify-center">
                     <span className="text-[10px] text-[#c5a059] font-serif leading-none">§</span>
                   </div>
-                  <div className="w-[1px] h-9 sm:h-11 bg-[#c5a059]/60" />
+                  <div className="w-[1px] h-10 sm:h-12 bg-[#c5a059]/60" />
                   <div className="w-1.5 h-1.5 rounded-full bg-[#c5a059]" />
                 </div>
 
                 {/* Groom Side: ع / عمر / UMAR */}
-                <div className="flex-1 flex flex-col items-center">
-                  <span className="font-serif text-6xl sm:text-7xl text-[#3a1d1d] leading-none font-normal select-none">
+                <div className="flex flex-col items-center min-w-[80px] sm:min-w-[95px]">
+                  <span className="font-serif text-[84px] sm:text-[100px] text-[#3a1d1d] leading-[0.88] font-normal select-none">
                     ع
                   </span>
-                  <span className="font-serif text-base sm:text-lg text-[#4a2e24] mt-0.5 font-medium">
+                  <span className="font-serif text-base sm:text-lg text-[#4a2e24] mt-1.5 font-medium">
                     عمر
                   </span>
                   <span className="font-serif text-[10px] sm:text-xs tracking-[0.25em] text-[#5c3e32] uppercase font-semibold">
@@ -285,50 +285,14 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               <div 
                 data-swiper-parallax-y="-140"
                 data-swiper-parallax-opacity="0.3"
-                className="space-y-0.5 pt-0.5"
+                className="space-y-1 pt-3 sm:pt-4"
               >
                 <p className="font-serif text-sm sm:text-base text-[#2c1810] font-bold tracking-[0.16em] uppercase">
                   {weddingData.event.dateFormatted}
                 </p>
-                <p className="font-sans text-[11px] text-[#6b5344] tracking-wider font-medium">
+                <p className="font-sans text-[11px] sm:text-xs text-[#6b5344] tracking-wider font-medium">
                   {weddingData.event.venueName}, {weddingData.event.city} • 11:00 AM – 4:00 PM
                 </p>
-              </div>
-
-              {/* 4. Quranic Verse from Surah An-Naba': 8 */}
-              <div 
-                data-swiper-parallax-y="-110"
-                className="max-w-xs mx-auto space-y-0.5 pt-1"
-              >
-                <p className="font-serif italic text-xs sm:text-sm text-[#4a2e24] leading-relaxed">
-                  &ldquo;dan Kami menciptakan kamu berpasang-pasangan&rdquo;
-                </p>
-                <p className="font-serif text-[10px] sm:text-xs text-[#8c6d32] font-semibold tracking-wider">
-                  Surah An-Naba&apos; : 78:8
-                </p>
-              </div>
-
-              {/* 5. Confirm Attendance / RSVP CTA Pill */}
-              <div
-                data-swiper-parallax-y="-90"
-                className="pt-1.5"
-              >
-                <button
-                  onClick={() => swiperInstance?.slideTo(4)}
-                  className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-[#5a2328] hover:bg-[#45181c] text-white font-serif text-xs uppercase tracking-widest font-semibold shadow-md transition-all active:scale-95 cursor-pointer border border-[#c5a059]/40"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
-                  <span>Sahkan Kehadiran</span>
-                </button>
-              </div>
-
-              {/* 6. Interactive Scroll Cue */}
-              <div 
-                data-swiper-parallax-y="-60"
-                className="mt-1 flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fefcf8]/85 backdrop-blur-xs text-[#5a2328] text-[10px] tracking-widest uppercase font-semibold border border-[#c5a059]/30 shadow-xs"
-              >
-                <span>Skrol ke bawah</span>
-                <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#5a2328]" />
               </div>
             </div>
           </BotanicalWildflowerFrame>

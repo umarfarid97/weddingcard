@@ -240,56 +240,53 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
               </p>
             </div>
 
-            {/* Central Arabic Initial Monogram (ع | ن) */}
-            <div className="relative z-10 my-auto flex items-center justify-center gap-5 sm:gap-7 w-full max-w-[240px]">
+            {/* Central Arabic Initial Monogram (ع | ن) (Bigger & Closer) */}
+            <div className="relative z-10 my-auto flex items-center justify-center gap-4 sm:gap-6 w-full max-w-[240px]">
               {/* Bride: ن / نفيسة / NAFISYA */}
               <div className="flex-1 flex flex-col items-center">
-                <span className="font-serif text-5xl sm:text-6xl text-[#3a1d1d] leading-none font-normal select-none">
+                <span className="font-serif text-6xl sm:text-7xl text-[#3a1d1d] leading-none font-normal select-none">
                   ن
                 </span>
                 <span className="font-serif text-xs sm:text-sm text-[#4a2e24] mt-0.5 font-medium">
                   نفيسة
                 </span>
-                <span className="font-serif text-[9px] tracking-[0.2em] text-[#5c3e32] uppercase font-semibold">
+                <span className="font-serif text-[9px] sm:text-[10px] tracking-[0.2em] text-[#5c3e32] uppercase font-semibold">
                   NAFISYA
                 </span>
               </div>
 
               {/* Center Divider with Knot */}
-              <div className="flex flex-col items-center justify-center h-20 sm:h-24 select-none">
+              <div className="flex flex-col items-center justify-center h-24 sm:h-28 select-none">
                 <div className="w-1 h-1 rounded-full bg-[#c5a059]" />
-                <div className="w-[1px] h-6 sm:h-8 bg-[#c5a059]/60" />
+                <div className="w-[1px] h-7 sm:h-9 bg-[#c5a059]/60" />
                 <div className="my-0.5 w-3.5 h-3.5 rounded-full border border-[#c5a059] flex items-center justify-center">
                   <span className="text-[8px] text-[#c5a059] font-serif leading-none">§</span>
                 </div>
-                <div className="w-[1px] h-6 sm:h-8 bg-[#c5a059]/60" />
+                <div className="w-[1px] h-7 sm:h-9 bg-[#c5a059]/60" />
                 <div className="w-1 h-1 rounded-full bg-[#c5a059]" />
               </div>
 
               {/* Groom: ع / عمر / UMAR */}
               <div className="flex-1 flex flex-col items-center">
-                <span className="font-serif text-5xl sm:text-6xl text-[#3a1d1d] leading-none font-normal select-none">
+                <span className="font-serif text-6xl sm:text-7xl text-[#3a1d1d] leading-none font-normal select-none">
                   ع
                 </span>
                 <span className="font-serif text-xs sm:text-sm text-[#4a2e24] mt-0.5 font-medium">
                   عمر
                 </span>
-                <span className="font-serif text-[9px] tracking-[0.2em] text-[#5c3e32] uppercase font-semibold">
+                <span className="font-serif text-[9px] sm:text-[10px] tracking-[0.2em] text-[#5c3e32] uppercase font-semibold">
                   UMAR
                 </span>
               </div>
             </div>
 
-            {/* Date & Quote */}
-            <div className="relative z-10 space-y-1 pb-2">
+            {/* Date Details */}
+            <div className="relative z-10 space-y-0.5 pb-2">
               <p className="font-serif text-xs sm:text-sm text-[#2c1810] font-bold tracking-[0.15em] uppercase">
                 {weddingData.event.dateFormatted}
               </p>
-              <p className="font-serif italic text-[11px] sm:text-xs text-[#4a2e24] leading-tight">
-                &ldquo;dan Kami menciptakan kamu berpasang-pasangan&rdquo;
-              </p>
-              <p className="font-serif text-[9px] text-[#8c6d32] font-semibold tracking-wider">
-                Surah An-Naba&apos; : 78:8
+              <p className="font-sans text-[10px] text-[#6b5344] tracking-wider font-medium">
+                {weddingData.event.venueName}, {weddingData.event.city}
               </p>
             </div>
           </motion.div>
