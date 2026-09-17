@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Send, Users, Heart, AlertCircle } from "lucide-react";
 import confetti from "canvas-confetti";
+import { submitRSVP } from "@/lib/guestService";
 
 interface RsvpSectionProps {
   onWishAdded?: () => void;
@@ -35,23 +36,14 @@ export default function RsvpSection({ onWishAdded }: RsvpSectionProps) {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name.trim(),
-          phone: phone.trim(),
-          attending,
-          pax: attending ? pax : 0,
-          dietary: dietary.trim() || undefined,
-          message: message.trim() || undefined,
-        }),
+      await submitRSVP({
+        name: name.trim(),
+        phone: phone.trim(),
+        attending,
+        pax: attending ? pax : 0,
+        dietary: dietary.trim() || undefined,
+        message: message.trim() || undefined,
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Gagal menghantar RSVP");
-      }
 
       setSubmitted(true);
       if (onWishAdded && message.trim()) {

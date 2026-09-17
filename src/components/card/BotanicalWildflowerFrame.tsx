@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { getAssetPath } from "@/lib/basePath";
 
 interface BotanicalWildflowerFrameProps {
   children: React.ReactNode;
@@ -28,7 +29,7 @@ export default function BotanicalWildflowerFrame({
         data-swiper-parallax-scale="1.06"
         className="slide-bg absolute inset-0 z-0 bg-cover bg-center pointer-events-none transition-transform duration-1000"
         style={{
-          backgroundImage: "url('/images/page_background.jpg')",
+          backgroundImage: `url('${getAssetPath("/images/page_background.jpg")}')`,
           backgroundPosition: "center center",
         }}
       />

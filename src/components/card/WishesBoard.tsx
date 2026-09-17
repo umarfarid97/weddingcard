@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquareHeart, Send, Heart, Sparkles } from "lucide-react";
-import { WishRecord } from "@/lib/storage";
+import { WishRecord, getWishes, submitWish } from "@/lib/guestService";
 
 interface WishesBoardProps {
   refreshTrigger?: number;
@@ -16,13 +16,10 @@ export default function WishesBoard({ refreshTrigger }: WishesBoardProps) {
   const [loading, setLoading] = useState(false);
   const [showInput, setShowInput] = useState(false);
 
-  const fetchWishes = async () => {
+  const fetchWishes = () => {
     try {
-      const res = await fetch("/api/wishes");
-      const json = await res.json();
-      if (json.success && Array.isArray(json.data)) {
-        setWishes(json.data);
-      }
+      const data = getWishes();
+      setWishes(data);
     } catch {
       // ignore
     }
@@ -38,18 +35,11 @@ export default function WishesBoard({ refreshTrigger }: WishesBoardProps) {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/wishes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), message: message.trim() }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setName("");
-        setMessage("");
-        setShowInput(false);
-        fetchWishes();
-      }
+      submitWish(name.trim(), message.trim());
+      setName("");
+      setMessage("");
+      setShowInput(false);
+      fetchWishes();
     } catch {
       // ignore
     } finally {

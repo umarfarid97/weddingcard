@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, Users, CheckCircle, XCircle, Shield } from "lucide-react";
-import { RSVPRecord } from "@/lib/storage";
+import { RSVPRecord, getRSVPRecords, getRSVPStats } from "@/lib/guestService";
 
 interface AdminModalProps {
   isOpen: boolean;
@@ -23,15 +23,13 @@ export default function AdminModal({ isOpen, onClose }: AdminModalProps) {
   const [loading, setLoading] = useState(false);
   const [pinError, setPinError] = useState(false);
 
-  const fetchRsvps = async () => {
+  const fetchRsvps = () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/rsvp");
-      const json = await res.json();
-      if (json.success) {
-        setRsvps(json.data || []);
-        setStats(json.stats);
-      }
+      const list = getRSVPRecords();
+      const summary = getRSVPStats();
+      setRsvps(list);
+      setStats(summary);
     } catch {
       // ignore
     } finally {

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Music, Volume2, VolumeX, Pause, Play } from "lucide-react";
 import { weddingData } from "@/data/weddingData";
+import { getAssetPath } from "@/lib/basePath";
 
 interface MusicPlayerProps {
   autoPlayTrigger: boolean;
@@ -58,7 +59,7 @@ export default function MusicPlayer({ autoPlayTrigger }: MusicPlayerProps) {
     <>
       <audio
         ref={audioRef}
-        src={weddingData.audio.url}
+        src={getAssetPath(weddingData.audio.url)}
         loop
         preload="auto"
       />

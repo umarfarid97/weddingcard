@@ -22,6 +22,8 @@ import {
 import confetti from "canvas-confetti";
 import { weddingData } from "@/data/weddingData";
 import BotanicalWildflowerFrame from "./BotanicalWildflowerFrame";
+import { getAssetPath } from "@/lib/basePath";
+import { submitRSVP, getWishes } from "@/lib/guestService";
 
 // Swiper CSS styles
 import "swiper/css";
@@ -77,13 +79,10 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
   const [wishes, setWishes] = useState<Array<{ name: string; message: string; date: string }>>([]);
   const [copiedBank, setCopiedBank] = useState(false);
 
-  const fetchWishes = async () => {
+  const fetchWishes = () => {
     try {
-      const res = await fetch("/api/wishes");
-      const data = await res.json();
-      if (data.wishes) {
-        setWishes(data.wishes);
-      }
+      const data = getWishes();
+      setWishes(data.map((w) => ({ name: w.name, message: w.message, date: w.createdAt })));
     } catch (e) {
       console.error("Failed to fetch wishes:", e);
     }
@@ -108,22 +107,13 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
 
     setRsvpLoading(true);
     try {
-      const res = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: rsvpName.trim(),
-          phone: rsvpPhone.trim(),
-          attending: rsvpAttending,
-          pax: rsvpAttending ? rsvpPax : 0,
-          message: rsvpMessage.trim() || undefined,
-        }),
+      await submitRSVP({
+        name: rsvpName.trim(),
+        phone: rsvpPhone.trim(),
+        attending: rsvpAttending,
+        pax: rsvpAttending ? rsvpPax : 0,
+        message: rsvpMessage.trim() || undefined,
       });
-
-      const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || "Gagal menghantar RSVP");
-      }
 
       setRsvpSubmitted(true);
       fetchWishes();
@@ -220,7 +210,7 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
-                  src="/images/monogram_full.png" 
+                  src={getAssetPath("/images/monogram_full.png")} 
                   alt="Umar & Nafisya Monogram" 
                   className="w-52 sm:w-60 max-w-[250px] h-auto object-contain pointer-events-none select-none"
                 />

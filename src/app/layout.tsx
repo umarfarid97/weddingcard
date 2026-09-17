@@ -33,8 +33,7 @@ const sansFont = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://weddingcard.vercel.app")
+    process.env.NEXT_PUBLIC_SITE_URL || "https://umarfarid97.github.io/weddingcard"
   ),
   title: weddingData.meta.title,
   description: weddingData.meta.description,
@@ -44,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Walimatulurus Umar & Nafisya",
     images: [
       {
-        url: "/images/page_background.jpg",
+        url: "https://umarfarid97.github.io/weddingcard/images/page_background.jpg",
         alt: "Walimatulurus Umar & Nafisya",
       },
     ],
@@ -55,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: weddingData.meta.title,
     description: weddingData.meta.description,
-    images: ["/images/page_background.jpg"],
+    images: ["https://umarfarid97.github.io/weddingcard/images/page_background.jpg"],
   },
 };
 
