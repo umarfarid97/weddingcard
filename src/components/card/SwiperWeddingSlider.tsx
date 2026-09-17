@@ -196,11 +196,13 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
     <div className="relative w-full max-w-[100vw] h-screen overflow-hidden bg-[#faf6ee] text-[#283424] select-none touch-none">
       <Swiper
         direction="vertical"
-        speed={1000}
+        speed={400}
         parallax={true}
         mousewheel={{ enabled: true, sensitivity: 1 }}
         keyboard={{ enabled: true }}
         touchAngle={45}
+        threshold={5}
+        touchRatio={1.3}
         resistanceRatio={0}
         preventInteractionOnTransition={true}
         modules={[Parallax, Mousewheel, Pagination, Navigation, Keyboard]}
