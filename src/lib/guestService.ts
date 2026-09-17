@@ -153,22 +153,108 @@ export async function submitRSVP(
 }
 
 /**
- * Get wishes: combines custom user submissions with default seeded wishes.
+ * Asynchronously fetch live wishes from the Google Sheets Webhook endpoint.
+ * Supports both { success: true, wishes: [...] } and raw array format.
  */
-export function getWishes(): WishRecord[] {
+export async function fetchGoogleSheetWishes(): Promise<WishRecord[]> {
+  if (!GOOGLE_SHEET_WEBHOOK_URL) return [];
+  try {
+    const res = await fetch(GOOGLE_SHEET_WEBHOOK_URL, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    if (!res.ok) return [];
+    const text = await res.text();
+    let json: any;
+    try {
+      json = JSON.parse(text);
+    } catch {
+      return [];
+    }
+
+    const rawList: any[] = Array.isArray(json)
+      ? json
+      : Array.isArray(json?.wishes)
+      ? json.wishes
+      : Array.isArray(json?.data)
+      ? json.data
+      : [];
+
+    if (!rawList.length) return [];
+
+    const sheetWishes: WishRecord[] = rawList
+      .filter((item) => {
+        const msg = item.message || item.ucapan || item.pesanan || item[6] || item[7];
+        return msg && String(msg).trim() !== "" && String(msg).trim() !== "-";
+      })
+      .map((item, idx) => ({
+        id: `sheet_${idx}_${item.name || "tetamu"}_${item.createdAt || item.timestamp || idx}`,
+        name: String(item.name || item.nama || item[1] || "Tetamu").trim(),
+        message: String(item.message || item.ucapan || item.pesanan || item[6] || item[7]).trim(),
+        createdAt: String(item.createdAt || item.timestamp || item[0] || new Date().toISOString()),
+      }));
+
+    if (sheetWishes.length > 0 && typeof window !== "undefined") {
+      try {
+        localStorage.setItem("wedding_remote_wishes_cache_v1", JSON.stringify(sheetWishes));
+      } catch (e) {
+        console.warn("Could not cache remote wishes:", e);
+      }
+    }
+
+    return sheetWishes;
+  } catch (err) {
+    console.warn("Could not fetch wishes from Google Sheets (using cached/local):", err);
+    return [];
+  }
+}
+
+/**
+ * Get wishes: combines local user submissions, cached Google Sheet wishes, and default seeded wishes.
+ */
+export function getWishes(remoteWishes?: WishRecord[]): WishRecord[] {
   if (typeof window === "undefined") return DEFAULT_WISHES;
   try {
-    const raw = localStorage.getItem(LOCAL_STORAGE_WISHES_KEY);
-    const userWishes: WishRecord[] = raw ? JSON.parse(raw) : [];
-    if (!Array.isArray(userWishes)) return DEFAULT_WISHES;
+    const rawLocal = localStorage.getItem(LOCAL_STORAGE_WISHES_KEY);
+    const localWishes: WishRecord[] = rawLocal ? JSON.parse(rawLocal) : [];
 
-    // Filter out duplicates by ID
-    const userIds = new Set(userWishes.map((w) => w.id));
-    const combined = [...userWishes, ...DEFAULT_WISHES.filter((d) => !userIds.has(d.id))];
-    return combined;
+    let remote: WishRecord[] = remoteWishes || [];
+    if (!remote.length) {
+      const cached = localStorage.getItem("wedding_remote_wishes_cache_v1");
+      remote = cached ? JSON.parse(cached) : [];
+    }
+
+    // Merge in priority order: local submissions first, then Google Sheet remote wishes, then default seeded wishes
+    const combined: WishRecord[] = [];
+    const seenSignatures = new Set<string>();
+
+    const addWish = (w: WishRecord) => {
+      const sig = `${w.name.trim().toLowerCase()}_${w.message.trim().toLowerCase()}`;
+      if (!seenSignatures.has(sig)) {
+        seenSignatures.add(sig);
+        combined.push(w);
+      }
+    };
+
+    if (Array.isArray(localWishes)) localWishes.forEach(addWish);
+    if (Array.isArray(remote)) remote.forEach(addWish);
+    DEFAULT_WISHES.forEach(addWish);
+
+    return combined.length > 0 ? combined : DEFAULT_WISHES;
   } catch {
     return DEFAULT_WISHES;
   }
+}
+
+/**
+ * Fetch fresh wishes from Google Sheets and return unified list.
+ */
+export async function fetchAndSyncWishes(): Promise<WishRecord[]> {
+  const remote = await fetchGoogleSheetWishes();
+  return getWishes(remote);
 }
 
 /**

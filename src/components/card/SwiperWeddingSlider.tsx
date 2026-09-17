@@ -21,7 +21,7 @@ import confetti from "canvas-confetti";
 import { weddingData } from "@/data/weddingData";
 import BotanicalWildflowerFrame from "./BotanicalWildflowerFrame";
 import { getAssetPath } from "@/lib/basePath";
-import { submitRSVP, getWishes } from "@/lib/guestService";
+import { submitRSVP, getWishes, fetchAndSyncWishes } from "@/lib/guestService";
 
 // Swiper CSS styles
 import "swiper/css";
@@ -87,24 +87,24 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
     return [...wishes, ...wishes];
   }, [wishes]);
 
-  // Smooth continuous auto-scrolling effect
+  // Smooth continuous horizontal auto-scrolling effect
   useEffect(() => {
     const el = wishesScrollRef.current;
     if (!el || wishes.length === 0) return;
 
-    const speed = 25; // 25 px/sec for gentle, readable glide
+    const speed = 26; // 26 px/sec for gentle, comfortable horizontal reading glide
     const intervalMs = 25; // 40 fps for silky smooth motion
     const stepPx = (speed * intervalMs) / 1000;
 
     const timer = setInterval(() => {
       if (isWishesPaused || !el) return;
 
-      const halfHeight = el.scrollHeight / 2;
-      if (halfHeight > el.clientHeight) {
-        if (el.scrollTop >= halfHeight) {
-          el.scrollTop -= halfHeight;
+      const halfWidth = el.scrollWidth / 2;
+      if (halfWidth > el.clientWidth) {
+        if (el.scrollLeft >= halfWidth) {
+          el.scrollLeft -= halfWidth;
         } else {
-          el.scrollTop += stepPx;
+          el.scrollLeft += stepPx;
         }
       }
     }, intervalMs);
@@ -112,10 +112,17 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
     return () => clearInterval(timer);
   }, [isWishesPaused, wishes, displayWishes]);
 
-  const fetchWishes = () => {
+  const fetchWishes = async () => {
     try {
-      const data = getWishes();
-      setWishes(data.map((w) => ({ name: w.name, message: w.message, date: w.createdAt })));
+      // Fast load from local/cache first
+      const cached = getWishes();
+      setWishes(cached.map((w) => ({ name: w.name, message: w.message, date: w.createdAt })));
+
+      // Fresh sync with Google Sheets
+      const fresh = await fetchAndSyncWishes();
+      if (fresh && fresh.length > 0) {
+        setWishes(fresh.map((w) => ({ name: w.name, message: w.message, date: w.createdAt })));
+      }
     } catch (e) {
       console.error("Failed to fetch wishes:", e);
     }
@@ -734,22 +741,22 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 </p>
               </div>
 
-              {/* Guestbook Wishes Auto-Scrolling Box Directly on Background */}
+              {/* Guestbook Wishes Horizontal Auto-Scrolling Track Directly on Background */}
               <div 
                 data-swiper-parallax-y="-170"
-                className="w-full max-w-[320px] my-1.5 flex flex-col items-center"
+                className="w-full max-w-[340px] sm:max-w-[390px] my-1.5 flex flex-col items-center"
               >
-                <div className="flex items-center justify-center gap-1.5 mb-1.5">
+                <div className="flex items-center justify-center gap-1.5 mb-2">
                   <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
                   <span className="font-serif text-xs sm:text-sm font-bold text-[#1f2d1b]">
                     Ucapan Tetamu Terkini
                   </span>
-                  <span className="text-[10px] text-[#556b4f] font-serif font-medium bg-[#556b4f]/10 px-1.5 py-0.5 rounded-full">
+                  <span className="text-[10px] text-[#556b4f] font-serif font-medium bg-[#556b4f]/10 px-2 py-0.5 rounded-full">
                     {wishes.length}
                   </span>
                 </div>
 
-                {/* Smooth Auto-Scrolling Container */}
+                {/* Smooth Horizontal Scrolling Track */}
                 <div
                   ref={wishesScrollRef}
                   onMouseEnter={() => setIsWishesPaused(true)}
@@ -757,33 +764,38 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                   onTouchStart={() => setIsWishesPaused(true)}
                   onTouchEnd={() => setIsWishesPaused(false)}
                   data-swiper-no-swiping="true"
-                  className="swiper-no-swiping relative w-full h-52 sm:h-60 overflow-y-auto no-scrollbar rounded-2xl bg-white/60 border border-[#35452e]/15 px-3 py-2 text-center select-text [mask-image:linear-gradient(to_bottom,transparent,black_8%,black_92%,transparent)]"
+                  className="swiper-no-swiping relative w-full overflow-x-auto no-scrollbar py-2 px-1 select-text [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
                 >
                   {wishes.length > 0 ? (
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex flex-row space-x-3 items-stretch w-max">
                       {displayWishes.map((w, idx) => (
                         <div 
                           key={idx} 
-                          className="p-2.5 rounded-xl bg-white/80 backdrop-blur-xs border border-[#35452e]/10 shadow-2xs text-center"
+                          className="w-[230px] sm:w-[250px] shrink-0 p-3 rounded-2xl bg-white/85 backdrop-blur-xs border border-[#35452e]/12 shadow-xs text-left flex flex-col justify-between"
                         >
-                          <p className="font-serif font-bold text-[#1f2d1b] text-xs leading-tight">
-                            {w.name}
-                          </p>
-                          <p className="font-serif italic text-[#35452e] text-[11px] mt-1 leading-relaxed">
-                            &ldquo;{w.message}&rdquo;
-                          </p>
+                          <div>
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <Sparkles className="w-3 h-3 text-[#dfa528] shrink-0" />
+                              <p className="font-serif font-bold text-[#1f2d1b] text-xs sm:text-sm truncate">
+                                {w.name}
+                              </p>
+                            </div>
+                            <p className="font-serif italic text-[#35452e] text-[11px] sm:text-xs leading-relaxed line-clamp-3">
+                              &ldquo;{w.message}&rdquo;
+                            </p>
+                          </div>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <div className="h-full flex items-center justify-center py-6 text-xs text-[#556b4f] font-serif italic">
+                    <div className="w-full py-6 text-center text-xs text-[#556b4f] font-serif italic">
                       &ldquo;Selamat menempuh alam perkahwinan, semoga berkekalan hingga ke Jannah.&rdquo;
                     </div>
                   )}
                 </div>
 
                 <p className="text-[9px] text-[#556b4f]/70 font-serif italic mt-1 text-center">
-                  *Sentuh atau halakan tetikus untuk jeda bacaan
+                  *Sentuh atau halakan tetikus untuk jeda • Leret untuk lihat lagi
                 </p>
               </div>
 
