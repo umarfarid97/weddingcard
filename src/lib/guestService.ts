@@ -45,6 +45,20 @@ export const DEFAULT_WISHES: WishRecord[] = [
       "Tahniah Nafisya & Umar! Sama cantik sama padan bagai pinang dibelah dua. Can't wait to celebrate your special day!",
     createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
   },
+  {
+    id: "wish_4",
+    name: "Pak Ngah & Mak Ngah",
+    message:
+      "Selamat pengantin baru buat anakanda Umar & Nafisya. Semoga rukun damai dan dikurniakan zuriat yang soleh solehah.",
+    createdAt: new Date(Date.now() - 3600000 * 12).toISOString(),
+  },
+  {
+    id: "wish_5",
+    name: "Aiman & Sahabat",
+    message:
+      "Alhamdulillah, tahniah sahabatku Umar & Nafisya! Moga ikatan suci ini berkekalan hingga ke Jannah. Selamat melangkah ke fasa baharu!",
+    createdAt: new Date(Date.now() - 3600000 * 24).toISOString(),
+  },
 ];
 
 /**

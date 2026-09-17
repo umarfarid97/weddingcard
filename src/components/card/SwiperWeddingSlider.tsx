@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Parallax, Mousewheel, Pagination, Navigation, Keyboard } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -11,13 +11,11 @@ import {
   CheckCircle2, 
   ChevronUp, 
   ChevronDown, 
-  Gift, 
   Phone, 
-  Copy, 
+  Calendar, 
+  Sparkles, 
   Check,
-  Calendar,
-  Sparkles,
-  Navigation as NavIcon
+  Navigation as NavIcon 
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { weddingData } from "@/data/weddingData";
@@ -75,9 +73,44 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
   const [rsvpError, setRsvpError] = useState<string | null>(null);
 
-  // Live Wishes State
+  // Live Wishes State & Auto-Scrolling
   const [wishes, setWishes] = useState<Array<{ name: string; message: string; date: string }>>([]);
-  const [copiedBank, setCopiedBank] = useState(false);
+  const wishesScrollRef = useRef<HTMLDivElement>(null);
+  const [isWishesPaused, setIsWishesPaused] = useState(false);
+
+  // Seamless looping wishes array
+  const displayWishes = useMemo(() => {
+    if (wishes.length === 0) return [];
+    if (wishes.length < 4) {
+      return [...wishes, ...wishes, ...wishes, ...wishes];
+    }
+    return [...wishes, ...wishes];
+  }, [wishes]);
+
+  // Smooth continuous auto-scrolling effect
+  useEffect(() => {
+    const el = wishesScrollRef.current;
+    if (!el || wishes.length === 0) return;
+
+    const speed = 25; // 25 px/sec for gentle, readable glide
+    const intervalMs = 25; // 40 fps for silky smooth motion
+    const stepPx = (speed * intervalMs) / 1000;
+
+    const timer = setInterval(() => {
+      if (isWishesPaused || !el) return;
+
+      const halfHeight = el.scrollHeight / 2;
+      if (halfHeight > el.clientHeight) {
+        if (el.scrollTop >= halfHeight) {
+          el.scrollTop -= halfHeight;
+        } else {
+          el.scrollTop += stepPx;
+        }
+      }
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [isWishesPaused, wishes, displayWishes]);
 
   const fetchWishes = () => {
     try {
@@ -130,12 +163,6 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
     } finally {
       setRsvpLoading(false);
     }
-  };
-
-  const handleCopyBank = () => {
-    navigator.clipboard.writeText(weddingData.gift.accountNumber);
-    setCopiedBank(true);
-    setTimeout(() => setCopiedBank(false), 2500);
   };
 
   const slideTitles = [
@@ -700,83 +727,64 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 className="space-y-0.5"
               >
                 <span className="font-handwriting text-3xl sm:text-4xl text-[#35452e] block">
-                  &lsquo;Buku Ucapan & Hadiah&rsquo;
+                  &lsquo;Buku Ucapan Tetamu&rsquo;
                 </span>
                 <p className="font-serif text-[11px] tracking-[0.2em] text-[#556b4f] uppercase font-semibold">
-                  Ingatan Tulus & Salam Kaut Digital
+                  Titipan Doa & Ingatan Tulus
                 </p>
               </div>
 
-              {/* Guestbook Wishes Directly on Background */}
+              {/* Guestbook Wishes Auto-Scrolling Box Directly on Background */}
               <div 
-                data-swiper-parallax-y="-180"
-                className="w-full max-w-[310px] my-1"
+                data-swiper-parallax-y="-170"
+                className="w-full max-w-[320px] my-1.5 flex flex-col items-center"
               >
-                <p className="font-serif text-xs sm:text-sm font-bold text-[#1f2d1b] mb-1.5 text-center flex items-center justify-center gap-1.5">
+                <div className="flex items-center justify-center gap-1.5 mb-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
-                  <span>Ucapan Tetamu Terkini</span>
-                </p>
-                <div className="space-y-1.5 max-h-24 overflow-y-auto no-scrollbar text-center px-3 py-1.5 rounded-xl bg-white/60 border border-[#35452e]/15">
+                  <span className="font-serif text-xs sm:text-sm font-bold text-[#1f2d1b]">
+                    Ucapan Tetamu Terkini
+                  </span>
+                  <span className="text-[10px] text-[#556b4f] font-serif font-medium bg-[#556b4f]/10 px-1.5 py-0.5 rounded-full">
+                    {wishes.length}
+                  </span>
+                </div>
+
+                {/* Smooth Auto-Scrolling Container */}
+                <div
+                  ref={wishesScrollRef}
+                  onMouseEnter={() => setIsWishesPaused(true)}
+                  onMouseLeave={() => setIsWishesPaused(false)}
+                  onTouchStart={() => setIsWishesPaused(true)}
+                  onTouchEnd={() => setIsWishesPaused(false)}
+                  data-swiper-no-swiping="true"
+                  className="swiper-no-swiping relative w-full h-52 sm:h-60 overflow-y-auto no-scrollbar rounded-2xl bg-white/60 border border-[#35452e]/15 px-3 py-2 text-center select-text [mask-image:linear-gradient(to_bottom,transparent,black_8%,black_92%,transparent)]"
+                >
                   {wishes.length > 0 ? (
-                    wishes.slice(0, 3).map((w, idx) => (
-                      <div 
-                        key={idx} 
-                        className="py-1 border-b border-[#35452e]/10 last:border-none text-xs"
-                      >
-                        <p className="font-serif font-bold text-[#1f2d1b] leading-tight">
-                          {w.name}
-                        </p>
-                        <p className="font-serif italic text-[#35452e] text-[11px] line-clamp-2 mt-0.5">
-                          &ldquo;{w.message}&rdquo;
-                        </p>
-                      </div>
-                    ))
+                    <div className="flex flex-col space-y-2">
+                      {displayWishes.map((w, idx) => (
+                        <div 
+                          key={idx} 
+                          className="p-2.5 rounded-xl bg-white/80 backdrop-blur-xs border border-[#35452e]/10 shadow-2xs text-center"
+                        >
+                          <p className="font-serif font-bold text-[#1f2d1b] text-xs leading-tight">
+                            {w.name}
+                          </p>
+                          <p className="font-serif italic text-[#35452e] text-[11px] mt-1 leading-relaxed">
+                            &ldquo;{w.message}&rdquo;
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   ) : (
-                    <div className="py-1.5 text-xs text-[#556b4f] font-serif italic">
+                    <div className="h-full flex items-center justify-center py-6 text-xs text-[#556b4f] font-serif italic">
                       &ldquo;Selamat menempuh alam perkahwinan, semoga berkekalan hingga ke Jannah.&rdquo;
                     </div>
                   )}
                 </div>
-              </div>
 
-              {/* Digital Salam Kaut Directly on Background */}
-              <div 
-                data-swiper-parallax-y="-160"
-                className="w-full max-w-[310px] py-2.5 px-4 rounded-2xl border border-[#35452e]/20 bg-white/70 text-center my-1 shadow-xs"
-              >
-                <div className="flex items-center justify-center gap-1.5 mb-0.5">
-                  <Gift className="w-3.5 h-3.5 text-[#dfa528]" />
-                  <span className="font-serif text-xs sm:text-sm font-bold text-[#35452e]">
-                    Salam Kaut Digital (DuitNow)
-                  </span>
-                  <span className="font-serif text-[10px] sm:text-xs text-[#556b4f] uppercase font-bold tracking-wider">
-                    • {weddingData.gift.bankName}
-                  </span>
-                </div>
-                <p className="font-serif text-xs sm:text-sm text-[#1f2d1b]">
-                  {weddingData.gift.accountHolder}
+                <p className="text-[9px] text-[#556b4f]/70 font-serif italic mt-1 text-center">
+                  *Sentuh atau halakan tetikus untuk jeda bacaan
                 </p>
-                <div className="flex items-center justify-center gap-2.5 mt-1.5">
-                  <span className="font-mono text-sm sm:text-base font-bold text-[#1f2d1b] tracking-wider">
-                    {weddingData.gift.accountNumber}
-                  </span>
-                  <button
-                    onClick={handleCopyBank}
-                    className="flex items-center gap-1 py-1 px-2.5 rounded-lg bg-[#35452e] hover:bg-[#253220] text-white text-xs font-sans font-medium transition-all active:scale-95 cursor-pointer"
-                  >
-                    {copiedBank ? (
-                      <>
-                        <Check className="w-3 h-3 text-[#e8c872]" />
-                        <span>Disalin!</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3 h-3" />
-                        <span>Salin</span>
-                      </>
-                    )}
-                  </button>
-                </div>
               </div>
 
               {/* Family WhatsApp Contacts Directly on Background */}
