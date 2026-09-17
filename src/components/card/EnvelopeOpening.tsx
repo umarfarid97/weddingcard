@@ -1,185 +1,378 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { ChevronUp, Sparkles } from "lucide-react";
 import { weddingData } from "@/data/weddingData";
+import { getAssetPath } from "@/lib/basePath";
 
 interface EnvelopeOpeningProps {
   onOpen: () => void;
+  onInteract?: () => void;
 }
 
-export default function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
-  const [isOpening, setIsOpening] = useState(false);
+export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningProps) {
+  const [isDone, setIsDone] = useState(false);
+  const touchStartY = useRef<number | null>(null);
+  const isAnimatingRef = useRef(false);
 
-  const handleOpen = () => {
-    if (isOpening) return;
-    setIsOpening(true);
+  // 1:1 Gesture Progress: 0 (completely closed) to 1 (completely opened)
+  const progress = useMotionValue(0);
 
-    // Graceful, refined transition to the main invitation
-    setTimeout(() => {
-      onOpen();
-    }, 1300);
+  // 1. 3D Flap Rotation: 0 -> 0.45 progress flips flap 0deg -> -180deg
+  const flapRotateX = useTransform(progress, [0, 0.45], [0, -180]);
+  // Flap shifts behind the rising card once it passes -90 degrees
+  const flapZIndex = useTransform(progress, [0, 0.22, 0.23, 1], [35, 35, 8, 8]);
+
+  // 2. Inner Invitation Card Slide-Up: emerges as flap opens (0.2 -> 1.0 progress)
+  const cardY = useTransform(progress, [0.2, 1], [0, -250]);
+  const cardScale = useTransform(progress, [0.2, 1], [0.94, 1.02]);
+  const cardShadow = useTransform(
+    progress,
+    [0.2, 1],
+    ["0 10px 25px -5px rgba(0,0,0,0.3)", "0 25px 50px -12px rgba(0,0,0,0.55)"]
+  );
+
+  // 3. Wax Seal Lift and Disappear
+  const sealScale = useTransform(progress, [0, 0.18, 0.42], [1, 1.15, 0.4]);
+  const sealOpacity = useTransform(progress, [0, 0.25, 0.42], [1, 0.85, 0]);
+
+  // 4. Prompts fade out immediately on swipe
+  const promptOpacity = useTransform(progress, [0, 0.15], [1, 0]);
+  const headerOpacity = useTransform(progress, [0, 0.4], [1, 0.35]);
+
+  // Trigger smooth finish animation
+  const completeOpening = () => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
+    setIsDone(true);
+    if (onInteract) onInteract();
+
+    animate(progress, 1, {
+      duration: 0.65,
+      ease: [0.16, 1, 0.3, 1],
+      onComplete: () => {
+        setTimeout(() => {
+          onOpen();
+        }, 350);
+      },
+    });
+  };
+
+  // Reset back to closed if drag didn't cross threshold
+  const resetEnvelope = () => {
+    isAnimatingRef.current = true;
+    animate(progress, 0, {
+      type: "spring",
+      stiffness: 280,
+      damping: 24,
+      onComplete: () => {
+        isAnimatingRef.current = false;
+      },
+    });
+  };
+
+  // 1:1 Touch Gesture Handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (isAnimatingRef.current || isDone) return;
+    touchStartY.current = e.touches[0].clientY;
+    if (onInteract) onInteract();
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartY.current === null || isAnimatingRef.current || isDone) return;
+    const currentY = e.touches[0].clientY;
+    const deltaY = touchStartY.current - currentY; // positive when swiping UP
+
+    if (deltaY > 0) {
+      // Direct 1:1 progress tracking: 220px drag = 100% progress
+      const p = Math.min(1, Math.max(0, deltaY / 220));
+      progress.set(p);
+    } else {
+      // Swiping back down: damp slightly
+      progress.set(0);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartY.current === null || isAnimatingRef.current || isDone) return;
+    touchStartY.current = null;
+
+    const currentP = progress.get();
+    if (currentP > 0.32) {
+      completeOpening();
+    } else {
+      resetEnvelope();
+    }
+  };
+
+  // Mouse Drag Fallback (for Desktop testing)
+  const isMouseDownRef = useRef(false);
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (isAnimatingRef.current || isDone) return;
+    isMouseDownRef.current = true;
+    touchStartY.current = e.clientY;
+    if (onInteract) onInteract();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isMouseDownRef.current || touchStartY.current === null || isAnimatingRef.current || isDone) return;
+    const deltaY = touchStartY.current - e.clientY;
+    if (deltaY > 0) {
+      const p = Math.min(1, Math.max(0, deltaY / 220));
+      progress.set(p);
+    } else {
+      progress.set(0);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!isMouseDownRef.current || isAnimatingRef.current || isDone) return;
+    isMouseDownRef.current = false;
+    touchStartY.current = null;
+    if (progress.get() > 0.32) {
+      completeOpening();
+    } else {
+      resetEnvelope();
+    }
   };
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      exit={{ opacity: 0, scale: 1.04 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#15120e] px-4 overflow-hidden select-none"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-between bg-[#14110d] px-3 sm:px-4 py-5 sm:py-7 select-none overflow-hidden touch-none"
       style={{ perspective: 1200 }}
     >
-      {/* Soft warm vignette backdrop */}
-      <div className="absolute inset-0 bg-radial from-[#251e17] via-[#15120e] to-[#0c0a08] opacity-95 pointer-events-none" />
+      {/* 1. Atmospheric Ambient Backdrop with Warm Golden Vignette */}
+      <div className="absolute inset-0 bg-radial from-[#241c14] via-[#15110d] to-[#0a0806] opacity-95 pointer-events-none" />
+      <div className="absolute w-[600px] h-[600px] rounded-full bg-[#c5a059]/10 blur-[130px] pointer-events-none" />
 
-      {/* Subtle warm glow behind the envelope */}
-      <div className="absolute w-[500px] h-[500px] rounded-full bg-[#c5a059]/10 blur-[120px] pointer-events-none" />
+      {/* Floating subtle gold sparkles */}
+      <div className="absolute inset-0 pointer-events-none opacity-30">
+        <div className="absolute top-1/6 left-1/5 w-1.5 h-1.5 rounded-full bg-[#dfa528] blur-[0.5px] animate-pulse" />
+        <div className="absolute top-1/4 right-1/4 w-2 h-2 rounded-full bg-[#e8c87c] blur-[1px] animate-pulse" style={{ animationDelay: "1.2s" }} />
+        <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 rounded-full bg-[#d4af37] blur-[0.5px] animate-pulse" style={{ animationDelay: "0.7s" }} />
+      </div>
 
-      {/* Main Interactive Envelope Container */}
+      {/* 2. Top Title Header */}
       <motion.div
-        animate={
-          isOpening
-            ? {
-                scale: 1.18,
-                y: -15,
-                transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-              }
-            : { scale: 1, y: 0 }
-        }
-        onClick={handleOpen}
-        className="relative w-full max-w-[340px] sm:max-w-[400px] h-[230px] sm:h-[260px] cursor-pointer group"
+        style={{ opacity: headerOpacity }}
+        className="text-center pt-2 sm:pt-3 z-10 pointer-events-none"
       >
-        {/* Realistic Ground Shadow */}
-        <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[85%] h-8 bg-black/40 blur-xl rounded-full pointer-events-none" />
-
-        {/* Envelope Back Plate (Textured Charcoal/Warm Stone) */}
-        <div className="absolute inset-0 rounded-xl bg-[#231b14] border border-[#c5a059]/30 shadow-2xl overflow-hidden">
-          <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:16px_16px]" />
-        </div>
-
-        {/* The Invitation Letter Card (Slides up gracefully when opened) */}
-        <motion.div
-          animate={
-            isOpening
-              ? {
-                  y: -120,
-                  opacity: 1,
-                  transition: { duration: 0.85, delay: 0.25, ease: [0.16, 1, 0.3, 1] },
-                }
-              : { y: 0, opacity: 0.95 }
-          }
-          className="absolute inset-x-4 top-3 bottom-3 rounded-lg bg-gradient-to-b from-[#fdfbf7] via-[#f7f3ea] to-[#ede3d1] p-6 shadow-xl border border-[#c5a059]/40 flex flex-col items-center justify-center text-center z-10"
-        >
-          {/* Inner hairline border */}
-          <div className="absolute inset-2 rounded-md border border-[#c5a059]/25 pointer-events-none" />
-
-          <p className="text-[9px] uppercase tracking-[0.35em] text-[#8c6d32] font-medium mb-1">
-            Walimatulurus
-          </p>
-
-          <p className="font-script text-3xl sm:text-4xl text-[#996515] my-1">
-            {weddingData.groom.name} &amp; {weddingData.bride.name}
-          </p>
-
-          <div className="w-12 h-px bg-[#c5a059]/50 my-1" />
-
-          <p className="text-[10px] text-[#6b553e] font-serif tracking-wider">
-            {weddingData.event.dateFormatted}
-          </p>
-          <p className="text-[9px] text-[#8c7457] mt-0.5">
-            {weddingData.event.venueName}
-          </p>
-        </motion.div>
-
-        {/* Envelope Front Pocket (Clean Architectural Fold) */}
-        <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded-xl">
-          <div
-            className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#f8f5ee] via-[#efe8d8] to-[#e5dac5] border-t border-[#c5a059]/40 shadow-sm"
-            style={{
-              clipPath: "polygon(0% 100%, 100% 100%, 50% 48%)",
-            }}
-          />
-          <div
-            className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-[#ece3d1] to-transparent opacity-95"
-            style={{
-              clipPath: "polygon(0% 0%, 0% 100%, 50% 50%)",
-            }}
-          />
-          <div
-            className="absolute inset-y-0 right-0 w-full bg-gradient-to-l from-[#ece3d1] to-transparent opacity-95"
-            style={{
-              clipPath: "polygon(100% 0%, 100% 100%, 50% 50%)",
-            }}
-          />
-        </div>
-
-        {/* Envelope Top Flap (Smooth Natural 3D Fold) */}
-        <motion.div
-          animate={
-            isOpening
-              ? {
-                  rotateX: -180,
-                  zIndex: 5,
-                  transition: { duration: 0.65, ease: [0.4, 0, 0.2, 1] },
-                }
-              : { rotateX: 0, zIndex: 30 }
-          }
-          style={{ transformOrigin: "top center", transformStyle: "preserve-3d" }}
-          className="absolute inset-x-0 top-0 h-full pointer-events-none"
-        >
-          <div
-            className="absolute inset-0 bg-gradient-to-b from-[#f3ece0] via-[#ede4d3] to-[#e4d7bf] shadow-md border-b border-[#c5a059]/40"
-            style={{
-              clipPath: "polygon(0% 0%, 100% 0%, 50% 52%)",
-              backfaceVisibility: "hidden",
-            }}
-          />
-          <div
-            className="absolute inset-0 bg-gradient-to-b from-[#d8c49e] to-[#caa76f] shadow-inner"
-            style={{
-              clipPath: "polygon(0% 0%, 100% 0%, 50% 52%)",
-              transform: "rotateX(180deg)",
-              backfaceVisibility: "hidden",
-            }}
-          />
-        </motion.div>
-
-        {/* Elegant Minimalist Gold Monogram Seal */}
-        <motion.div
-          animate={
-            isOpening
-              ? {
-                  scale: 0.8,
-                  opacity: 0,
-                  transition: { duration: 0.35, ease: "easeOut" },
-                }
-              : { scale: 1, opacity: 1 }
-          }
-          className="absolute top-[43%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center cursor-pointer pointer-events-auto"
-        >
-          <div className="relative group/seal">
-            <div className="absolute -inset-2 rounded-full bg-[#c5a059]/15 blur-sm opacity-0 group-hover/seal:opacity-100 transition-opacity duration-300" />
-            <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-[#e6ce97] via-[#c5a059] to-[#8c6d32] p-[1.5px] shadow-lg transform transition-transform duration-300 group-hover/seal:scale-105">
-              <div className="w-full h-full rounded-full bg-[#271f16] flex flex-col items-center justify-center text-center shadow-inner border border-[#c5a059]/40">
-                <span className="font-serif text-sm font-semibold tracking-wider text-[#eeddb2]">
-                  {weddingData.groom.name[0]} · {weddingData.bride.name[0]}
-                </span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        <p className="font-serif text-[10px] sm:text-xs uppercase tracking-[0.35em] text-[#c5a059]/90 font-medium mb-1">
+          Undangan Rasmi Walimatulurus
+        </p>
+        <h1 className="font-script text-3xl sm:text-4xl text-[#eeddb2] tracking-wide">
+          {weddingData.groom.name} &amp; {weddingData.bride.name}
+        </h1>
       </motion.div>
 
-      {/* Refined Bottom Invitation Prompt */}
+      {/* ========================================================================= */}
+      {/* 3. CLOSE-UP FULL SCREEN 3D ENVELOPE (DIRECT TOUCH DRAG GESTURE)            */}
+      {/* ========================================================================= */}
+      <div className="relative w-full max-w-[390px] h-[64vh] sm:h-[68vh] max-h-[580px] my-auto flex items-center justify-center">
+        {/* Realistic Ambient Ground Shadow */}
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[92%] h-8 bg-black/60 blur-xl rounded-full pointer-events-none" />
+
+        {/* Envelope Container */}
+        <div 
+          onClick={() => {
+            // Tap fallback: clicking also smoothly opens the envelope
+            if (!isAnimatingRef.current && !isDone) completeOpening();
+          }}
+          className="relative w-full h-full cursor-pointer select-none"
+        >
+          {/* A. ENVELOPE BACK PLATE (Warm Textured Ivory Paper Interior) */}
+          <div className="absolute inset-0 rounded-2xl bg-[#282017] border border-[#c5a059]/35 shadow-2xl overflow-hidden">
+            {/* Rich Botanical Damask Pattern on Inside Lining */}
+            <div
+              className="absolute inset-0 opacity-25 bg-cover bg-center pointer-events-none"
+              style={{
+                backgroundImage: `url('${getAssetPath("/images/page_background.jpg")}')`,
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none" />
+          </div>
+
+          {/* ========================================================================= */}
+          {/* B. THE INVITATION CARD (Slides out in 1:1 sync with swipe gesture)        */}
+          {/* ========================================================================= */}
+          <motion.div
+            style={{
+              y: cardY,
+              scale: cardScale,
+              boxShadow: cardShadow,
+            }}
+            className="absolute inset-x-3 top-3 bottom-3 rounded-t-[110px] sm:rounded-t-[130px] rounded-b-xl bg-[#faf6ee] p-5 border border-[#c5a059]/45 flex flex-col items-center justify-start text-center z-10 overflow-hidden"
+          >
+            {/* Roman Arch Die-Cut Window Header with Garden Art */}
+            <div className="relative w-full h-[155px] sm:h-[185px] rounded-t-[100px] sm:rounded-t-[120px] rounded-b-lg overflow-hidden border border-[#c5a059]/40 shadow-inner mb-2.5">
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: `url('${getAssetPath("/images/vintage_garden_bg.jpg")}')`,
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#faf6ee] via-transparent to-black/15" />
+              {/* Arch hairline inner outline */}
+              <div className="absolute inset-1.5 rounded-t-[90px] sm:rounded-t-[110px] rounded-b-md border border-[#c5a059]/30 pointer-events-none" />
+            </div>
+
+            {/* Invitation Card Content */}
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#8c6d32] font-serif font-semibold">
+              Walimatulurus
+            </p>
+            <p className="font-script text-3xl sm:text-4xl text-[#3d4d38] -mt-0.5">
+              {weddingData.groom.name} &amp; {weddingData.bride.name}
+            </p>
+            <div className="w-16 h-px bg-[#c5a059]/50 my-1.5" />
+            <p className="text-xs text-[#556b4f] font-serif tracking-wider font-semibold">
+              {weddingData.event.dateFormatted}
+            </p>
+            <p className="text-[11px] text-[#705e49] font-sans mt-1 tracking-wide">
+              {weddingData.event.venueName}, {weddingData.event.city}
+            </p>
+          </motion.div>
+
+          {/* ========================================================================= */}
+          {/* C. ENVELOPE FRONT POCKET (Clean Architectural Fold - Fully Opaque Paper)  */}
+          {/* ========================================================================= */}
+          <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden rounded-2xl">
+            {/* Solid Backing for the pocket to guarantee complete opacity */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-[56%] bg-[#f5ede0] shadow-md"
+              style={{
+                clipPath: "polygon(0% 10%, 50% 0%, 100% 10%, 100% 100%, 0% 100%)",
+              }}
+            />
+            {/* Left Wing */}
+            <div
+              className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-[#ebe0cc] to-[#f5eee2] shadow-sm border-r border-[#c5a059]/25"
+              style={{
+                clipPath: "polygon(0% 0%, 0% 100%, 50% 48%)",
+              }}
+            />
+            {/* Right Wing */}
+            <div
+              className="absolute inset-y-0 right-0 w-full bg-gradient-to-l from-[#ebe0cc] to-[#f5eee2] shadow-sm border-l border-[#c5a059]/25"
+              style={{
+                clipPath: "polygon(100% 0%, 100% 100%, 50% 48%)",
+              }}
+            />
+            {/* Bottom Triangular Fold with Fine Top Edge */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#f8f4ec] via-[#efe6d4] to-[#e5d6be] border-t border-[#c5a059]/45 shadow-lg"
+              style={{
+                clipPath: "polygon(0% 100%, 100% 100%, 50% 46%)",
+              }}
+            />
+            {/* Delicate Perimeter Border */}
+            <div className="absolute inset-0 border border-[#c5a059]/40 rounded-2xl pointer-events-none" />
+          </div>
+
+          {/* ========================================================================= */}
+          {/* D. ENVELOPE TOP FLAP (Folds back in 3D sync with touch swipe)             */}
+          {/* ========================================================================= */}
+          <motion.div
+            style={{
+              rotateX: flapRotateX,
+              zIndex: flapZIndex,
+              transformOrigin: "top center",
+              transformStyle: "preserve-3d",
+            }}
+            className="absolute inset-x-0 top-0 h-full pointer-events-none"
+          >
+            {/* Outer Flap Front (Closed view) */}
+            <div
+              className="absolute inset-0 bg-gradient-to-b from-[#f4ede1] via-[#ebe1cf] to-[#e1d2bc] shadow-xl border-b border-[#c5a059]/50"
+              style={{
+                clipPath: "polygon(0% 0%, 100% 0%, 50% 52%)",
+                backfaceVisibility: "hidden",
+              }}
+            >
+              {/* Embossed Flap Edge Line */}
+              <div
+                className="absolute inset-x-0 top-0 h-full border-b border-[#c5a059]/35"
+                style={{ clipPath: "polygon(4% 0%, 96% 0%, 50% 49%)" }}
+              />
+            </div>
+
+            {/* Inner Flap Back (Flipped open view) */}
+            <div
+              className="absolute inset-0 bg-gradient-to-b from-[#c5a059] to-[#8c6d32] shadow-inner"
+              style={{
+                clipPath: "polygon(0% 0%, 100% 0%, 50% 52%)",
+                transform: "rotateX(180deg)",
+                backfaceVisibility: "hidden",
+              }}
+            />
+          </motion.div>
+
+          {/* ========================================================================= */}
+          {/* E. 3D WAX SEAL STAMP (Directly at the Flap V-Apex)                       */}
+          {/* ========================================================================= */}
+          <motion.div
+            style={{
+              scale: sealScale,
+              opacity: sealOpacity,
+            }}
+            className="absolute top-[43%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 flex flex-col items-center justify-center pointer-events-none"
+          >
+            <div className="relative group/seal">
+              {/* Pulsing Warm Glow Aura */}
+              <div className="absolute -inset-3 rounded-full bg-[#dfa528]/30 blur-md animate-pulse" />
+
+              {/* 3D Molten Wax Body */}
+              <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-[#80222a] via-[#65171d] to-[#460d12] p-2 shadow-[0_8px_24px_rgba(0,0,0,0.55),inset_0_2px_4px_rgba(255,255,255,0.4),inset_0_-3px_5px_rgba(0,0,0,0.6)]">
+                {/* Beveled Edge Ring */}
+                <div className="w-full h-full rounded-full bg-gradient-to-br from-[#721c23] to-[#501217] flex flex-col items-center justify-center text-center shadow-inner border border-[#d4af37]/45 relative overflow-hidden">
+                  {/* Metallic Gold Sheen Highlight */}
+                  <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-white/20 blur-sm pointer-events-none" />
+
+                  {/* Debossed Monogram Content */}
+                  <span className="font-serif text-lg sm:text-xl font-bold tracking-widest text-[#f5e6c8] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                    U <span className="text-[#dfa528] text-xs font-normal">✦</span> N
+                  </span>
+                  <span className="text-[8px] uppercase tracking-[0.2em] text-[#d4af37]/90 font-serif font-semibold -mt-0.5">
+                    11.04
+                  </span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 4. TACTILE SWIPE UP PROMPT (Direct feedback to the user)                   */}
+      {/* ========================================================================= */}
       <motion.div
-        animate={isOpening ? { opacity: 0 } : { opacity: 1 }}
-        transition={{ duration: 0.4 }}
-        className="absolute bottom-12 inset-x-0 text-center pointer-events-none"
+        style={{ opacity: promptOpacity }}
+        className="text-center pb-3 sm:pb-5 z-10 pointer-events-none"
       >
-        <p className="text-xs uppercase tracking-[0.35em] text-[#c5a059]/90 font-serif font-light">
-          Buka Undangan
-        </p>
-        <div className="w-8 h-px bg-[#c5a059]/40 mx-auto mt-2" />
+        <div className="inline-flex flex-col items-center gap-1">
+          <div className="w-8 h-8 rounded-full bg-[#251e17]/80 border border-[#c5a059]/40 flex items-center justify-center text-[#dfa528] shadow-md animate-bounce">
+            <ChevronUp className="w-5 h-5 stroke-[2.5]" />
+          </div>
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#251e17]/80 border border-[#c5a059]/30 backdrop-blur-sm shadow-md mt-1">
+            <Sparkles className="w-3 h-3 text-[#dfa528]" />
+            <p className="text-xs uppercase tracking-[0.25em] text-[#eeddb2] font-serif font-medium">
+              Tarik Ke Atas Untuk Buka
+            </p>
+            <Sparkles className="w-3 h-3 text-[#dfa528]" />
+          </div>
+          <p className="text-[10px] text-[#eeddb2]/50 tracking-wider font-light mt-1">
+            Swipe up perlahan untuk membuka sampul
+          </p>
+        </div>
       </motion.div>
     </motion.div>
   );
