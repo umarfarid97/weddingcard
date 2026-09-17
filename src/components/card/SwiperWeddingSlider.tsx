@@ -11,6 +11,8 @@ import {
   CheckCircle2, 
   ChevronUp, 
   ChevronDown, 
+  ChevronLeft,
+  ChevronRight,
   Phone, 
   Calendar, 
   Sparkles, 
@@ -73,44 +75,53 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
   const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
   const [rsvpError, setRsvpError] = useState<string | null>(null);
 
-  // Live Wishes State & Auto-Scrolling
+  // Live Wishes State (Single Wish Per Slide with Limit)
   const [wishes, setWishes] = useState<Array<{ name: string; message: string; date: string }>>([]);
-  const wishesScrollRef = useRef<HTMLDivElement>(null);
+  const [currentWishIndex, setCurrentWishIndex] = useState(0);
   const [isWishesPaused, setIsWishesPaused] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
 
-  // Seamless looping wishes array
-  const displayWishes = useMemo(() => {
-    if (wishes.length === 0) return [];
-    if (wishes.length < 4) {
-      return [...wishes, ...wishes, ...wishes, ...wishes];
-    }
-    return [...wishes, ...wishes];
-  }, [wishes]);
-
-  // Smooth continuous horizontal auto-scrolling effect
+  // Auto-advance wish-by-wish with limit (stops at the last wish)
   useEffect(() => {
-    const el = wishesScrollRef.current;
-    if (!el || wishes.length === 0) return;
-
-    const speed = 26; // 26 px/sec for gentle, comfortable horizontal reading glide
-    const intervalMs = 25; // 40 fps for silky smooth motion
-    const stepPx = (speed * intervalMs) / 1000;
+    if (isWishesPaused || wishes.length <= 1) return;
 
     const timer = setInterval(() => {
-      if (isWishesPaused || !el) return;
-
-      const halfWidth = el.scrollWidth / 2;
-      if (halfWidth > el.clientWidth) {
-        if (el.scrollLeft >= halfWidth) {
-          el.scrollLeft -= halfWidth;
-        } else {
-          el.scrollLeft += stepPx;
+      setCurrentWishIndex((prev) => {
+        if (prev < wishes.length - 1) {
+          return prev + 1;
         }
-      }
-    }, intervalMs);
+        return prev; // stops at the limit
+      });
+    }, 5000); // 5 seconds per wish gives comfortable reading time
 
     return () => clearInterval(timer);
-  }, [isWishesPaused, wishes, displayWishes]);
+  }, [isWishesPaused, wishes.length]);
+
+  const handlePrevWish = () => {
+    setIsWishesPaused(true);
+    setCurrentWishIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleNextWish = () => {
+    setIsWishesPaused(true);
+    setCurrentWishIndex((prev) => Math.min(wishes.length - 1, prev + 1));
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsWishesPaused(true);
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const diff = touchStartXRef.current - e.changedTouches[0].clientX;
+    if (diff > 45 && currentWishIndex < wishes.length - 1) {
+      setCurrentWishIndex((prev) => Math.min(wishes.length - 1, prev + 1));
+    } else if (diff < -45 && currentWishIndex > 0) {
+      setCurrentWishIndex((prev) => Math.max(0, prev - 1));
+    }
+    touchStartXRef.current = null;
+  };
 
   const fetchWishes = async () => {
     try {
@@ -741,62 +752,110 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
                 </p>
               </div>
 
-              {/* Guestbook Wishes Horizontal Auto-Scrolling Track Directly on Background */}
+              {/* Guestbook Wishes: Single Wish Per Slide with Limit */}
               <div 
                 data-swiper-parallax-y="-170"
-                className="w-full max-w-[340px] sm:max-w-[390px] my-1.5 flex flex-col items-center"
+                className="w-full max-w-[320px] sm:max-w-[340px] my-1.5 flex flex-col items-center"
               >
-                <div className="flex items-center justify-center gap-1.5 mb-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
-                  <span className="font-serif text-xs sm:text-sm font-bold text-[#1f2d1b]">
-                    Ucapan Tetamu Terkini
-                  </span>
-                  <span className="text-[10px] text-[#556b4f] font-serif font-medium bg-[#556b4f]/10 px-2 py-0.5 rounded-full">
-                    {wishes.length}
-                  </span>
-                </div>
-
-                {/* Smooth Horizontal Scrolling Track */}
-                <div
-                  ref={wishesScrollRef}
-                  onMouseEnter={() => setIsWishesPaused(true)}
-                  onMouseLeave={() => setIsWishesPaused(false)}
-                  onTouchStart={() => setIsWishesPaused(true)}
-                  onTouchEnd={() => setIsWishesPaused(false)}
-                  data-swiper-no-swiping="true"
-                  className="swiper-no-swiping relative w-full overflow-x-auto no-scrollbar py-2 px-1 select-text [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
-                >
-                  {wishes.length > 0 ? (
-                    <div className="flex flex-row space-x-3 items-stretch w-max">
-                      {displayWishes.map((w, idx) => (
-                        <div 
-                          key={idx} 
-                          className="w-[230px] sm:w-[250px] shrink-0 p-3 rounded-2xl bg-white/85 backdrop-blur-xs border border-[#35452e]/12 shadow-xs text-left flex flex-col justify-between"
-                        >
-                          <div>
-                            <div className="flex items-center gap-1.5 mb-1.5">
-                              <Sparkles className="w-3 h-3 text-[#dfa528] shrink-0" />
-                              <p className="font-serif font-bold text-[#1f2d1b] text-xs sm:text-sm truncate">
-                                {w.name}
-                              </p>
-                            </div>
-                            <p className="font-serif italic text-[#35452e] text-[11px] sm:text-xs leading-relaxed line-clamp-3">
-                              &ldquo;{w.message}&rdquo;
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="w-full py-6 text-center text-xs text-[#556b4f] font-serif italic">
-                      &ldquo;Selamat menempuh alam perkahwinan, semoga berkekalan hingga ke Jannah.&rdquo;
-                    </div>
+                {/* Header with Counter Badge */}
+                <div className="flex items-center justify-between w-full px-1 mb-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
+                    <span className="font-serif text-xs sm:text-sm font-bold text-[#1f2d1b]">
+                      Ucapan Tetamu
+                    </span>
+                  </div>
+                  {wishes.length > 0 && (
+                    <span className="text-[11px] text-[#556b4f] font-serif font-bold bg-[#556b4f]/10 px-2 py-0.5 rounded-full">
+                      {currentWishIndex + 1} / {wishes.length}
+                    </span>
                   )}
                 </div>
 
-                <p className="text-[9px] text-[#556b4f]/70 font-serif italic mt-1 text-center">
-                  *Sentuh atau halakan tetikus untuk jeda • Leret untuk lihat lagi
-                </p>
+                {/* Single Wish Card Container with Left/Right Navigation */}
+                <div className="relative w-full flex items-center justify-center">
+                  {/* Prev Button */}
+                  <button
+                    onClick={handlePrevWish}
+                    disabled={currentWishIndex === 0}
+                    className={`absolute -left-3 sm:-left-3.5 z-10 w-7 h-7 rounded-full bg-white/95 border border-[#35452e]/20 shadow-xs flex items-center justify-center text-[#35452e] transition-all ${
+                      currentWishIndex === 0 ? "opacity-25 cursor-not-allowed" : "hover:bg-white active:scale-95 cursor-pointer"
+                    }`}
+                    aria-label="Ucapan Sebelumnya"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+
+                  {/* Horizontal Slide Viewport (One Wish at a time) */}
+                  <div
+                    onMouseEnter={() => setIsWishesPaused(true)}
+                    onMouseLeave={() => setIsWishesPaused(false)}
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                    data-swiper-no-swiping="true"
+                    className="swiper-no-swiping relative w-full overflow-hidden rounded-2xl bg-white/85 backdrop-blur-xs border border-[#35452e]/15 shadow-sm select-text"
+                  >
+                    <div 
+                      className="flex transition-transform duration-500 ease-out"
+                      style={{ transform: `translateX(-${currentWishIndex * 100}%)` }}
+                    >
+                      {wishes.length > 0 ? (
+                        wishes.map((w, idx) => (
+                          <div 
+                            key={idx} 
+                            className="w-full shrink-0 p-4 sm:p-5 flex flex-col justify-between text-center min-h-[135px] sm:min-h-[145px]"
+                          >
+                            <div className="my-auto">
+                              <p className="font-serif font-bold text-[#1f2d1b] text-sm sm:text-base leading-tight mb-2">
+                                {w.name}
+                              </p>
+                              <p className="font-serif italic text-[#35452e] text-xs sm:text-[13px] leading-relaxed line-clamp-4">
+                                &ldquo;{w.message}&rdquo;
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="w-full p-4 text-center text-xs text-[#556b4f] font-serif italic min-h-[135px] flex items-center justify-center">
+                          &ldquo;Selamat menempuh alam perkahwinan, semoga berkekalan hingga ke Jannah.&rdquo;
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Next Button */}
+                  <button
+                    onClick={handleNextWish}
+                    disabled={currentWishIndex === wishes.length - 1}
+                    className={`absolute -right-3 sm:-right-3.5 z-10 w-7 h-7 rounded-full bg-white/95 border border-[#35452e]/20 shadow-xs flex items-center justify-center text-[#35452e] transition-all ${
+                      currentWishIndex === wishes.length - 1 ? "opacity-25 cursor-not-allowed" : "hover:bg-white active:scale-95 cursor-pointer"
+                    }`}
+                    aria-label="Ucapan Seterusnya"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Pagination Dots (Has Limit) */}
+                {wishes.length > 1 && (
+                  <div className="flex items-center justify-center gap-1.5 mt-2">
+                    {wishes.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          setIsWishesPaused(true);
+                          setCurrentWishIndex(idx);
+                        }}
+                        className={`transition-all rounded-full ${
+                          currentWishIndex === idx
+                            ? "w-4 h-1.5 bg-[#35452e]"
+                            : "w-1.5 h-1.5 bg-[#35452e]/25 hover:bg-[#35452e]/50"
+                        }`}
+                        aria-label={`Pergi ke ucapan ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Family WhatsApp Contacts Directly on Background */}
