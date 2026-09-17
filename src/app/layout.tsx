@@ -33,7 +33,7 @@ const sansFont = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://umarfarid97.github.io/weddingcard"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://umarriedtodina.abrdns.com"
   ),
   title: weddingData.meta.title,
   description: weddingData.meta.description,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Walimatulurus Umar & Nafisya",
     images: [
       {
-        url: "https://umarfarid97.github.io/weddingcard/images/page_background.jpg",
+        url: "https://umarriedtodina.abrdns.com/images/page_background.jpg",
         alt: "Walimatulurus Umar & Nafisya",
       },
     ],
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: weddingData.meta.title,
     description: weddingData.meta.description,
-    images: ["https://umarfarid97.github.io/weddingcard/images/page_background.jpg"],
+    images: ["https://umarriedtodina.abrdns.com/images/page_background.jpg"],
   },
 };
 

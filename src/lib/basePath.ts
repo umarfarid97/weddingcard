@@ -1,17 +1,10 @@
 /**
- * Base Path utility for GitHub Pages static site hosting.
+ * Base Path utility for custom domain / GitHub Pages static site hosting.
  *
- * In production GitHub Pages (https://umarfarid97.github.io/weddingcard),
- * the base path is "/weddingcard".
- * If a custom domain is configured, set NEXT_PUBLIC_BASE_PATH="" to remove the prefix.
- * In development, basePath is "" for http://localhost:3000.
+ * For custom domain (https://umarriedtodina.abrdns.com), the base path is "".
+ * If deployed to a subpath like /weddingcard, NEXT_PUBLIC_BASE_PATH can be passed.
  */
-export const basePath =
-  process.env.NEXT_PUBLIC_BASE_PATH !== undefined
-    ? process.env.NEXT_PUBLIC_BASE_PATH
-    : process.env.NODE_ENV === "production"
-    ? "/weddingcard"
-    : "";
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 /**
  * Prepends the basePath to absolute asset paths (/images/..., /audio/...).
