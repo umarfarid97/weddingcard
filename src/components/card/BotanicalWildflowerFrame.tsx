@@ -22,30 +22,30 @@ export default function BotanicalWildflowerFrame({
   return (
     <div className={`relative w-full h-full overflow-hidden flex flex-col items-center justify-between select-none ${className}`}>
       {/* ========================================================================= */}
-      {/* 1. LAYER: TORN-PAPER BOTANICAL WATERCOLOR BACKGROUND                       */}
+      {/* 1. LAYER: ISLAMIC BOTANICAL BURGUNDY & GOLD BORDER BACKGROUND              */}
       {/* ========================================================================= */}
       <div
         data-swiper-parallax-y="-10%"
         data-swiper-parallax-scale="1.06"
         className="slide-bg absolute inset-0 z-0 bg-cover bg-center pointer-events-none transition-transform duration-1000"
         style={{
-          backgroundImage: `url('${getAssetPath("/images/page_background.jpg")}')`,
+          backgroundImage: `url('${getAssetPath("/images/islamic_botanical_bg.jpg")}')`,
           backgroundPosition: "center center",
         }}
       />
 
-      {/* Very subtle soft warm highlight to preserve authentic cotton paper texture while ensuring crisp typography */}
+      {/* Soft ivory parchment wash to ensure high contrast and pristine legibility in the center while keeping outer botanical borders vibrant */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           background: `
-            radial-gradient(ellipse at 50% 50%, rgba(254, 252, 247, 0.25) 0%, rgba(254, 252, 247, 0.1) 60%, transparent 100%)
+            radial-gradient(ellipse 80% 70% at 50% 50%, rgba(255, 254, 250, 0.72) 0%, rgba(255, 254, 250, 0.42) 55%, transparent 100%)
           `,
         }}
       />
 
       {/* Subtle edge vignette */}
-      <div className="absolute inset-0 z-0 bg-radial from-transparent via-transparent to-[#282218]/10 pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-radial from-transparent via-transparent to-[#281812]/10 pointer-events-none" />
 
       {/* ========================================================================= */}
       {/* 2. MAIN CONTENT AREA (WORDS DIRECTLY ON THE BOTANICAL BACKGROUND)         */}

@@ -194,9 +194,9 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
           <div className="absolute inset-0 rounded-2xl bg-[#282017] border border-[#c5a059]/35 shadow-2xl overflow-hidden">
             {/* Rich Botanical Damask Pattern on Inside Lining */}
             <div
-              className="absolute inset-0 opacity-25 bg-cover bg-center pointer-events-none"
+              className="absolute inset-0 opacity-30 bg-cover bg-center pointer-events-none"
               style={{
-                backgroundImage: `url('${getAssetPath("/images/page_background.jpg")}')`,
+                backgroundImage: `url('${getAssetPath("/images/islamic_botanical_bg.jpg")}')`,
               }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none" />
@@ -211,35 +211,87 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
               scale: cardScale,
               boxShadow: cardShadow,
             }}
-            className="absolute inset-x-3 top-3 bottom-3 rounded-t-[110px] sm:rounded-t-[130px] rounded-b-xl bg-[#faf6ee] p-5 border border-[#c5a059]/45 flex flex-col items-center justify-start text-center z-10 overflow-hidden"
+            className="absolute inset-x-2.5 top-2.5 bottom-2.5 rounded-2xl bg-[#faf6ee] p-4 sm:p-5 border border-[#c5a059]/45 flex flex-col items-center justify-between text-center z-10 overflow-hidden"
           >
-            {/* Roman Arch Die-Cut Window Header with Garden Art */}
-            <div className="relative w-full h-[155px] sm:h-[185px] rounded-t-[100px] sm:rounded-t-[120px] rounded-b-lg overflow-hidden border border-[#c5a059]/40 shadow-inner mb-2.5">
-              <div
-                className="absolute inset-0 bg-cover bg-center"
-                style={{
-                  backgroundImage: `url('${getAssetPath("/images/vintage_garden_bg.jpg")}')`,
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#faf6ee] via-transparent to-black/15" />
-              {/* Arch hairline inner outline */}
-              <div className="absolute inset-1.5 rounded-t-[90px] sm:rounded-t-[110px] rounded-b-md border border-[#c5a059]/30 pointer-events-none" />
+            {/* Background Botanical Frame Image */}
+            <div
+              className="absolute inset-0 bg-cover bg-center pointer-events-none opacity-90"
+              style={{
+                backgroundImage: `url('${getAssetPath("/images/islamic_botanical_bg.jpg")}')`,
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse at 50% 50%, rgba(254, 252, 247, 0.75) 0%, rgba(254, 252, 247, 0.35) 75%, transparent 100%)",
+              }}
+            />
+            {/* Fine Inner Hairline Border */}
+            <div className="absolute inset-2 rounded-xl border border-[#c5a059]/35 pointer-events-none" />
+
+            {/* Top Arabic Calligraphy Header */}
+            <div className="relative z-10 space-y-0.5 pt-2">
+              <p className="font-serif text-2xl sm:text-3xl text-[#3a1d1d] font-semibold tracking-wider select-none">
+                وَلِيمَةُ العُرْسِ
+              </p>
+              <p className="font-serif text-[9px] sm:text-[10px] tracking-[0.35em] text-[#5c3e32] uppercase font-semibold">
+                WALIMATULURUS
+              </p>
             </div>
 
-            {/* Invitation Card Content */}
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[#8c6d32] font-serif font-semibold">
-              Walimatulurus
-            </p>
-            <p className="font-script text-3xl sm:text-4xl text-[#3d4d38] -mt-0.5">
-              {weddingData.groom.name} &amp; {weddingData.bride.name}
-            </p>
-            <div className="w-16 h-px bg-[#c5a059]/50 my-1.5" />
-            <p className="text-xs text-[#556b4f] font-serif tracking-wider font-semibold">
-              {weddingData.event.dateFormatted}
-            </p>
-            <p className="text-[11px] text-[#705e49] font-sans mt-1 tracking-wide">
-              {weddingData.event.venueName}, {weddingData.event.city}
-            </p>
+            {/* Central Arabic Initial Monogram (ع | ن) */}
+            <div className="relative z-10 my-auto flex items-center justify-center gap-5 sm:gap-7 w-full max-w-[240px]">
+              {/* Bride: ن / نفيسة / NAFISYA */}
+              <div className="flex-1 flex flex-col items-center">
+                <span className="font-serif text-5xl sm:text-6xl text-[#3a1d1d] leading-none font-normal select-none">
+                  ن
+                </span>
+                <span className="font-serif text-xs sm:text-sm text-[#4a2e24] mt-0.5 font-medium">
+                  نفيسة
+                </span>
+                <span className="font-serif text-[9px] tracking-[0.2em] text-[#5c3e32] uppercase font-semibold">
+                  NAFISYA
+                </span>
+              </div>
+
+              {/* Center Divider with Knot */}
+              <div className="flex flex-col items-center justify-center h-20 sm:h-24 select-none">
+                <div className="w-1 h-1 rounded-full bg-[#c5a059]" />
+                <div className="w-[1px] h-6 sm:h-8 bg-[#c5a059]/60" />
+                <div className="my-0.5 w-3.5 h-3.5 rounded-full border border-[#c5a059] flex items-center justify-center">
+                  <span className="text-[8px] text-[#c5a059] font-serif leading-none">§</span>
+                </div>
+                <div className="w-[1px] h-6 sm:h-8 bg-[#c5a059]/60" />
+                <div className="w-1 h-1 rounded-full bg-[#c5a059]" />
+              </div>
+
+              {/* Groom: ع / عمر / UMAR */}
+              <div className="flex-1 flex flex-col items-center">
+                <span className="font-serif text-5xl sm:text-6xl text-[#3a1d1d] leading-none font-normal select-none">
+                  ع
+                </span>
+                <span className="font-serif text-xs sm:text-sm text-[#4a2e24] mt-0.5 font-medium">
+                  عمر
+                </span>
+                <span className="font-serif text-[9px] tracking-[0.2em] text-[#5c3e32] uppercase font-semibold">
+                  UMAR
+                </span>
+              </div>
+            </div>
+
+            {/* Date & Quote */}
+            <div className="relative z-10 space-y-1 pb-2">
+              <p className="font-serif text-xs sm:text-sm text-[#2c1810] font-bold tracking-[0.15em] uppercase">
+                {weddingData.event.dateFormatted}
+              </p>
+              <p className="font-serif italic text-[11px] sm:text-xs text-[#4a2e24] leading-tight">
+                &ldquo;dan Kami menciptakan kamu berpasang-pasangan&rdquo;
+              </p>
+              <p className="font-serif text-[9px] text-[#8c6d32] font-semibold tracking-wider">
+                Surah An-Naba&apos; : 78:8
+              </p>
+            </div>
           </motion.div>
 
           {/* ========================================================================= */}
@@ -337,9 +389,9 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
                   {/* Metallic Gold Sheen Highlight */}
                   <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-white/20 blur-sm pointer-events-none" />
 
-                  {/* Debossed Monogram Content */}
-                  <span className="font-serif text-lg sm:text-xl font-bold tracking-widest text-[#f5e6c8] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-                    U <span className="text-[#dfa528] text-xs font-normal">✦</span> N
+                  {/* Debossed Arabic Monogram Content */}
+                  <span className="font-serif text-xl sm:text-2xl font-bold tracking-wider text-[#f5e6c8] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] select-none">
+                    ع <span className="text-[#dfa528] text-sm font-normal">✦</span> ن
                   </span>
                   <span className="text-[8px] uppercase tracking-[0.2em] text-[#d4af37]/90 font-serif font-semibold -mt-0.5">
                     11.04
