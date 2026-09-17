@@ -219,78 +219,87 @@ export default function SwiperWeddingSlider({ onSlideChange }: SwiperWeddingSlid
         className="wedding-slider w-full h-full"
       >
         {/* ========================================================================= */}
-        {/* SLIDE 01: PINTU GERBANG UTAMA (CARDLESS - DIRECT ON PAPER BACKGROUND)     */}
+        {/* SLIDE 01: PINTU GERBANG UTAMA (ROMAN ARCH PORTAL CARD)                    */}
         {/* ========================================================================= */}
         <SwiperSlide className="relative w-full h-full overflow-hidden flex items-center justify-center">
           <BotanicalWildflowerFrame>
-            <div className="flex-1 flex flex-col justify-center items-center text-center w-full my-auto space-y-4 sm:space-y-5">
+            <div className="flex-1 flex flex-col justify-center items-center text-center w-full my-auto space-y-2.5 sm:space-y-3.5 max-w-sm sm:max-w-md">
+              {/* Roman Arch Die-Cut Window Header (TikTok Style) */}
+              <div
+                data-swiper-parallax-y="-140"
+                data-swiper-parallax-scale="1.04"
+                className="relative w-[190px] sm:w-[220px] h-[145px] sm:h-[165px] rounded-t-[95px] sm:rounded-t-[110px] rounded-b-xl overflow-hidden shadow-md border-2 border-[#c5a059]/40 mb-1"
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{
+                    backgroundImage: `url('${getAssetPath("/images/vintage_garden_bg.jpg")}')`,
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#faf6ee] via-transparent to-black/15" />
+                {/* Arch hairline inner outline */}
+                <div className="absolute inset-1.5 rounded-t-[85px] sm:rounded-t-[100px] rounded-b-lg border border-[#c5a059]/35 pointer-events-none" />
+              </div>
+
               {/* Header Script */}
               <div 
                 data-swiper-parallax-y="-120"
                 data-swiper-parallax-opacity="0.2"
-                className="space-y-1"
+                className="space-y-0.5"
               >
-                <span className="font-handwriting text-4xl sm:text-5xl text-[#35452e] block tracking-wide">
+                <span className="font-handwriting text-3xl sm:text-4xl text-[#35452e] block tracking-wide">
                   &lsquo;Walimatulurus&rsquo;
                 </span>
-                <p className="font-serif text-xs sm:text-sm tracking-[0.28em] text-[#556b4f] uppercase font-semibold">
+                <p className="font-serif text-[11px] sm:text-xs tracking-[0.28em] text-[#556b4f] uppercase font-semibold">
                   Sabtu • 2 Januari 2027
                 </p>
               </div>
 
-              {/* Callout */}
+              {/* Main Couple Monogram */}
               <div 
                 data-swiper-parallax-y="-170"
-                data-swiper-parallax-opacity="0.2"
-                className="space-y-1.5"
-              >
-                <p className="font-handwriting text-3xl sm:text-4xl text-[#3d4d38] leading-tight">
-                  Kindly Join Our Celebration
-                </p>
-                <div className="w-20 h-[1px] bg-[#c5a059]/50 mx-auto" />
-              </div>
-
-              {/* Main Couple Monogram Replacing Names */}
-              <div 
-                data-swiper-parallax-y="-210"
-                className="my-1 sm:my-2 flex flex-col items-center justify-center"
+                className="my-0.5 flex flex-col items-center justify-center"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img 
                   src={getAssetPath("/images/monogram_full.png")} 
                   alt="Umar & Nafisya Monogram" 
-                  className="w-64 sm:w-72 max-w-[290px] h-auto object-contain pointer-events-none select-none"
+                  className="w-56 sm:w-64 max-w-[260px] h-auto object-contain pointer-events-none select-none"
                 />
               </div>
 
               {/* Venue & Time Information */}
               <div 
-                data-swiper-parallax-y="-160"
+                data-swiper-parallax-y="-140"
                 data-swiper-parallax-opacity="0.3"
-                className="space-y-1"
+                className="space-y-0.5"
               >
-                <p className="font-serif text-lg sm:text-xl text-[#2a3825] font-bold tracking-wide">
+                <p className="font-serif text-base sm:text-lg text-[#2a3825] font-bold tracking-wide">
                   Petak Padin, Kepala Batas
                 </p>
-                <p className="font-sans text-xs sm:text-sm text-[#556b4f] tracking-widest uppercase font-semibold">
+                <p className="font-sans text-[11px] sm:text-xs text-[#556b4f] tracking-widest uppercase font-semibold">
                   Pulau Pinang • 11:00 AM – 4:00 PM
                 </p>
               </div>
 
-              {/* Dainty Footer Script Whisper */}
-              <div 
+              {/* Confirm Attendance / RSVP CTA Pill */}
+              <div
                 data-swiper-parallax-y="-110"
                 className="pt-1"
               >
-                <p className="font-handwriting text-2xl sm:text-3xl text-[#35452e]/90">
-                  We can&apos;t wait to celebrate with you!
-                </p>
+                <button
+                  onClick={() => swiperInstance?.slideTo(4)}
+                  className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#35452e] hover:bg-[#253220] text-white font-serif text-xs uppercase tracking-widest font-semibold shadow-sm transition-all active:scale-95 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#dfa528]" />
+                  <span>Sahkan Kehadiran</span>
+                </button>
               </div>
 
               {/* Interactive Scroll Cue */}
               <div 
                 data-swiper-parallax-y="-80"
-                className="pt-1 flex items-center gap-1.5 text-[#556b4f] text-xs tracking-widest uppercase font-semibold"
+                className="pt-0.5 flex items-center gap-1.5 text-[#556b4f] text-[11px] tracking-widest uppercase font-semibold"
               >
                 <span>Skrol ke bawah</span>
                 <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#35452e]" />
