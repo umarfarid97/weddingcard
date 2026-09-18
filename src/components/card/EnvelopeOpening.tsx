@@ -51,18 +51,18 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
       }
     }
 
-    // Safety timeout: if video fails to report end after 7.5s, advance automatically
+    // Safety timeout: for 10s video, auto-advance after 11.5s if not completed
     setTimeout(() => {
       if (!completedRef.current) {
         handleComplete();
       }
-    }, 7500);
+    }, 11500);
   };
 
   const handleTimeUpdate = () => {
     if (!videoRef.current || completedRef.current) return;
-    // Crossfade slightly before the 6.01s video stops to make the transition buttery smooth
-    if (videoRef.current.currentTime >= 5.75) {
+    // Crossfade slightly before the 10.0s video ends (at 9.6s) for a buttery-smooth transition
+    if (videoRef.current.currentTime >= 9.6) {
       handleComplete();
     }
   };
@@ -75,12 +75,12 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
       transition={{ duration: 0.55, ease: "easeInOut" }}
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#151210] overflow-hidden select-none"
     >
-      {/* Container maintaining original aspect ratio (702 / 1300) */}
+      {/* Container maintaining 9:16 portrait aspect ratio (1080 / 1920) */}
       <div 
         onClick={!isPlaying ? handleStart : undefined}
-        className="relative w-full h-full max-w-[520px] max-h-[100dvh] flex items-center justify-center cursor-pointer overflow-hidden shadow-2xl"
+        className="relative w-full h-full max-w-[520px] max-h-[100dvh] aspect-[9/16] flex items-center justify-center cursor-pointer overflow-hidden shadow-2xl bg-[#e8e4dc]"
       >
-        {/* The Envelope Opening Video */}
+        {/* The Envelope Opening Video (Wedding1.mp4) */}
         <video
           ref={videoRef}
           src={videoSrc}
@@ -97,29 +97,20 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
           className="w-full h-full object-cover pointer-events-none"
         />
 
-        {/* Ambient Top & Bottom Vignette Overlays for Depth */}
-        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#151210]/70 via-[#151210]/20 to-transparent pointer-events-none z-10" />
-        <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#151210]/80 via-[#151210]/30 to-transparent pointer-events-none z-10" />
-
         {/* --- STATE 1: INITIAL CLOSED ENVELOPE OVERLAY --- */}
         {!isPlaying && (
           <div className="absolute inset-0 z-20 flex flex-col justify-between items-center px-6 py-10 sm:py-12 pointer-events-auto transition-opacity duration-300">
             {/* Top Invitation Header */}
-            <div className="text-center space-y-1 pt-3 sm:pt-4 drop-shadow-sm">
-              <span className="text-[10px] sm:text-xs font-serif tracking-[0.45em] uppercase text-[#3a1d1d] font-bold block">
+            <div className="text-center space-y-1 pt-2 sm:pt-3">
+              <span className="text-[10px] sm:text-xs font-serif tracking-[0.45em] uppercase text-[#4a4038] font-bold block">
                 WALIMATULURUS
               </span>
-              <h1 className="text-2xl sm:text-3xl font-serif text-[#2c1810] tracking-wide font-normal">
+              <h1 className="text-2xl sm:text-3xl font-serif text-[#2c2621] tracking-wide font-normal">
                 Umar & Nafisya
               </h1>
-              <p className="text-[11px] sm:text-xs font-serif text-[#5c3e32] tracking-widest uppercase font-medium">
+              <p className="text-[11px] sm:text-xs font-serif text-[#6b5f54] tracking-widest uppercase font-medium">
                 Sabtu, 2 Januari 2027
               </p>
-            </div>
-
-            {/* Pulsing Hint directly over the Wax Seal (center is at 51.5% height) */}
-            <div className="absolute top-[51.5%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full border border-[#80282e]/50 animate-ping opacity-40" />
             </div>
 
             {/* Bottom Call to Action Button */}
@@ -130,13 +121,13 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
                   e.stopPropagation();
                   handleStart();
                 }}
-                className="group relative px-8 py-3.5 rounded-full bg-gradient-to-r from-[#7a242a] via-[#943137] to-[#7a242a] text-[#fdfaf5] font-serif font-semibold tracking-wider text-xs sm:text-sm shadow-[0_8px_25px_rgba(122,36,42,0.5)] hover:shadow-[0_12px_32px_rgba(122,36,42,0.7)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2.5 cursor-pointer border border-[#dfc285]/50"
+                className="group relative px-8 py-3.5 rounded-full bg-gradient-to-r from-[#2c2724] via-[#453e39] to-[#2c2724] text-[#f7f4ed] font-serif font-semibold tracking-wider text-xs sm:text-sm shadow-[0_10px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_14px_30px_rgba(0,0,0,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2.5 cursor-pointer border border-[#c5a059]/40"
               >
                 <Sparkles className="w-4 h-4 text-[#dfc285] group-hover:rotate-12 transition-transform duration-300" />
-                <span className="tracking-[0.15em] uppercase">Buka Undangan</span>
+                <span className="tracking-[0.18em] uppercase font-serif">Buka Undangan</span>
               </button>
 
-              <p className="text-[11px] font-serif tracking-wider text-[#4a2e24] font-medium animate-pulse flex items-center gap-1.5">
+              <p className="text-[11px] font-serif tracking-wider text-[#524941] font-medium animate-pulse flex items-center gap-1.5">
                 <Mail className="w-3.5 h-3.5 opacity-70" />
                 Sentuh untuk membuka
               </p>
@@ -154,7 +145,7 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
                 e.stopPropagation();
                 handleComplete();
               }}
-              className="pointer-events-auto absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white/80 hover:text-white text-xs font-serif tracking-widest uppercase transition-all flex items-center gap-1.5 shadow-lg cursor-pointer"
+              className="pointer-events-auto absolute top-6 right-6 px-3.5 py-1.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white/85 hover:text-white text-xs font-serif tracking-widest uppercase transition-all flex items-center gap-1.5 shadow-lg cursor-pointer"
               title="Langkau ke kad jemputan"
             >
               <span>Langkau</span>
