@@ -61,8 +61,8 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
 
   const handleTimeUpdate = () => {
     if (!videoRef.current || completedRef.current) return;
-    // Crossfade slightly before the 10.0s video ends (at 9.6s) for a buttery-smooth transition
-    if (videoRef.current.currentTime >= 9.6) {
+    // Crossfade when the botanical illustration completes (at 9.7s) for a buttery-smooth transition
+    if (videoRef.current.currentTime >= 9.7) {
       handleComplete();
     }
   };
