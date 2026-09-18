@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, FastForward, Mail } from "lucide-react";
+import { FastForward } from "lucide-react";
 import { getAssetPath } from "@/lib/basePath";
 
 interface EnvelopeOpeningProps {
@@ -99,39 +99,20 @@ export default function EnvelopeOpening({ onOpen, onInteract }: EnvelopeOpeningP
 
         {/* --- STATE 1: INITIAL CLOSED ENVELOPE OVERLAY --- */}
         {!isPlaying && (
-          <div className="absolute inset-0 z-20 flex flex-col justify-between items-center px-6 py-10 sm:py-12 pointer-events-auto transition-opacity duration-300">
-            {/* Top Invitation Header */}
-            <div className="text-center space-y-1 pt-2 sm:pt-3">
-              <span className="text-[10px] sm:text-xs font-serif tracking-[0.45em] uppercase text-[#4a4038] font-bold block">
-                WALIMATULURUS
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-serif text-[#2c2621] tracking-wide font-normal">
-                Umar & Nafisya
-              </h1>
-              <p className="text-[11px] sm:text-xs font-serif text-[#6b5f54] tracking-widest uppercase font-medium">
-                Sabtu, 2 Januari 2027
-              </p>
-            </div>
-
-            {/* Bottom Call to Action Button */}
-            <div className="flex flex-col items-center space-y-2.5 pb-6 sm:pb-8">
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleStart();
-                }}
-                className="group relative px-8 py-3.5 rounded-full bg-gradient-to-r from-[#2c2724] via-[#453e39] to-[#2c2724] text-[#f7f4ed] font-serif font-semibold tracking-wider text-xs sm:text-sm shadow-[0_10px_25px_rgba(0,0,0,0.35)] hover:shadow-[0_14px_30px_rgba(0,0,0,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2.5 cursor-pointer border border-[#c5a059]/40"
-              >
-                <Sparkles className="w-4 h-4 text-[#dfc285] group-hover:rotate-12 transition-transform duration-300" />
-                <span className="tracking-[0.18em] uppercase font-serif">Buka Undangan</span>
-              </button>
-
-              <p className="text-[11px] font-serif tracking-wider text-[#524941] font-medium animate-pulse flex items-center gap-1.5">
-                <Mail className="w-3.5 h-3.5 opacity-70" />
-                Sentuh untuk membuka
-              </p>
-            </div>
+          <div className="absolute inset-0 z-20 flex flex-col justify-end items-center px-6 pb-10 sm:pb-12 pointer-events-auto transition-opacity duration-300">
+            {/* Minimalist 'BUKA' Text Hyperlink */}
+            <a
+              href="#buka"
+              role="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleStart();
+              }}
+              className="font-serif text-sm sm:text-base tracking-[0.35em] uppercase text-[#3d342d] hover:text-[#120f0d] underline underline-offset-[8px] decoration-[#756455]/50 hover:decoration-[#120f0d] transition-all duration-200 cursor-pointer py-2 px-4 select-none"
+            >
+              BUKA
+            </a>
           </div>
         )}
 
